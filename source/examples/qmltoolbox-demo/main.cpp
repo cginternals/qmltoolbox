@@ -3,24 +3,23 @@
 #include <QQuickView>
 #include <QQmlEngine>
 
-#include <qmltoolbox/qmltoolbox.h>
+#include <qmltoolbox/QmlEngine.h>
 
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
+    // Create QtQuick engine
+    qmltoolbox::QmlEngine engine;
+
     // Create QtQuick window
     QQuickWindow::setDefaultAlphaBuffer(true);
-    QQuickView * window = new QQuickView;
-
-    // Get data path
-    QString dataPath = QString::fromStdString(qmltoolbox::dataPath());
+    QQuickView * window = new QQuickView(&engine, nullptr);
 
     // Load and show QML
     window->setResizeMode(QQuickView::SizeRootObjectToView);
-    window->engine()->addImportPath(dataPath + "/qmltoolbox/qml");
-    window->setSource(QUrl::fromLocalFile(dataPath + "/qmltoolbox/qml/demos/Demo.qml"));
+    window->setSource(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/demos/Demo.qml"));
     #ifdef JOLLA
         window->showFullScreen();
     #else

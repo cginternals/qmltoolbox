@@ -5,6 +5,19 @@
 
 find_package(cpplocate REQUIRED)
 
+# Qt5
+find_package(Qt5Core 5.1)
+find_package(Qt5Quick 5.1)
+
+# Enable automoc
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(AUTOMOC_MOC_OPTIONS PROPERTIES FOLDER CMakeAutomocTargets)
+set_property(GLOBAL PROPERTY AUTOMOC_FOLDER CMakeAutomocTargets)
+
+# ENABLE CMP0020: Automatically link Qt executables to qtmain target on Windows.
+cmake_policy(SET CMP0020 NEW)
+
 
 # 
 # Library name and options
@@ -32,10 +45,12 @@ set(source_path  "${CMAKE_CURRENT_SOURCE_DIR}/source")
 
 set(headers
     ${include_path}/qmltoolbox.h
+    ${include_path}/QmlEngine.h
 )
 
 set(sources
     ${source_path}/qmltoolbox.cpp
+    ${source_path}/QmlEngine.cpp
 )
 
 # Group source files
@@ -128,6 +143,8 @@ target_include_directories(${target}
 
 target_link_libraries(${target}
     PRIVATE
+    Qt5::Core
+    Qt5::Quick
     cpplocate::cpplocate
 
     PUBLIC
