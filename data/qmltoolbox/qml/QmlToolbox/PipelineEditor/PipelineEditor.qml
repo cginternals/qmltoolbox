@@ -58,7 +58,7 @@ Item
         if (!loaded)
         {
             // Set pipeline root
-            pipeline.path = 'pipeline';
+            pipeline.path = root || 'pipeline';
 
             // Done
             loaded = true;

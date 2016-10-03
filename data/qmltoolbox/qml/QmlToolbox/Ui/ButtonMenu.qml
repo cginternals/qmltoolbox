@@ -1,5 +1,6 @@
 
 import QtQuick 2.0
+import QtQuick.Layouts 1.0
 
 import QmlToolbox.Base 1.0
 import QmlToolbox.Ui 1.0
@@ -22,13 +23,12 @@ BaseItem
     implicitWidth:  column.implicitWidth
     implicitHeight: column.implicitHeight
 
-    Column
+    ColumnLayout
     {
         id: column
 
-        anchors.top:  parent.top
-        anchors.left: parent.left
-        spacing:      Ui.style.spacingSmall
+        width:   parent.width
+        spacing: Ui.style.spacingSmall
 
         IconButton
         {
@@ -40,9 +40,11 @@ BaseItem
             }
         }
 
-        Column
+        ColumnLayout
         {
             id: items
+
+            width: parent.width
 
             visible: button.selected
             spacing: Ui.style.spacingSmall

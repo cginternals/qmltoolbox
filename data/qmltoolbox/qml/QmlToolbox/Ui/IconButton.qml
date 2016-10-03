@@ -60,9 +60,9 @@ Control
         {
             anchors.verticalCenter: parent.verticalCenter
 
-            text:           item.text
-            color:          selectStyle(Ui.style.controlTextColorDisabled, Ui.style.controlTextColorPressed, Ui.style.controlTextColorHover, Ui.style.controlTextColorSelected, Ui.style.controlTextColor)
-            font.pixelSize: Ui.style.controlFontSize
+            text:     item.text
+            color:    selectStyle(Ui.style.controlTextColorDisabled, Ui.style.controlTextColorPressed, Ui.style.controlTextColorHover, Ui.style.controlTextColorSelected, Ui.style.controlTextColor)
+            fontSize: Ui.style.controlFontSize
         }
     }
 }

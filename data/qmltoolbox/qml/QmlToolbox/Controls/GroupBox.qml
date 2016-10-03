@@ -41,8 +41,8 @@ BaseItem
             anchors.fill:    parent
             anchors.margins: Ui.style.paddingSmall
 
-            text:        item.title
-            font.weight: Font.Bold
+            text:   item.title
+            weight: Font.Bold
         }
     }
 
