@@ -11,7 +11,14 @@ import QmlToolbox.Base 1.0
 */
 BaseItem
 {
+    id: item
+
     default property alias data: content.data
+
+    property color backgroundColor: Ui.style.frameColor
+    property color borderColor:     Ui.style.frameBorderColor
+    property int   borderWidth:     Ui.style.frameBorderWidth
+    property int   radius:          Ui.style.frameBorderRadius
 
     Rectangle
     {
@@ -19,10 +26,10 @@ BaseItem
 
         anchors.fill: parent
 
-        color:        Ui.style.frameColor
-        border.color: Ui.style.frameBorderColor
-        border.width: Ui.style.frameBorderWidth
-        radius:       Ui.style.frameBorderRadius
+        color:        item.backgroundColor
+        border.color: item.borderColor
+        border.width: item.borderWidth
+        radius:       item.radius
 
         Item
         {

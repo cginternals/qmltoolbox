@@ -17,3 +17,4 @@ TextField     1.0 TextField.qml
 ComboBox      1.0 ComboBox.qml
 Button        1.0 Button.qml
 ProgressBar   1.0 ProgressBar.qml
+Slider        1.0 Slider.qml
