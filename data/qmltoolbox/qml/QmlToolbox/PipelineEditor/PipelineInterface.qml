@@ -50,6 +50,42 @@ Item
     }
 
     /**
+    *  Get information of a slot
+    *
+    *  @param[in] path
+    *    Path to slot (e.g., 'pipeline.stage1.in1')
+    *
+    *  @return
+    *    {
+    *      name:    'SlotName',
+    *      type:    'int',
+    *      value:   100,
+    *      options: {}
+    *    }
+    */
+    function getSlot(path)
+    {
+        return {
+            name:    '',
+            type:    '',
+            value:   null,
+            options: {}
+        };
+    }
+
+    /**
+    *  Set slot value
+    *
+    *  @param[in] path
+    *    Path to slot (e.g., 'pipeline.stage1.in1')
+    *  @param[in] value
+    *    Value
+    */
+    function setSlotValue(path, value)
+    {
+    }
+
+    /**
     *  Create new stage
     *
     *  @param[in] path
