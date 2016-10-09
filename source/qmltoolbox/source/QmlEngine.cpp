@@ -1,7 +1,10 @@
 
 #include <qmltoolbox/QmlEngine.h>
 
+#include <QQmlContext>
+
 #include <qmltoolbox/qmltoolbox.h>
+#include <qmltoolbox/QmlUtils.h>
 
     
 namespace qmltoolbox
@@ -16,6 +19,9 @@ QmlEngine::QmlEngine()
 
     // Import qmltoolbox module
     addImportPath(m_qmlToolboxPath);
+
+    QmlUtils * qmlUtils = new QmlUtils(this);
+    rootContext()->setContextProperty("QmlUtils", qmlUtils);
 }
 
 QmlEngine::~QmlEngine()
