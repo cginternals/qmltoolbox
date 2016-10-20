@@ -211,8 +211,11 @@ BaseItem
     /**
     *  Component that contains the template for an input slot
     */
-    property Component inputSlotComponent: InputSlot
+    property Component inputSlotComponent : InputSlot
     {
+        pipelineInterface: stage.pipelineInterface
+        showEditors:       !stage.inverse
+
         hovered:  (pipeline != null && pipeline.hoveredElement  == path)
         selected: (pipeline != null && pipeline.selectedElement == path)
 
@@ -240,6 +243,9 @@ BaseItem
     */
     property Component outputSlotComponent: OutputSlot
     {
+        pipelineInterface: stage.pipelineInterface
+        showEditors:       stage.inverse
+
         hovered:  (pipeline != null && pipeline.hoveredElement  == path)
         selected: (pipeline != null && pipeline.selectedElement == path)
 
