@@ -45,7 +45,7 @@ BaseItem
         {
             input.color = color;
 
-            pipelineInterface.setSlotValue(path, color);
+            pipelineInterface.setSlotValue(path, color.toString());
         }
     }
 
