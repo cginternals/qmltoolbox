@@ -6,3 +6,4 @@ endif()
 
 # Example applications
 add_subdirectory(qmltoolbox-demo)
+add_subdirectory(uiconcept)
