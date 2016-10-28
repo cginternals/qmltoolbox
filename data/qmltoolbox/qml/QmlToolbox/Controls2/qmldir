@@ -3,4 +3,4 @@ module Controls
 
 Slider 1.0 Slider.qml
 Label 1.0 Label.qml
-Pane 1.3 Pane.qml
+Pane 1.0 Pane.qml

@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 
     // Load and show QML
     window->setResizeMode(QQuickView::SizeRootObjectToView);
-    window->setSource(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/demo/Demo.qml"));
+    window->setSource(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uiconcept/window.qml"));
     #ifdef JOLLA
         window->showFullScreen();
     #else
