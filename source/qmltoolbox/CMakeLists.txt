@@ -45,12 +45,14 @@ set(source_path  "${CMAKE_CURRENT_SOURCE_DIR}/source")
 
 set(headers
     ${include_path}/qmltoolbox.h
+    ${include_path}/QmlApplicationEngine.h
     ${include_path}/QmlEngine.h
     ${include_path}/QmlUtils.h
 )
 
 set(sources
     ${source_path}/qmltoolbox.cpp
+    ${source_path}/QmlApplicationEngine.cpp
     ${source_path}/QmlEngine.cpp
     ${source_path}/QmlUtils.cpp
 )

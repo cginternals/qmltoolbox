@@ -1,31 +1,20 @@
 
-#include <QApplication>
-#include <QQuickView>
-#include <QQmlEngine>
+#include <QGuiApplication>
 
-#include <qmltoolbox/QmlEngine.h>
+#include <qmltoolbox/QmlApplicationEngine.h>
 
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QGuiApplication app(argc, argv);
 
     // Create QtQuick engine
-    qmltoolbox::QmlEngine engine;
-
-    // Create QtQuick window
-    QQuickWindow::setDefaultAlphaBuffer(true);
-    QQuickView * window = new QQuickView(&engine, nullptr);
+    qmltoolbox::QmlApplicationEngine engine;
 
     // Load and show QML
-    window->setResizeMode(QQuickView::SizeRootObjectToView);
-    window->setSource(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uiconcept/window.qml"));
-    #ifdef JOLLA
-        window->showFullScreen();
-    #else
-        window->show();
-    #endif
-
+    engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uiconcept/window.qml"));
+    
     // Run application
     int res = app.exec();
 

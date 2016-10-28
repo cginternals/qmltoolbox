@@ -5,3 +5,4 @@ Slider 1.0 Slider.qml
 Label 1.0 Label.qml
 Pane 1.0 Pane.qml
 Button 1.0 Button.qml
+ToolButton 1.0 ToolButton.qml
