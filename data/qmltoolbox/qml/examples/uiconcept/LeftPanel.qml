@@ -11,9 +11,9 @@ Controls.Pane {
         state = (state == "visible") ? "hidden" : "visible";
     }  
 
-    // padding: 0.0
+    padding: 0.0
     state: "visible"
-    Layout.minimumHeight: 150
+    Layout.minimumWidth: 150
 
     states: [
         State { name: "visible" },
