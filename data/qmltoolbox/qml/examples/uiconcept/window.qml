@@ -2,6 +2,7 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
+import QtQuick.Controls 1.4 as Controls1
 import QtQuick.Controls 2.0
 import QmlToolBox.Controls2 1.0 as Controls
 
@@ -69,134 +70,39 @@ ApplicationWindow
                     id: viewMenu
                     y: toolBar.height
 
-                    MenuItem { text: "Show Console" }
-                    MenuItem { text: "Show Log" }
+                    MenuItem { 
+                        text: "Toggle Bottom Area" 
+                        onTriggered: bottomPanel.toggle()
+                    }
                 }
             }
         }
     }
 
-    Controls.Pane {
-        ColumnLayout {
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
 
-            Controls.Label {
-                text: "Settings"
-            }
-            Controls.Slider {
-                value: 0.5
-            }
-            Controls.Button {
-                text: "Save"
-            }
-        }
-    }
+    Controls1.SplitView {
+        anchors.fill: parent
+        orientation: Qt.Vertical
 
-    ColumnLayout {
-        id: bottomPane
-
-        height: 200
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-
-        Item {
-            height: 1
-            anchors.left: parent.left
-            anchors.right: parent.right
-
-            Rectangle {
-                anchors.fill: parent
-
-                color: "#1D1F21"
-            }
-
-            MouseArea {
-                id: mouseArea
-
-                anchors.fill: parent
-                cursorShape: Qt.SplitVCursor
-                acceptedButtons: Qt.LeftButton
-
-                property double oldHeight
-
-                onPressed: {
-                    oldHeight = bottomPane.height
-                }
-
-                onMouseYChanged: { 
-                    bottomPane.height = oldHeight - mouseY
-                }
-            }
-        }
-
-        Controls.Pane {
-            anchors.left: parent.left
-            anchors.right: parent.right
+        TestContent {
             Layout.fillHeight: true
+        }
 
-            Flickable {
+        BottomPanel {
+            id: bottomPanel
+
+            Controls1.SplitView {
                 anchors.fill: parent
+                orientation: Qt.Horizontal
 
-                flickableDirection: Flickable.VerticalFlick
+                TestContent {
+                    Layout.minimumWidth: 150
+                }
 
-                TextArea.flickable: TextArea {
-                    id: logTextArea
-                    text: "TextArea\n...\n...\n...\n...\n...\n...\n"
-                    wrapMode: TextArea.Wrap
+                TestContent {
+                    Layout.minimumWidth: 150
                 }
             }
         }
     }
-
-
-
-    // ColumnLayout {
-    //     anchors.fill: parent
-
-    //     Controls.Pane {
-    //         Layout.fillHeight: true
-
-    //         ColumnLayout {
-    //             anchors.top: parent.top
-    //             anchors.left: parent.left
-    //             anchors.right: parent.right
-
-    //             Controls.Label {
-    //                 text: "Settings"
-    //             }
-    //             Controls.Slider {
-    //                 value: 0.5
-    //             }
-    //             Controls.Button {
-    //                 text: "Save"
-    //             }
-    //         }
-    //     }
-
-    //     Controls.Pane {
-    //         height: 200
-    //         Layout.fillWidth: true
-
-    //         // TextArea {
-    //         //     anchors.fill: parent
-    //         // }
-    //         Flickable {
-    //             id: flickable
-    //             anchors.fill: parent
-    //             contentHeight: logTextArea.height
-    //             contentWidth: logTextArea.width
-
-    //             TextArea.flickable: TextArea {
-    //                 id: logTextArea
-    //                 text: "TextArea\n...\n...\n...\n...\n...\n...\n"
-    //                 wrapMode: TextArea.Wrap
-    //             }
-
-    //             ScrollBar.vertical: ScrollBar { }
-    //         }
-    //     }
-    // }
 }
