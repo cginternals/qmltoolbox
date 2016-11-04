@@ -74,6 +74,10 @@ ApplicationWindow
                         text: "Toggle Bottom Area" 
                         onTriggered: bottomPanel.toggle()
                     }
+                    MenuItem { 
+                        text: "Toggle Side Area" 
+                        onTriggered: sidePanel.toggle()
+                    }
                 }
             }
         }
@@ -84,8 +88,21 @@ ApplicationWindow
         anchors.fill: parent
         orientation: Qt.Vertical
 
-        TestContent {
+        Controls1.SplitView {
+            orientation: Qt.Horizontal
             Layout.fillHeight: true
+
+            TestContent {
+                Layout.fillWidth: true
+            }
+
+            
+
+            LeftPanel {
+                id: sidePanel
+                
+                TestContent {}
+            }
         }
 
         BottomPanel {
@@ -97,10 +114,12 @@ ApplicationWindow
 
                 TestContent {
                     Layout.minimumWidth: 150
+                    Layout.fillWidth: true
                 }
 
                 TestContent {
                     Layout.minimumWidth: 150
+                    Layout.fillWidth: true
                 }
             }
         }
