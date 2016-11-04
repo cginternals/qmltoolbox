@@ -18,12 +18,30 @@ ApplicationWindow
         width: 0.3 * window.width
         height: window.height
 
-        Controls.Button {
-            text: "Back"
-            flat: true
-            onClicked: drawer.close()
+        ColumnLayout {
+            anchors.fill: parent
+
+
+            Controls.Button {
+                text: "Back"
+                flat: true
+                onClicked: drawer.close()
+            }
+
+            Controls.ToolButton {
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                text: "Settings"
+                flat: true
+            }
+
+            Item { Layout.fillHeight: true }
         }
     }
+
+
+    
 
     header: ToolBar {
         id: toolBar
@@ -96,11 +114,9 @@ ApplicationWindow
                 Layout.fillWidth: true
             }
 
-            
-
             LeftPanel {
                 id: sidePanel
-                
+
                 TestContent {}
             }
         }
