@@ -1,8 +1,10 @@
 
 module Controls
 
-Slider 1.0 Slider.qml
+Button 1.0 Button.qml
 Label 1.0 Label.qml
 Pane 1.0 Pane.qml
-Button 1.0 Button.qml
+Slider 1.0 Slider.qml
+ToolBar 1.0 ToolBar.qml
 ToolButton 1.0 ToolButton.qml
+Control 1.0 Control.qml

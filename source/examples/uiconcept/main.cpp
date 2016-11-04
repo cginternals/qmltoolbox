@@ -14,10 +14,10 @@ int main(int argc, char *argv[])
     // Create QtQuick engine
     qmltoolbox::QmlApplicationEngine engine;
 
-// #ifdef QML_FALLBACK
+#ifdef QML_FALLBACK
     auto fileSelector = QQmlFileSelector::get(&engine);
     fileSelector->setExtraSelectors(QStringList{"fallback"});
-// #endif
+#endif
 
     // Load and show QML
     engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uiconcept/window.qml"));

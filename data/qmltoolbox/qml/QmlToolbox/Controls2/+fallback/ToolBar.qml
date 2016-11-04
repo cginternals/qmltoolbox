@@ -3,8 +3,5 @@ import QtQuick 2.4
 import QtQuick.Controls 1.3
 
 Control {
-    id: pane
-
-    padding: 10
-    color: "#F5F5F5"
+    color: "#3A6ED3"
 }

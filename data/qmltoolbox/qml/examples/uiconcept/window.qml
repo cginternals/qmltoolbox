@@ -40,10 +40,7 @@ ApplicationWindow
         }
     }
 
-
-    
-
-    header: ToolBar {
+    header: Controls.ToolBar {
         id: toolBar
 
         RowLayout {
