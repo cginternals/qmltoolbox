@@ -1,0 +1,10 @@
+
+module QmlToolbox.PropertyEditor
+
+PropertyEditor    1.0 PropertyEditor.qml
+ValueEdit         1.0 ValueEdit.qml
+ValueEditBool     1.0 ValueEditBool.qml
+ValueEditNumber   1.0 ValueEditNumber.qml
+ValueEditString   1.0 ValueEditString.qml
+ValueEditFilename 1.0 ValueEditFilename.qml
+ValueEditColor    1.0 ValueEditColor.qml
