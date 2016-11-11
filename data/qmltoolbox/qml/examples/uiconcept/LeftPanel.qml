@@ -16,7 +16,13 @@ Controls.Pane {
     Layout.minimumWidth: 150
 
     states: [
-        State { name: "visible" },
+        State { 
+            name: "visible"
+            PropertyChanges {
+                target: leftPanel
+                visible: true
+            }
+        },
         State {
             name: "hidden"
             PropertyChanges { target: leftPanel; width: 0; Layout.minimumWidth: 0 }
@@ -28,6 +34,7 @@ Controls.Pane {
             from: "hidden"; to: "visible" 
 
             SequentialAnimation {
+                PropertyAction { properties: "visible" }
                 NumberAnimation { properties: "width"; easing.type: Easing.InOutQuad }
                 PropertyAction { properties: "Layout.minimumWidth" }
             }
@@ -35,7 +42,10 @@ Controls.Pane {
         Transition {
             from: "visible"; to: "hidden"
 
-            NumberAnimation { properties: "width"; easing.type: Easing.InOutQuad }
+            SequentialAnimation {
+                NumberAnimation { properties: "width"; easing.type: Easing.InOutQuad }
+                PropertyAction { properties: "visible" }
+            }
         }
     ]
 }

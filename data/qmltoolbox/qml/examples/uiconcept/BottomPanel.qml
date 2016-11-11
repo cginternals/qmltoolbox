@@ -16,10 +16,21 @@ Controls.Pane {
     Layout.minimumHeight: 150
 
     states: [
-        State { name: "visible" },
+        State { 
+            name: "visible"
+            PropertyChanges {
+                target: bottomPanel
+                visible: true
+            }
+        },
         State {
             name: "hidden"
-            PropertyChanges { target: bottomPanel; height: 0; Layout.minimumHeight: 0 }
+            PropertyChanges { 
+                target: bottomPanel
+                height: 0
+                Layout.minimumHeight: 0
+                visible: false 
+            }
         }
     ]
 
@@ -28,6 +39,7 @@ Controls.Pane {
             from: "hidden"; to: "visible" 
 
             SequentialAnimation {
+                PropertyAction { properties: "visible" }
                 NumberAnimation { properties: "height"; easing.type: Easing.InOutQuad }
                 PropertyAction { properties: "Layout.minimumHeight" }
             }
@@ -35,7 +47,10 @@ Controls.Pane {
         Transition {
             from: "visible"; to: "hidden"
 
-            NumberAnimation { properties: "height"; easing.type: Easing.InOutQuad }
+            SequentialAnimation {
+                NumberAnimation { properties: "height"; easing.type: Easing.InOutQuad }
+                PropertyAction { properties: "visible" }
+            }
         }
     ]
 }
