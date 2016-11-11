@@ -57,39 +57,39 @@ Controls.ApplicationWindow
                 text: "Pipeline"
                 onClicked: pipelineMenu.open()
 
-                Menu {
+                Controls.Menu {
                     id: pipelineMenu
                     y: toolBar.height
 
-                    MenuItem { text: "Details" }
-                    MenuItem { text: "Edit" }
+                    Controls.MenuItem { text: "Details" }
+                    Controls.MenuItem { text: "Edit" }
                 }
             }
             Controls.ToolButton {
                 text: "Tools"
                 onClicked: toolsMenu.open()
 
-                Menu {
+                Controls.Menu {
                     id: toolsMenu
                     y: toolBar.height
 
-                    MenuItem { text: "Record" }
-                    MenuItem { text: "Take Screenshot" }
+                    Controls.MenuItem { text: "Record" }
+                    Controls.MenuItem { text: "Take Screenshot" }
                 }
             }
             Controls.ToolButton {
                 text: "View"
                 onClicked: viewMenu.open()
 
-                Menu {
+                Controls.Menu {
                     id: viewMenu
                     y: toolBar.height
 
-                    MenuItem { 
+                    Controls.MenuItem { 
                         text: "Toggle Bottom Area" 
                         onTriggered: bottomPanel.toggle()
                     }
-                    MenuItem { 
+                    Controls.MenuItem { 
                         text: "Toggle Side Area" 
                         onTriggered: sidePanel.toggle()
                     }
