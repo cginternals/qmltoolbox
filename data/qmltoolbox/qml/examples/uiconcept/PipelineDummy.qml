@@ -8,33 +8,45 @@ QtObject {
     property QtObject stage: QtObject {
         id: stage
 
-        property var inputs: ["Name of Pony", "Activate Magic Abilities",  "Length of Pony", "Color of Pony"]
+        property var inputs: [
+            "Name of pony",
+            "Activate magic abilities",
+            "Length of pony",
+            "Color of pony",
+            "Name of its left toe"
+        ]
 
         property var slots: [
             {
-                name:    'Name of Pony',
+                name:    'Name of pony',
                 type:    'string',
                 value:   'Erhardt',
                 options: {}
             },
             {
-                name:    'Activate Magic Abilities',
+                name:    'Activate magic abilities',
                 type:    'bool',
                 value:   true,
                 options: {}
             },
             {
-                name:    'Length of Pony',
+                name:    'Length of pony',
                 type:    'float',
                 value:   1.3,
                 options: {}
             },
             {
-                name:    'Color of Pony',
+                name:    'Color of pony',
                 type:    'color',
                 value:   '#000000',
                 options: {}
-            }
+            },
+            {
+                name:    'Name of its left toe',
+                type:    'string',
+                value:   'Kurt',
+                options: {}
+            },
         ]
 
         function getSlot(slotName) {
