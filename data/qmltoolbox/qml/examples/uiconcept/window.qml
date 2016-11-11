@@ -6,7 +6,7 @@ import QtQuick.Controls 1.4 as Controls1
 import QtQuick.Controls 2.0
 import QmlToolBox.Controls2 1.0 as Controls
 
-ApplicationWindow
+Controls.ApplicationWindow
 {
     id: window
     width: 800
