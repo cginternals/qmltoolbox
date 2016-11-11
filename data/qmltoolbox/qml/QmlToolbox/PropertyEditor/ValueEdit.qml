@@ -1,28 +1,27 @@
 
-import QtQuick 2.0
+import QtQuick 2.7
+import QtQuick.Layouts 1.3
 
-import QmlToolbox.Base 1.0
-import QmlToolbox.Controls 1.0
-import QmlToolbox.PipelineEditor 1.0
+import QmlToolbox.Controls2 1.0 as Controls
 
 
-Item
-{
+Item {
     id: item
 
     property var    pipelineInterface: null ///< Interface for communicating with the actual pipeline
     property string path:              ''   ///< Path to pipeline slot (e.g., 'pipeline.Stage1.in1')
 
-    implicitWidth:  input ? input.implicitWidth  : 0
-    implicitHeight: input ? input.implicitHeight : 0
-
     property Item   input:     null
     property string inputType: ''
+
+    implicitWidth:  layout.implicitWidth
+    implicitHeight: layout.implicitHeight
 
     function update()
     {
         // Get slot type
         var slotInfo = pipelineInterface.getSlot(path);
+
         if (!slotInfo.type || slotInfo.type == '')
             return;
 
@@ -38,19 +37,36 @@ Item
             // Create editor
             inputType = slotInfo.type;
             if (slotInfo.type == 'bool')
-                input = editBool.createObject(item);
+                input = editBool.createObject(inputWrapper);
             else if (slotInfo.type == 'int' || slotInfo.type == 'float')
-                input = editNumber.createObject(item);
+                input = editNumber.createObject(inputWrapper);
             else if (slotInfo.type == 'color')
-                input = editColor.createObject(item);
+                input = editColor.createObject(inputWrapper);
             else if (slotInfo.type == 'filename')
-                input = editFilename.createObject(item);
+                input = editFilename.createObject(inputWrapper);
             else
-                input = editString.createObject(item);
+                input = editString.createObject(inputWrapper);
         }
 
         // Update editor
         input.update();
+    }
+
+    ColumnLayout {
+        id: layout
+
+        anchors.fill: parent
+
+        Controls.Label {
+            text: pipelineInterface.getSlot(path).name
+        }
+
+        Item {
+            id: inputWrapper
+
+            implicitWidth:  input ? input.implicitWidth  : 0
+            implicitHeight: input ? input.implicitHeight : 0
+        }
     }
 
     Component

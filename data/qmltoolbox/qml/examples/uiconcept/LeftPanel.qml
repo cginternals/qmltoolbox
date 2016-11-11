@@ -13,7 +13,7 @@ Controls.Pane {
 
     padding: 0.0
     state: "visible"
-    Layout.minimumWidth: 150
+    Layout.minimumWidth: 240
 
     states: [
         State { 

@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 1.4 as Controls1
 import QtQuick.Controls 2.0
 import QmlToolBox.Controls2 1.0 as Controls
+import QmlToolBox.PropertyEditor 1.0 as PropertyEditor
 
 Controls.ApplicationWindow
 {
@@ -113,7 +114,29 @@ Controls.ApplicationWindow
             LeftPanel {
                 id: sidePanel
 
-                TestContent {}
+                Flickable {
+                    anchors.fill: parent
+
+                    flickableDirection: Flickable.VerticalFlick
+                    boundsBehavior: Flickable.StopAtBounds
+
+                    contentHeight: propertyEditor.height
+                
+                    PropertyEditor.PropertyEditor {
+                        id: propertyEditor
+
+                        pipelineInterface: pipelineDummy
+                        path: 'root'
+
+                        Component.onCompleted: propertyEditor.update();
+                    
+                        PipelineDummy {
+                            id: pipelineDummy
+                        }
+                    }
+
+                    ScrollBar.vertical: ScrollBar {}
+                }
             }
         }
 
