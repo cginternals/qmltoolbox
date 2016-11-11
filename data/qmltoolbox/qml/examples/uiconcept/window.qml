@@ -33,7 +33,6 @@ Controls.ApplicationWindow
                 anchors.right: parent.right
 
                 text: "Settings"
-                flat: true
             }
 
             Item { Layout.fillHeight: true }
