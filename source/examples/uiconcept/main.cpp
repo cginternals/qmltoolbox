@@ -5,11 +5,16 @@
 
 #include <qmltoolbox/QmlApplicationEngine.h>
 
+#include <qmltoolbox/qmltoolbox-version.h>
+
 
 int main(int argc, char *argv[])
 {
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
+    app.setOrganizationName(QMLTOOLBOX_AUTHOR_ORGANIZATION);
+    app.setOrganizationDomain("cginternals.com");
+    app.setApplicationName(QString{QMLTOOLBOX_PROJECT_NAME} + "_uiconcept");
 
     // Create QtQuick engine
     qmltoolbox::QmlApplicationEngine engine;

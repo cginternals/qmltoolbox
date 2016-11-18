@@ -7,6 +7,8 @@ import QtQuick.Controls 2.0
 import QmlToolBox.Controls2 1.0 as Controls
 import QmlToolBox.PropertyEditor 1.0 as PropertyEditor
 
+import Qt.labs.settings 1.0 as Labs
+
 Page {
     id: page
 
@@ -114,9 +116,11 @@ Page {
 
         Controls1.SplitView {
             orientation: Qt.Horizontal
+            Layout.minimumHeight: 100
             Layout.fillHeight: true
 
             TestContent {
+                Layout.minimumWidth: 100
                 Layout.fillWidth: true
             }
 
@@ -153,13 +157,34 @@ Page {
                 orientation: Qt.Horizontal
 
                 TestContent {
+                    id: consolePane
+                    width: settings.consoleWidth
                     Layout.minimumWidth: 150
                     Layout.fillWidth: true
                 }
 
                 TestContent {
+                    id: logPane
+                    width: settings.logWidth
                     Layout.minimumWidth: 150
                     Layout.fillWidth: true
+                }
+
+                Labs.Settings {
+                    id: bottomPanelSettings
+                    category: "bottomPanel"
+                    property int consoleWidth
+                    property int logWidth
+                }
+
+                Component.onCompleted: {
+                    consolePane.width = bottomPanelSettings.consoleWidth;
+                    logPane.width = bottomPanelSettings.logWidth;
+                }
+
+                Component.onDestruction: {
+                    bottomPanelSettings.consoleWidth = consolePane.width;
+                    bottomPanelSettings.logWidth = logPane.width;
                 }
             }
         }
