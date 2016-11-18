@@ -125,14 +125,10 @@ Controls.ApplicationWindow
                     PropertyEditor.PropertyEditor {
                         id: propertyEditor
 
-                        pipelineInterface: pipelineDummy
+                        pipelineInterface: Qt.createComponent("PipelineDummy.qml").createObject(propertyEditor);
                         path: 'root'
 
                         Component.onCompleted: propertyEditor.update();
-                    
-                        PipelineDummy {
-                            id: pipelineDummy
-                        }
                     }
 
                     ScrollBar.vertical: ScrollBar {}
