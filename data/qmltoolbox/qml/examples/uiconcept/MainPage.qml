@@ -10,6 +10,16 @@ import QmlToolBox.PropertyEditor 1.0 as PropertyEditor
 Page {
     id: page
 
+    Shortcut {
+        sequence: "CTRL+F6"
+        onActivated: sidePanel.toggle()
+    }
+
+    Shortcut {
+        sequence: "CTRL+F7"
+        onActivated: bottomPanel.toggle()
+    }
+
     Drawer {
         id: drawer
         width: 0.3 * page.width
@@ -88,7 +98,7 @@ Page {
                         text: "Toggle Bottom Area" 
                         onTriggered: bottomPanel.toggle()
                     }
-                    Controls.MenuItem { 
+                    Controls.MenuItem {
                         text: "Toggle Side Area" 
                         onTriggered: sidePanel.toggle()
                     }
