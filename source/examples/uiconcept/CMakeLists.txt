@@ -3,9 +3,9 @@
 # External dependencies
 # 
 
-find_package(Qt5Core 5.7)
-find_package(Qt5Widgets 5.7)
-find_package(Qt5Quick 5.7)
+find_package(Qt5Core 5.4)
+find_package(Qt5Widgets 5.4)
+find_package(Qt5Quick 5.4)
 
 # Enable automoc
 set(CMAKE_AUTOMOC ON)
@@ -101,8 +101,8 @@ target_link_libraries(${target}
 target_compile_definitions(${target}
     PRIVATE
     ${DEFAULT_COMPILE_DEFINITIONS}
+    $<$<VERSION_LESS:${Qt5Quick_VERSION},5.7.0>:QML_FALLBACK>
 )
-
 
 # 
 # Compile options
