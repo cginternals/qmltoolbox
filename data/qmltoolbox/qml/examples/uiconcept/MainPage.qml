@@ -31,7 +31,7 @@ Page {
             anchors.fill: parent
 
             Controls.Button {
-                text: "Back"
+                text: qsTr("Back")
                 flat: true
                 onClicked: drawer.close()
             }
@@ -40,7 +40,7 @@ Page {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                text: "Settings"
+                text: qsTr("Settings")
             }
 
             Item { Layout.fillHeight: true }
@@ -54,42 +54,42 @@ Page {
             anchors.fill: parent
 
             Controls.ToolButton {
-                text: "Menu"
+                text: qsTr("Menu")
                 onClicked: drawer.open()
             }
 
             Item { Layout.fillWidth: true }
 
             Controls.ToolButton {
-                text: "Pipeline"
+                text: qsTr("Pipeline")
                 onClicked: pipelineMenu.open()
 
                 Controls.Menu {
                     id: pipelineMenu
                     y: toolBar.height
 
-                    Controls.MenuItem { text: "Details" }
+                    Controls.MenuItem { text: qsTr("Details") }
 
                     Controls.MenuItem { 
-                        text: "Edit" 
+                        text: qsTr("Edit")
                         onTriggered: page.StackView.view.push(Qt.createComponent("PipelinePage.qml"))
                     }
                 }
             }
             Controls.ToolButton {
-                text: "Tools"
+                text: qsTr("Tools")
                 onClicked: toolsMenu.open()
 
                 Controls.Menu {
                     id: toolsMenu
                     y: toolBar.height
 
-                    Controls.MenuItem { text: "Record" }
-                    Controls.MenuItem { text: "Take Screenshot" }
+                    Controls.MenuItem { text: qsTr("Record") }
+                    Controls.MenuItem { text: qsTr("Take Screenshot") }
                 }
             }
             Controls.ToolButton {
-                text: "View"
+                text: qsTr("View")
                 onClicked: viewMenu.open()
 
                 Controls.Menu {
@@ -97,11 +97,11 @@ Page {
                     y: toolBar.height
 
                     Controls.MenuItem { 
-                        text: "Toggle Bottom Area" 
+                        text: bottomPanel.isVisible() ? qsTr("Hide Bottom Panel") : qsTr("Show Bottom Panel")
                         onTriggered: bottomPanel.toggle()
                     }
                     Controls.MenuItem {
-                        text: "Toggle Side Area" 
+                        text: sidePanel.isVisible() ? qsTr("Hide Side Panel") : qsTr("Show Side Panel")
                         onTriggered: sidePanel.toggle()
                     }
                 }

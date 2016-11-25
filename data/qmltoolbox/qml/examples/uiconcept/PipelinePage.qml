@@ -15,7 +15,7 @@ Page {
             anchors.fill: parent
 
             Controls.ToolButton {
-                text: "Back"
+                text: qsTr("Back")
 
                 onClicked: page.StackView.view.pop()
             }
@@ -26,7 +26,7 @@ Page {
 
     Controls.Pane {
         Controls.Label {
-            text: "New Page!"
+            text: qsTr("New Page")
         }
     }
 }

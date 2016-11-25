@@ -12,13 +12,13 @@ Controls.Pane {
         anchors.right: parent.right
 
         Controls.Label {
-            text: "Settings"
+            text: qsTr("Settings")
         }
         Controls.Slider {
             value: 0.5
         }
         Controls.Button {
-            text: "Save"
+            text: qsTr("Save")
         }
     }
 }
