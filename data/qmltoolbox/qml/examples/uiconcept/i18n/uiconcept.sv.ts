@@ -123,12 +123,17 @@
 <context>
     <name>TestContent</name>
     <message>
-        <location filename="../TestContent.qml" line="15"/>
+        <location filename="../TestContent.qml" line="18"/>
         <source>Settings</source>
         <translation>Inställningar</translation>
     </message>
     <message>
-        <location filename="../TestContent.qml" line="21"/>
+        <location filename="../TestContent.qml" line="29"/>
+        <source>Slider set to %1</source>
+        <translation>Skjutreglaget sätt på %1</translation>
+    </message>
+    <message>
+        <location filename="../TestContent.qml" line="33"/>
         <source>Save</source>
         <translation>Spara</translation>
     </message>

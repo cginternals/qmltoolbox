@@ -13,10 +13,19 @@ Controls.Pane {
 
         Controls.Label {
             text: qsTr("Settings")
+            font.pointSize: 20
         }
+
         Controls.Slider {
-            value: 0.5
+            id: slider
         }
+
+        Controls.Label {
+            id: sliderLabel
+
+            text: qsTr("Slider set to %1").arg(slider.value.toFixed(2));
+        }
+
         Controls.Button {
             text: qsTr("Save")
         }
