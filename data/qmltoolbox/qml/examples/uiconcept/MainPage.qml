@@ -152,40 +152,38 @@ Page {
         BottomPanel {
             id: bottomPanel
 
-            Controls1.SplitView {
+            ColumnLayout {
                 anchors.fill: parent
-                orientation: Qt.Horizontal
 
-                TestContent {
-                    id: consolePane
-                    width: settings.consoleWidth
-                    Layout.minimumWidth: 150
-                    Layout.fillWidth: true
-                }
+                Console {
+                    id: console_view
 
-                TestContent {
-                    id: logPane
-                    width: settings.logWidth
-                    Layout.minimumWidth: 150
-                    Layout.fillWidth: true
-                }
+                    anchors.left: parent.left
+                    anchors.right: parent.right
 
-                Labs.Settings {
-                    id: bottomPanelSettings
-                    category: "bottomPanel"
-                    property int consoleWidth
-                    property int logWidth
-                }
+                    Layout.fillHeight: true
+                }   
 
-                Component.onCompleted: {
-                    consolePane.width = bottomPanelSettings.consoleWidth;
-                    logPane.width = bottomPanelSettings.logWidth;
-                }
+                Controls.Pane {
+                    anchors.left: parent
+                    anchors.right: parent
 
-                Component.onDestruction: {
-                    bottomPanelSettings.consoleWidth = consolePane.width;
-                    bottomPanelSettings.logWidth = logPane.width;
-                }
+                    padding: 0
+
+                    TextArea {
+                        id: command_line
+                        anchors.fill: parent
+
+                        text: "Hallo Welt!"
+                        font.family: "Menlo"
+
+                        onEditingFinished: {
+                            console_view.addLine(text, "Command");
+                            command_line.text = ""
+                        }
+                    }
+
+                } 
             }
         }
     }
