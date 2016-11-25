@@ -36,8 +36,6 @@ Controls.Pane {
 
         var num = stage.inputs.length || 0;
 
-        console.log("stage.inputs: " + stage.inputs);
-
         var names = [];
 
         for (var i=0; i<num; i++) {
