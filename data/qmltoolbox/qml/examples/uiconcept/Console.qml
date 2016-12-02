@@ -9,7 +9,11 @@ Controls.Pane {
     id: root
 
     function addLine(text, type) {
-        model.append({ text: text, type: type});
+        var lines = text.split("\n");
+
+        for (var line in lines)
+            model.append({ text: lines[line], type: type});
+
         view.positionViewAtEnd();
     }
 
