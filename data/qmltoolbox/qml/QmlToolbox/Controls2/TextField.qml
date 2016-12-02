@@ -1,4 +1,6 @@
 
 import QtQuick.Controls 2.0
 
-TextField {}
+TextField {
+    selectByMouse: true
+}
