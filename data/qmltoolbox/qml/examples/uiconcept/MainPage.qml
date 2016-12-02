@@ -22,26 +22,50 @@ Page {
         onActivated: bottomPanel.toggle()
     }
 
-    Drawer {
-        id: drawer
-        width: 0.3 * page.width
-        height: page.height
+    Shortcut {
+        sequence: "CTRL+F11"
+        onActivated: togglePreviewMode();
+    }
 
-        ColumnLayout {
+    function togglePreviewMode() {
+        stateWrapper.state = (stateWrapper.state == "") ? "preview" : "";
+    }
+
+    Item {
+        id: stateWrapper
+
+        state: ""
+
+        states: [
+            State {
+                name: "preview"
+                PropertyChanges {
+                    target: sidePanel
+                    visible: false
+                }
+                PropertyChanges {
+                    target: bottomPanel
+                    visible: false
+                }
+                PropertyChanges {
+                    target: page
+                    header: null
+                }
+                PropertyChanges {
+                    target: drawer
+                    visible: false
+                }
+            }
+        ]
+    }
+
+    CustomDrawer {
+        id: drawer
+
+        settingsContent: ColumnLayout {
             anchors.fill: parent
 
-            Controls.Button {
-                text: qsTr("Back")
-                flat: true
-                onClicked: drawer.close()
-            }
-
-            Controls.ToolButton {
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                text: qsTr("Settings")
-            }
+            TestContent {}
 
             Item { Layout.fillHeight: true }
         }
