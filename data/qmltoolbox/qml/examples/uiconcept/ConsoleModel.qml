@@ -4,7 +4,7 @@ import QtQml.Models 2.2
 
 ListModel {
     ListElement {
-        text: "Lorem ipsum dolor sit amet."
+        text: "Lorem ipsum dolor sit amet.\n    Noch Mehr Text."
         type: "Info"
     }
 

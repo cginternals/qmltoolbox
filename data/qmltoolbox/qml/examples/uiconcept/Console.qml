@@ -8,75 +8,96 @@ import QmlToolBox.Controls2 1.0 as Controls
 Controls.Pane {
     id: root
 
+    property color defaultColor: "#C5C8C6";
+    property color backgroundColor: "#1D1F21";
+    property color selectionColor: "#3F4042"
+
+    property var highlightingColors: {
+        "Warning": "#81A2BE",
+        "Error": "#DE935F",
+        "Info": "#808080",
+        "Command": "#B4E15E"
+    }
+
     function addLine(text, type) {
         var lines = text.split("\n");
 
-        for (var line in lines)
-            model.append({ text: lines[line], type: type});
+        for (var line in lines) {
+            text_edit.append(coloredText(lines[line], type));
+        }
 
-        view.positionViewAtEnd();
+        flickable.positionAtEnd();
+    }
+
+    function colorForType(type) {
+        if (type in highlightingColors)
+            return highlightingColors[type];
+        return defaultColor;
+    }
+
+    function coloredText(text, type) {
+        return "<font color='" + colorForType(type) + "'>" + text + "</font>"
     }
 
     property var model: ConsoleModel {}
-
-    leftPadding: 0
-    rightPadding: 0
     
     background: Rectangle {
-        color: "#1D1F21";
+        color: root.backgroundColor;
     }
 
-    ListView {
-        id: view
+    Flickable {
+        id: flickable
 
-        function colorForType(type) {
-            if (type == "Warning")
-                return "#81A2BE";
+        function ensureVisible(r)
+        {
+            if (contentX >= r.x)
+                contentX = r.x;
+            else if (contentX+width <= r.x+r.width)
+                contentX = r.x+r.width-width;
+            if (contentY >= r.y)
+                contentY = r.y;
+            else if (contentY+height <= r.y+r.height)
+                contentY = r.y+r.height-height;
+        }
 
-            if (type == "Error")
-                return "#DE935F";
-
-            if (type == "Info")
-                return "#808080";
-
-            if (type == "Command")
-                return "#B4E15E";
-
-            return "#C5C8C6";
+        function positionAtEnd() {
+            contentY = contentHeight - height
         }
 
         anchors.fill: parent
+        contentHeight: text_edit.height
 
         clip: true
         boundsBehavior: Flickable.StopAtBounds
+
+        TextEdit {
+            id: text_edit
+
+            readOnly: true
+            selectByMouse: true 
+            selectionColor: root.selectionColor
+
+            color: defaultColor
+            textFormat: TextEdit.RichText
+            font.family: "Menlo"
+
+            onCursorRectangleChanged: flickable.ensureVisible(cursorRectangle)
+
+            Component.onCompleted: {
+                for (var j = 0; j < 1; ++j) {
+                    for (var i = 0; i < model.count; ++i) {
+                        var element = model.get(i);
+
+                        root.addLine(element.text, element.type);
+                    }
+                }
+            }
+        }
 
         ScrollBar.vertical: ScrollBar {
             Component.onCompleted: {
                 contentItem.color = "#3F4042"
             }
-        }
-
-        model: root.model
-
-        delegate: TextInput {
-            anchors.left: parent.left
-            anchors.right: parent.right
-
-            leftPadding: 12
-            rightPadding: 12
-
-            readOnly: true
-            selectByMouse: true
-            selectionColor: "#3F4042"
-
-            text: model.text
-            color: view.colorForType(model.type)
-            font.family: "Menlo"    
-
-        }
-
-        function scrollToBottom() {
-            contentY = contentHeight - height;
         }
     }
 }

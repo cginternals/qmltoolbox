@@ -161,6 +161,8 @@ Page {
                     anchors.left: parent.left
                     anchors.right: parent.right
 
+                    rightPadding: 0
+
                     Layout.minimumHeight: 50
                     Layout.fillHeight: true
                 }   
@@ -170,6 +172,9 @@ Page {
 
                     anchors.left: parent.left
                     anchors.right: parent.right
+
+                    topPadding: 0
+                    bottomPadding: 0
 
                     onSubmitted: { console_view.addLine(command, "Command"); }
                 } 

@@ -12,11 +12,6 @@ Controls.Pane {
 
     signal submitted(string command)
 
-    topPadding: 0
-    bottomPadding: 0
-    leftPadding: 12
-    rightPadding: 12
-
     RowLayout {
         anchors.fill: parent
 
