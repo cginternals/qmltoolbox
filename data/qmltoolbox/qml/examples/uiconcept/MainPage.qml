@@ -97,7 +97,7 @@ Page {
                     y: toolBar.height
 
                     Controls.MenuItem { 
-                        text: bottomPanel.isVisible() ? qsTr("Hide Bottom Panel") : qsTr("Show Bottom Panel")
+                        text: bottomPanel.isVisible() ? qsTr("Hide Console") : qsTr("Show Console")
                         onTriggered: bottomPanel.toggle()
                     }
                     Controls.MenuItem {
@@ -161,28 +161,17 @@ Page {
                     anchors.left: parent.left
                     anchors.right: parent.right
 
+                    Layout.minimumHeight: 50
                     Layout.fillHeight: true
                 }   
 
-                Controls.Pane {
-                    anchors.left: parent
-                    anchors.right: parent
+                CommandLine {
+                    id: command_line
 
-                    padding: 0
+                    anchors.left: parent.left
+                    anchors.right: parent.right
 
-                    TextArea {
-                        id: command_line
-                        anchors.fill: parent
-
-                        text: "Hallo Welt!"
-                        font.family: "Menlo"
-
-                        onEditingFinished: {
-                            console_view.addLine(text, "Command");
-                            command_line.text = ""
-                        }
-                    }
-
+                    onSubmitted: { console_view.addLine(command, "Command"); }
                 } 
             }
         }

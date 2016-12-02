@@ -21,7 +21,7 @@ Controls.Pane {
         return (stateWrapper.state == "visible");
     }
 
-    padding: 0.0
+    padding: 0
     Layout.minimumHeight: 150
 
     Item {

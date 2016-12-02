@@ -2,6 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
+    <name>CommandLine</name>
+    <message>
+        <location filename="../CommandLine.qml" line="49"/>
+        <source>Enter Javascript code ...</source>
+        <translation type="unfinished">Javascriptcode eingeben ...</translation>
+    </message>
+    <message>
+        <location filename="../CommandLine.qml" line="79"/>
+        <source>Enter</source>
+        <translation>Enter</translation>
+    </message>
+</context>
+<context>
     <name>MainPage</name>
     <message>
         <location filename="../MainPage.qml" line="34"/>
@@ -55,13 +68,13 @@
     </message>
     <message>
         <location filename="../MainPage.qml" line="100"/>
-        <source>Hide Bottom Panel</source>
-        <translation>Bodenpaneel ausblenden</translation>
+        <source>Hide Console</source>
+        <translation>Konsole ausblenden</translation>
     </message>
     <message>
         <location filename="../MainPage.qml" line="100"/>
-        <source>Show Bottom Panel</source>
-        <translation>Bodenpaneel einblenden</translation>
+        <source>Show Console</source>
+        <translation>Konsole einblenden</translation>
     </message>
     <message>
         <location filename="../MainPage.qml" line="104"/>
@@ -123,17 +136,17 @@
 <context>
     <name>TestContent</name>
     <message>
-        <location filename="../TestContent.qml" line="18"/>
+        <location filename="../TestContent.qml" line="15"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../TestContent.qml" line="29"/>
+        <location filename="../TestContent.qml" line="26"/>
         <source>Slider set to %1</source>
         <translation>Schieberegler auf %1 gesetzt</translation>
     </message>
     <message>
-        <location filename="../TestContent.qml" line="33"/>
+        <location filename="../TestContent.qml" line="30"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>

@@ -10,7 +10,7 @@ Controls.Pane {
 
     function addLine(text, type) {
         model.append({ text: text, type: type});
-        view.scrollToBottom();
+        view.positionViewAtEnd();
     }
 
     property var model: ConsoleModel {}
@@ -35,6 +35,9 @@ Controls.Pane {
             if (type == "Info")
                 return "#808080";
 
+            if (type == "Command")
+                return "#B4E15E";
+
             return "#C5C8C6";
         }
 
@@ -51,12 +54,16 @@ Controls.Pane {
 
         model: root.model
 
-        delegate: Controls.Label {
+        delegate: TextInput {
             anchors.left: parent.left
             anchors.right: parent.right
 
             leftPadding: 12
             rightPadding: 12
+
+            readOnly: true
+            selectByMouse: true
+            selectionColor: "#3F4042"
 
             text: model.text
             color: view.colorForType(model.type)
