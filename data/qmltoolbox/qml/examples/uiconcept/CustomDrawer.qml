@@ -2,7 +2,6 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
 import QtQuick.Controls 2.0
-import QtQuick.Controls.Material 2.0
 import QmlToolBox.Controls2 1.0 as Controls
 
 Drawer {
@@ -119,8 +118,6 @@ Drawer {
         anchors.right: parent.right
 
         visible: true
-
-        Material.elevation: 10
 
         Item {
             id: settings_content
