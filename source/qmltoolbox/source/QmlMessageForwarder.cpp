@@ -13,12 +13,12 @@ namespace qmltoolbox
 
 QmlMessageForwarder::QmlMessageForwarder()
 {
-    MessageHandler::instance()->attach(*this);
+    MessageHandler::instance().attach(*this);
 }
 
 QmlMessageForwarder::~QmlMessageForwarder()
 {
-    MessageHandler::instance()->detach(*this);
+    MessageHandler::instance().detach(*this);
 }
 
 void QmlMessageForwarder::print(
