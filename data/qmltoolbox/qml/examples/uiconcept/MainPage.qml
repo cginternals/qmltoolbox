@@ -189,7 +189,7 @@ Page {
 
                     Layout.minimumHeight: 50
                     Layout.fillHeight: true
-                }   
+                }
 
                 CommandLine {
                     id: command_line
@@ -199,6 +199,8 @@ Page {
 
                     topPadding: 0
                     bottomPadding: 0
+
+                    autocompleteModel: AutocompleteModel { }
 
                     onSubmitted: { console_view.addLine(command, "Command"); }
                 } 

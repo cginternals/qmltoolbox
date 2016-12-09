@@ -9,6 +9,7 @@ Controls.Pane {
     id: root
 
     property real textHeight: flickable.contentHeight
+    property alias autocompleteModel: autocomplete.model
 
     signal submitted(string command)
 
@@ -82,6 +83,10 @@ Controls.Pane {
                 textFormat: TextEdit.PlainText
                 font.family: "Menlo"
 
+                Keys.onTabPressed: autocomplete.open()
+
+                Keys.forwardTo: [ autocomplete.list ]
+
                 Keys.onEnterPressed: submit()
 
                 /*
@@ -116,7 +121,7 @@ Controls.Pane {
                 }
             }
 
-            ScrollIndicator.vertical: ScrollIndicator {}
+            ScrollIndicator.vertical: ScrollIndicator { }
         }
 
         Controls.Button {
@@ -127,5 +132,15 @@ Controls.Pane {
             highlighted: true
             onClicked: command_line.submit()
         }           
+    }
+
+    AutocompletePopup {
+        id: autocomplete
+        
+        y: flickable.y - (height + 12)
+
+        onSelected: {
+            command_line.insert(command_line.length, model.get(index).keyword);
+        }
     }
 }
