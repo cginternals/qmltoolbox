@@ -71,6 +71,7 @@ Controls.Pane {
                     }
 
                     text = commandHistory[historyIndex];
+                    cursorPosition = length;
                 }
 
                 function isEmpty() {
@@ -136,7 +137,7 @@ Controls.Pane {
 
     AutocompletePopup {
         id: autocomplete
-        
+
         y: flickable.y - (height + 12)
 
         onSelected: {
