@@ -6,12 +6,14 @@
 #include <QDebug>
 
 #include <qmltoolbox/QmlApplicationEngine.h>
-
+#include <qmltoolbox/MessageHandler.h>
 #include <qmltoolbox/qmltoolbox-version.h>
 
 
 int main(int argc, char *argv[])
 {
+    qInstallMessageHandler(qmltoolbox::globalMessageHandler);
+    
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     
     QGuiApplication app(argc, argv);
@@ -31,7 +33,7 @@ int main(int argc, char *argv[])
     auto fileSelector = QQmlFileSelector::get(&engine);
     fileSelector->setExtraSelectors(QStringList{"fallback"});
 #endif
-
+    
     // Load and show QML
     engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uiconcept/window.qml"));
     

@@ -9,6 +9,8 @@ import QmlToolBox.PropertyEditor 1.0 as PropertyEditor
 
 import Qt.labs.settings 1.0 as Labs
 
+import com.cginternals.qmltoolbox 1.0
+
 Page {
     id: page
 
@@ -179,6 +181,24 @@ Page {
             ColumnLayout {
                 anchors.fill: parent
 
+                MessageForwarder {
+                    id: message_forwarder
+
+                    onMessageReceived: {
+                        var stringType;
+                        if (type == MessageForwarder.Debug)
+                            stringType = "Debug";
+                        else if (type == MessageForwarder.Warning)
+                            stringType = "Warning"; 
+                        else if (type == MessageForwarder.Critical)
+                            stringType = "Critical";
+                        else if (type == MessageForwarder.Fatal)
+                            stringType = "Fatal";
+
+                        console_view.addLine(message, stringType);
+                    }
+                }
+
                 Console {
                     id: console_view
 
@@ -202,8 +222,14 @@ Page {
 
                     autocompleteModel: AutocompleteModel { }
 
-                    onSubmitted: { console_view.addLine(command, "Command"); }
-                } 
+                    onSubmitted: { 
+                        console_view.addLine("> " + command, "Command");
+                        var res = eval(command);
+
+                        if (res != undefined)
+                            console.log(res);
+                    }
+                }
             }
         }
     }

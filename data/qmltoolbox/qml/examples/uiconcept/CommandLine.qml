@@ -138,6 +138,7 @@ Controls.Pane {
     AutocompletePopup {
         id: autocomplete
 
+        width: 200
         y: flickable.y - (height + 12)
 
         onSelected: {

@@ -13,9 +13,10 @@ Controls.Pane {
     property color selectionColor: "#3F4042"
 
     property var highlightingColors: {
-        "Warning": "#81A2BE",
-        "Error": "#DE935F",
-        "Info": "#808080",
+        "Debug": "#81A2BE",
+        "Warning": "#DE935F",
+        "Critical": "#808080",
+        "Fatal": "#808080",
         "Command": "#B4E15E"
     }
 
@@ -38,8 +39,6 @@ Controls.Pane {
     function coloredText(text, type) {
         return "<font color='" + colorForType(type) + "'>" + text + "</font>"
     }
-
-    property var model: ConsoleModel {}
     
     background: Rectangle {
         color: root.backgroundColor;
@@ -61,7 +60,8 @@ Controls.Pane {
         }
 
         function positionAtEnd() {
-            contentY = contentHeight - height
+            if (contentHeight > height)
+                contentY = contentHeight - height;
         }
 
         anchors.fill: parent
@@ -73,25 +73,18 @@ Controls.Pane {
         TextEdit {
             id: text_edit
 
+            width: flickable.width
+
             readOnly: true
             selectByMouse: true 
             selectionColor: root.selectionColor
 
             color: defaultColor
+            wrapMode: TextEdit.Wrap
             textFormat: TextEdit.RichText
             font.family: "Menlo"
 
             onCursorRectangleChanged: flickable.ensureVisible(cursorRectangle)
-
-            Component.onCompleted: {
-                for (var j = 0; j < 1; ++j) {
-                    for (var i = 0; i < model.count; ++i) {
-                        var element = model.get(i);
-
-                        root.addLine(element.text, element.type);
-                    }
-                }
-            }
         }
 
         ScrollBar.vertical: ScrollBar {

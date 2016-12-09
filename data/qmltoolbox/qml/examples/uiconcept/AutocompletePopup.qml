@@ -34,7 +34,6 @@ Popup {
         id: list_view
 
         function select(index) {
-            console.log(index);
             root.selected(index);
             root.close();
         }
