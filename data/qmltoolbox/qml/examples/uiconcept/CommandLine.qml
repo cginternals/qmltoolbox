@@ -28,13 +28,48 @@ Controls.Pane {
             TextArea.flickable: TextArea {
                 id: command_line
 
+                property var commandHistory: []
+                property int historyIndex: -1
+                property string lastUnsavedText
+
                 signal submitted(string command);
 
                 function submit() {
                     if (!isEmpty()) {
                         root.submitted(text);
+                        commandHistory.unshift(text);
+                        historyIndex = -1;
                         command_line.clear();
                     }
+                }
+
+                function moveUpInHistory() {
+                    if (historyIndex == -1)
+                        lastUnsavedText = text;
+
+                    if (historyIndex < commandHistory.length - 1)
+                        historyIndex += 1;
+
+                    updateText();
+                }
+
+                function moveDownInHistory() {
+                    if (historyIndex == -1)
+                        lastUnsavedText = text;
+
+                    if (historyIndex >= 0)
+                        historyIndex -= 1;
+
+                    updateText();
+                }
+
+                function updateText() {
+                    if (historyIndex < 0) {
+                        text = lastUnsavedText;
+                        return;
+                    }
+
+                    text = commandHistory[historyIndex];
                 }
 
                 function isEmpty() {
@@ -59,6 +94,22 @@ Controls.Pane {
                 Keys.onReturnPressed: {
                     if ((event.modifiers & Qt.ShiftModifier) == 0) {
                         submit();
+                    } else {
+                        event.accepted = false;
+                    }
+                }
+
+                Keys.onUpPressed: {
+                    if ((event.modifiers & Qt.ShiftModifier)) {
+                        moveUpInHistory();
+                    } else {
+                        event.accepted = false;
+                    }
+                }
+
+                Keys.onDownPressed: {
+                    if ((event.modifiers & Qt.ShiftModifier)) {
+                        moveDownInHistory();
                     } else {
                         event.accepted = false;
                     }
