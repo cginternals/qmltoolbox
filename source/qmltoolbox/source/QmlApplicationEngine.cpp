@@ -1,6 +1,7 @@
 
 #include <qmltoolbox/QmlApplicationEngine.h>
 
+#include <QtQml>
 #include <QQmlContext>
 
 #include <qmltoolbox/qmltoolbox.h>

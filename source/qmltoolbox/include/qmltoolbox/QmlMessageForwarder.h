@@ -6,15 +6,16 @@
 #include <QString>
 
 #include <qmltoolbox/AbstractMessageReceiver.h>
-#include <qmltoolbox/qmltoolbox_api.h>
 
 
 namespace qmltoolbox
 {
 
+
 class QMLTOOLBOX_API QmlMessageForwarder : public QObject, public AbstractMessageReceiver
 {
     Q_OBJECT
+
 
 public:
     enum MessageType {
@@ -23,7 +24,16 @@ public:
         Critical,
         Fatal
     };
+
     Q_ENUM(MessageType)
+
+
+signals:
+    void messageReceived(
+        MessageType type, 
+        const QDateTime & timestamp, 
+        const QString & message);
+
 
 public:
     QmlMessageForwarder();
@@ -34,12 +44,7 @@ public:
         const QMessageLogContext & context, 
         const QDateTime & timestamp, 
         const QString & message) override;
-
-signals:
-    void messageReceived(
-        MessageType type, 
-        const QDateTime & timestamp, 
-        const QString & message);
 };
+
 
 } // namespace qmltoolbox

@@ -1,3 +1,4 @@
+
 #include <qmltoolbox/MessageHandler.h>
 
 #include <cassert>
@@ -15,6 +16,7 @@
 namespace qmltoolbox
 {
 
+
 void globalMessageHandler(
     QtMsgType type
 ,   const QMessageLogContext & context
@@ -30,16 +32,16 @@ MessageHandler & MessageHandler::instance()
 }
 
 MessageHandler::MessageHandler(QObject * parent)
-:    QObject(parent)
+: QObject(parent)
 {
 }
 
 MessageHandler::~MessageHandler() = default;
 
 void MessageHandler::handle(
-    QtMsgType type
-,   const QMessageLogContext & context
-,   const QString & message)
+  QtMsgType type
+, const QMessageLogContext & context
+, const QString & message)
 {
     const auto timestamp = QDateTime::currentDateTime();
 
@@ -56,5 +58,6 @@ void MessageHandler::detach(AbstractMessageReceiver & receiver)
 {
     m_receivers.remove(&receiver);
 }
+
 
 } // namespace qmltoolbox

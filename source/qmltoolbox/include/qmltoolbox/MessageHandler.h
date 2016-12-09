@@ -1,4 +1,6 @@
+
 #pragma once
+
 
 #include <QObject>
 #include <QMap>
@@ -11,21 +13,27 @@
 class QTextStream;
 class QDateTime;
 
+
 namespace qmltoolbox
 {
 
+
 class AbstractMessageReceiver;
+
 
 void QMLTOOLBOX_API globalMessageHandler(
     QtMsgType type
 ,   const QMessageLogContext & context
 ,   const QString & message);
 
+
 class QMLTOOLBOX_API MessageHandler : public QObject
 {
 public:
     static MessageHandler & instance();
 
+
+public:
     explicit MessageHandler(QObject * parent = nullptr);
     virtual ~MessageHandler();
     
@@ -37,8 +45,10 @@ public:
         const QMessageLogContext & context,
         const QString & message);
 
+
 private:
     QSet<AbstractMessageReceiver *> m_receivers;
 };
+
 
 } // namespace qmltoolbox
