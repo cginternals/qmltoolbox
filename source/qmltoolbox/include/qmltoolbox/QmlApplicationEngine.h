@@ -14,7 +14,7 @@ namespace qmltoolbox
 
 /**
 *  @brief
-*    Qml engine with qmltoolbox integration
+*    Qml application engine with qmltoolbox integration
 *
 *    This is an extended QML engine that automatically adds
 *    the search paths for qmltoolbox qml files.
