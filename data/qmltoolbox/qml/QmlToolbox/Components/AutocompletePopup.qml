@@ -1,8 +1,8 @@
 
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
-
 import QtQuick.Controls 2.0
+
 import QmlToolBox.Controls 1.0
 
 
@@ -59,7 +59,7 @@ Popup
             topPadding: 0
             bottomPadding: 0
 
-            text: keyword
+            text: modelData
             highlighted: ListView.isCurrentItem
 
             onClicked: list_view.select(index)
@@ -97,7 +97,7 @@ Popup
     */
     function calculateHeight()
     {
-        var count = Math.min(model.count, maxVisibleElements);
+        var count = Math.min(model.length, maxVisibleElements);
         return count * rowHeight();
     }
 }
