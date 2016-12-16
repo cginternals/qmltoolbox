@@ -22,8 +22,8 @@ Controls.Pane {
             clip: true
             boundsBehavior: Flickable.StopAtBounds
 
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
+            implicitHeight: contentHeight
+            Layout.maximumHeight: 100
             Layout.fillWidth: true
 
             TextArea.flickable: TextArea {
