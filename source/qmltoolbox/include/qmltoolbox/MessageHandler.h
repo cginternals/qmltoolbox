@@ -3,16 +3,9 @@
 
 #include <memory>
 
-#include <QObject>
-#include <QMap>
 #include <QSet>
-#include <QFile>
 
 #include <qmltoolbox/qmltoolbox_api.h>
-
-
-class QTextStream;
-class QDateTime;
 
 
 namespace qmltoolbox
@@ -23,39 +16,112 @@ class AbstractMessageReceiver;
 class ForwardingStreamBuffer;
 
 
+/**
+ *  @brief
+ *    Interface required by qInstallMessageHandler()
+ */
 void QMLTOOLBOX_API globalMessageHandler(
-    QtMsgType type
-,   const QMessageLogContext & context
-,   const QString & message);
+    QtMsgType type,
+    const QMessageLogContext & context,
+    const QString & message);
 
 
-class QMLTOOLBOX_API MessageHandler : public QObject
+/**
+*  @brief
+*    Forwards Qt and std output streams
+*/
+class QMLTOOLBOX_API MessageHandler
 {
 public:
+    /**
+    *  @brief
+    *    Get singleton instance
+    *
+    *  @return
+    *    Singleton instance of MessageHandler
+    */
     static MessageHandler & instance();
 
 public:
-    explicit MessageHandler(QObject * parent = nullptr);
-    virtual ~MessageHandler();
-    
+    /**
+    *  @brief
+    *    Attach a message receiver
+    *
+    *  @param[in] receiver
+    *    Message receiver
+    */
     void attach(AbstractMessageReceiver & receiver);
+
+    /**
+    *  @brief
+    *    Detach a message receiver
+    *
+    *  @param[in] receiver
+    *    Message receiver
+    */
     void detach(AbstractMessageReceiver & receiver);
     
+    /**
+    *  @brief
+    *    Replace standard stream buffers of std::cout and std::cerr with
+    *    custom stream buffers that forward incoming input
+    */
     void installStdHandlers();
+
+    /**
+    *  @brief
+    *    Restore standard stream buffers of std::cout and std::cerr
+    */
     void deinstallStdHandlers();
     
+private:
+    /**
+    *  @brief
+    *    Constructor
+    */
+    MessageHandler() = default;
+
+    /**
+    *  @brief
+    *    Destructor
+    */
+    ~MessageHandler() override;
+
+    /**
+    *  @brief
+    *    Handle std messages by forwarding them to registered message receivers
+    *
+    *  param[in] type
+    *    Message type
+    *
+    *  param[in] message
+    *    Message string
+    */
     void handleStd(QtMsgType type, const QString & message);
 
+    /**
+    *  @brief
+    *    Handle Qt messages by forwarding them to registered message receivers
+    *
+    *  param[in] type
+    *    Message type
+    *
+    *  param[in] context
+    *    Message context
+    *
+    *  param[in] message
+    *    Message string
+    */
     void handle(
         QtMsgType type,
         const QMessageLogContext & context,
         const QString & message);
 
 private:
-    QSet<AbstractMessageReceiver *> m_receivers;
+    QSet<AbstractMessageReceiver *> m_receivers; ///< List of registered message receivers
     
-    std::unique_ptr<ForwardingStreamBuffer> m_coutBuffer;
-    std::unique_ptr<ForwardingStreamBuffer> m_cerrBuffer;
+    std::unique_ptr<ForwardingStreamBuffer> m_coutBuffer; ///< Stream buffer forwarding std::cout output
+    std::unique_ptr<ForwardingStreamBuffer> m_cerrBuffer; ///< Stream buffer forwarding std::cerr output
 };
 
 

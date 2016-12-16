@@ -70,13 +70,6 @@ MessageHandler & MessageHandler::instance()
     static MessageHandler instance;
     return instance;
 }
-
-MessageHandler::MessageHandler(QObject * parent)
-: QObject(parent)
-{
-}
-
-MessageHandler::~MessageHandler() = default;
     
 void MessageHandler::handleStd(QtMsgType type, const QString & message)
 {
