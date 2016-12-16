@@ -5,7 +5,12 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 1.4 as Controls1
 import QtQuick.Controls 2.0
 import QmlToolBox.Controls2 1.0 as Controls
+import QmlToolBox.Components 1.0 as Components
 import QmlToolBox.PropertyEditor 1.0 as PropertyEditor
+
+import Qt.labs.settings 1.0 as Labs
+
+import com.cginternals.qmltoolbox 1.0
 
 Page {
     id: page
@@ -20,26 +25,50 @@ Page {
         onActivated: bottomPanel.toggle()
     }
 
-    Drawer {
-        id: drawer
-        width: 0.3 * page.width
-        height: page.height
+    Shortcut {
+        sequence: "CTRL+F11"
+        onActivated: togglePreviewMode();
+    }
 
-        ColumnLayout {
+    function togglePreviewMode() {
+        stateWrapper.state = (stateWrapper.state == "") ? "preview" : "";
+    }
+
+    Item {
+        id: stateWrapper
+
+        state: ""
+
+        states: [
+            State {
+                name: "preview"
+                PropertyChanges {
+                    target: sidePanel
+                    visible: false
+                }
+                PropertyChanges {
+                    target: bottomPanel
+                    visible: false
+                }
+                PropertyChanges {
+                    target: page
+                    header: null
+                }
+                PropertyChanges {
+                    target: drawer
+                    visible: false
+                }
+            }
+        ]
+    }
+
+    CustomDrawer {
+        id: drawer
+
+        settingsContent: ColumnLayout {
             anchors.fill: parent
 
-            Controls.Button {
-                text: "Back"
-                flat: true
-                onClicked: drawer.close()
-            }
-
-            Controls.ToolButton {
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                text: "Settings"
-            }
+            TestContent {}
 
             Item { Layout.fillHeight: true }
         }
@@ -52,42 +81,42 @@ Page {
             anchors.fill: parent
 
             Controls.ToolButton {
-                text: "Menu"
+                text: qsTr("Menu")
                 onClicked: drawer.open()
             }
 
             Item { Layout.fillWidth: true }
 
             Controls.ToolButton {
-                text: "Pipeline"
+                text: qsTr("Pipeline")
                 onClicked: pipelineMenu.open()
 
                 Controls.Menu {
                     id: pipelineMenu
                     y: toolBar.height
 
-                    Controls.MenuItem { text: "Details" }
+                    Controls.MenuItem { text: qsTr("Details") }
 
                     Controls.MenuItem { 
-                        text: "Edit" 
+                        text: qsTr("Edit")
                         onTriggered: page.StackView.view.push(Qt.createComponent("PipelinePage.qml"))
                     }
                 }
             }
             Controls.ToolButton {
-                text: "Tools"
+                text: qsTr("Tools")
                 onClicked: toolsMenu.open()
 
                 Controls.Menu {
                     id: toolsMenu
                     y: toolBar.height
 
-                    Controls.MenuItem { text: "Record" }
-                    Controls.MenuItem { text: "Take Screenshot" }
+                    Controls.MenuItem { text: qsTr("Record") }
+                    Controls.MenuItem { text: qsTr("Take Screenshot") }
                 }
             }
             Controls.ToolButton {
-                text: "View"
+                text: qsTr("View")
                 onClicked: viewMenu.open()
 
                 Controls.Menu {
@@ -95,11 +124,11 @@ Page {
                     y: toolBar.height
 
                     Controls.MenuItem { 
-                        text: "Toggle Bottom Area" 
+                        text: bottomPanel.isVisible() ? qsTr("Hide Console") : qsTr("Show Console")
                         onTriggered: bottomPanel.toggle()
                     }
                     Controls.MenuItem {
-                        text: "Toggle Side Area" 
+                        text: sidePanel.isVisible() ? qsTr("Hide Side Panel") : qsTr("Show Side Panel")
                         onTriggered: sidePanel.toggle()
                     }
                 }
@@ -114,9 +143,11 @@ Page {
 
         Controls1.SplitView {
             orientation: Qt.Horizontal
+            Layout.minimumHeight: 100
             Layout.fillHeight: true
 
             TestContent {
+                Layout.minimumWidth: 100
                 Layout.fillWidth: true
             }
 
@@ -148,18 +179,57 @@ Page {
         BottomPanel {
             id: bottomPanel
 
-            Controls1.SplitView {
-                anchors.fill: parent
-                orientation: Qt.Horizontal
+            MessageForwarder {
+                id: message_forwarder
 
-                TestContent {
-                    Layout.minimumWidth: 150
-                    Layout.fillWidth: true
+                onMessageReceived: {
+                    var stringType;
+                    if (type == MessageForwarder.Debug)
+                        stringType = "Debug";
+                    else if (type == MessageForwarder.Warning)
+                        stringType = "Warning"; 
+                    else if (type == MessageForwarder.Critical)
+                        stringType = "Critical";
+                    else if (type == MessageForwarder.Fatal)
+                        stringType = "Fatal";
+
+                    console_view.append(message, stringType);
+                }
+            }
+
+            ColumnLayout {
+                anchors.fill: parent
+
+                Components.Console {
+                    id: console_view
+
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+
+                    rightPadding: 0
+
+                    Layout.minimumHeight: 50
+                    Layout.fillHeight: true
                 }
 
-                TestContent {
-                    Layout.minimumWidth: 150
-                    Layout.fillWidth: true
+                Components.CommandLine {
+                    id: command_line
+
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+
+                    topPadding: 0
+                    bottomPadding: 0
+
+                    autocompleteModel: AutocompleteModel { }
+
+                    onSubmitted: { 
+                        console_view.append("> " + command + "\n", "Command");
+                        var res = eval(command);
+
+                        if (res != undefined)
+                            console.log(res);
+                    }
                 }
             }
         }

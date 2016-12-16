@@ -6,5 +6,8 @@ Control {
     id: pane
 
     padding: 10
-    color: "#F5F5F5"
+    
+    background: Rectangle {
+        color: "#F5F5F5"
+    }
 }

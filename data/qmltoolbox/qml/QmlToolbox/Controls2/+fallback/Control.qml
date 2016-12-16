@@ -3,19 +3,29 @@ import QtQuick 2.4
 import QtQuick.Controls 1.3
 
 Item {
-    default property alias contentItem: contentWrapper.children
-    property alias color: background.color
+    default property alias contentItems: contentWrapper.data
+    property alias background: background_loader.sourceComponent
 
-    property double padding: 0
-    property double bottomPadding: 0
-    property double leftPadding: 0
-    property double rightPadding: 0
-    property double topPadding: 0
+    property real bottomPadding: 0
+    property real leftPadding: 0
+    property real rightPadding: 0
+    property real topPadding: 0
+    property real padding: 0
 
-    Rectangle {
+    onPaddingChanged: { 
+        bottomPadding = padding
+        leftPadding = padding
+        rightPadding = padding
+        topPadding = padding
+    }
+
+    Loader {
+        id: background_loader
+
         anchors.fill: parent
-        id: background
-        color: "#FFFFFF"
+
+        sourceComponent: Rectangle {
+        }
     }
 
     Item {
@@ -23,11 +33,10 @@ Item {
 
         anchors {
             fill: parent
-            margins: parent.padding
-            bottom: parent.bottomPadding
-            left: parent.leftPadding
-            right: parent.rightPadding  
-            top: parent.topPadding
+            bottomMargin: parent.bottomPadding
+            leftMargin: parent.leftPadding
+            rightMargin: parent.rightPadding  
+            topMargin: parent.topPadding
         }
     }
 }
