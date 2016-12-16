@@ -85,8 +85,9 @@ private:
     *  @brief
     *    Destructor
     */
-    ~MessageHandler() override;
+    ~MessageHandler() = default;
 
+public:
     /**
     *  @brief
     *    Handle std messages by forwarding them to registered message receivers
