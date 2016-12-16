@@ -79,13 +79,13 @@ private:
     *  @brief
     *    Constructor
     */
-    MessageHandler() = default;
+    MessageHandler();
 
     /**
     *  @brief
     *    Destructor
     */
-    ~MessageHandler() = default;
+    ~MessageHandler();
 
 public:
     /**

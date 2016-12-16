@@ -65,11 +65,16 @@ void globalMessageHandler(
     MessageHandler::instance().handle(type, context, message);
 }
 
+
 MessageHandler & MessageHandler::instance()
 {
     static MessageHandler instance;
     return instance;
 }
+
+MessageHandler::MessageHandler() = default;
+
+MessageHandler::~MessageHandler() = default;
     
 void MessageHandler::handleStd(QtMsgType type, const QString & message)
 {
