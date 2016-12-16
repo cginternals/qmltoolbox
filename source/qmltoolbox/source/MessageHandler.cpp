@@ -109,8 +109,8 @@ void MessageHandler::detach(AbstractMessageReceiver & receiver)
     
 void MessageHandler::installStdHandlers()
 {
-    m_coutBuffer = make_unique<ForwardingStreamBuffer>(*this, QtDebugMsg, std::cout);
-    m_cerrBuffer = make_unique<ForwardingStreamBuffer>(*this, QtFatalMsg, std::cerr);
+    m_coutBuffer = std::make_unique<ForwardingStreamBuffer>(*this, QtDebugMsg, std::cout);
+    m_cerrBuffer = std::make_unique<ForwardingStreamBuffer>(*this, QtFatalMsg, std::cerr);
 }
     
 void MessageHandler::deinstallStdHandlers()

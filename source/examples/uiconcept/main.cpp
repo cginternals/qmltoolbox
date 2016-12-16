@@ -14,7 +14,7 @@
 
 int main(int argc, char *argv[])
 {
-    qInstallMessageHandler(qmltoolbox::globalMessageHandler);
+   // qInstallMessageHandler(qmltoolbox::globalMessageHandler);
     qmltoolbox::MessageHandler::instance().installStdHandlers();
 
 #ifndef QML_FALLBACK
