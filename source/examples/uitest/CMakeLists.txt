@@ -22,7 +22,7 @@ set_policy(CMP0020 NEW)
 # 
 
 # Target name
-set(target uiconcept)
+set(target uitest)
 
 # Exit here if required dependencies are not met
 if (NOT Qt5Core_FOUND)

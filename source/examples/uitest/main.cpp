@@ -18,11 +18,11 @@ int main(int argc, char *argv[])
 
 #if (QT_VERSION < QT_VERSION_CHECK(5, 7, 0))
     auto fileSelector = QQmlFileSelector::get(&engine);
-    fileSelector->setExtraSelectors(QStringList{ "fallback" });
+    fileSelector->setExtraSelectors(QStringList{"fallback"});
 #endif
 
     // Load and show QML
-    engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uiconcept/window.qml"));
+    engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uitest/all.qml"));
     
 
     // Run application

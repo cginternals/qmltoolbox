@@ -2,7 +2,16 @@
 import QtQuick 2.4
 import QtQuick.Controls 1.3
 
-Item {
+/**
+*  Button
+*
+*  Fallback implementation of Button using Controls 1.3
+*  This implementation wraps the button with an item to 
+*  prevent property conflicts and partially matches the
+*  required button interface of Controls 2.0.
+*/
+Item
+{
     property alias text: button.text
     property bool flat: true
 
@@ -11,7 +20,8 @@ Item {
 
     signal clicked()
 
-    Button {
+    Button 
+    {
         id: button
 
         anchors.fill: parent
