@@ -13,11 +13,11 @@ Controls.Pane {
     property color selectionColor: "#3F4042"
 
     property var highlightingColors: {
-        "Debug": "#81A2BE",
-        "Warning": "#DE935F",
-        "Critical": "#808080",
-        "Fatal": "#808080",
-        "Command": "#B4E15E"
+        "Debug": "#C5C8C6",
+        "Warning": "#ECC674",
+        "Critical": "#FF5E58",
+        "Fatal": "#FF5E58",
+        "Command": "#C5C8C6"
     }
 
     function append(text, type) {
