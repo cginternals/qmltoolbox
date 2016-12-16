@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 1.4 as Controls1
 import QtQuick.Controls 2.0
 import QmlToolBox.Controls2 1.0 as Controls
+import QmlToolBox.Components 1.0 as Components
 import QmlToolBox.PropertyEditor 1.0 as PropertyEditor
 
 import Qt.labs.settings 1.0 as Labs
@@ -199,7 +200,7 @@ Page {
             ColumnLayout {
                 anchors.fill: parent
 
-                Console {
+                Components.Console {
                     id: console_view
 
                     anchors.left: parent.left
@@ -211,7 +212,7 @@ Page {
                     Layout.fillHeight: true
                 }
 
-                CommandLine {
+                Components.CommandLine {
                     id: command_line
 
                     anchors.left: parent.left
