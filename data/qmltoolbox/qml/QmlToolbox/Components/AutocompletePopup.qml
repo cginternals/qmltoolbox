@@ -3,71 +3,101 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
 import QtQuick.Controls 2.0
-import QmlToolBox.Controls2 1.0 as Controls
+import QmlToolBox.Controls 1.0
 
-Popup {
+
+/**
+*  AutocompletePopup
+*
+*  This item shows a list of configurable labels within a popup that intended 
+*  for autocompletion.
+*/
+Popup 
+{
     id: root
-
-    property int maxVisibleElements: 3
-    property alias model: list_view.model
-    property alias list: list_view
-
-    function rowHeight() {
-        return font_label.font.pixelSize * 2.0;
-    }
 
     signal selected(int index)
 
-    padding: 0
+    // Max visible elements ...
+    property int maxVisibleElements: 4
+
+    // Model ...
+    property alias model: list_view.model
+
+    // List .. 
+    property alias list: list_view
+
     width: 200
+    height: calculateHeight()
 
-    height: { 
-        var count = Math.min(model.count, maxVisibleElements);
-        return count * rowHeight();
-    }
-
-    Label { id: font_label }
-
+    padding: 0
     closePolicy: Popup.CloseOnPressOutside
 
-    ListView {
-        id: list_view
+    Label 
+    { 
+        id: font_label 
+    }
 
-        function select(index) {
-            root.selected(index);
-            root.close();
-        }
+    ListView 
+    {
+        id: list_view
 
         anchors.fill: parent
 
-        clip: true
-        boundsBehavior: Flickable.StopAtBounds
         verticalLayoutDirection: ListView.BottomToTop
+        boundsBehavior: Flickable.StopAtBounds
+        clip: true
 
-        delegate: ItemDelegate {
-            text: keyword
+        ScrollIndicator.vertical: ScrollIndicator 
+        { 
+        }
 
+        delegate: ItemDelegate 
+        {
             width: parent.width
             height: root.rowHeight()
-            bottomPadding: 0
             topPadding: 0
+            bottomPadding: 0
 
-            font.family: "Menlo"
-
+            text: keyword
             highlighted: ListView.isCurrentItem
 
             onClicked: list_view.select(index)
         }
 
-        ScrollIndicator.vertical: ScrollIndicator { }
-
-        Keys.onReturnPressed: {
+        Keys.onReturnPressed: 
+        {
             select(currentIndex);
             event.accepted = true;
         }
 
-        Keys.onEscapePressed: {
+        Keys.onEscapePressed: 
+        {
             root.close();
         }
+
+        function select(index) 
+        {
+            root.selected(index);
+            root.close();
+        }
+    }
+
+    /**
+    *  Retrieve height of single row in pixels
+    */
+    function rowHeight() 
+    {
+        return font_label.font.pixelSize * 2.0;
+    }
+
+    /**
+    *  Calculate height of this popup based on number of currently visible or
+    *  maximum visible items.
+    */
+    function calculateHeight()
+    {
+        var count = Math.min(model.count, maxVisibleElements);
+        return count * rowHeight();
     }
 }
