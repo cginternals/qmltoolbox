@@ -5,9 +5,9 @@ import QmlToolbox.Base 1.0
 
 
 /**
-*  BaseItem
+*  DebugItem
 *
-*  Base class for items
+*  Visual debug item.
 *
 *  This class adds debug capabilities to items. If Ui.debugMode is enabled,
 *  it will draw a colored rectangle around the space of the item to visualize
@@ -20,8 +20,6 @@ Item
     // Debug mode enabled? (displays borders around items)
     property bool debugMode: Ui.debugMode
 
-    clip: true
-
     Rectangle
     {
         id: debugBorder
@@ -29,7 +27,7 @@ Item
         anchors.fill: parent
         z:            100
         color:        'transparent'
-        border.color: debugMode ? Ui.style.debugColor : 'transparent'
+        border.color: debugMode ? Ui.debugColor : 'transparent'
         border.width: debugMode ? 1 : 0
     }
 }
