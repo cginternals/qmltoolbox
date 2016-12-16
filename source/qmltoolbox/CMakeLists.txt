@@ -45,6 +45,7 @@ set(source_path  "${CMAKE_CURRENT_SOURCE_DIR}/source")
 
 set(headers
     ${include_path}/qmltoolbox.h
+    ${include_path}/make_unique.h
     ${include_path}/AbstractMessageReceiver.h
     ${include_path}/MessageHandler.h
     ${include_path}/QmlApplicationEngine.h

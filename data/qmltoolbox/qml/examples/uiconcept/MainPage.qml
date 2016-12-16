@@ -178,26 +178,26 @@ Page {
         BottomPanel {
             id: bottomPanel
 
+            MessageForwarder {
+                id: message_forwarder
+
+                onMessageReceived: {
+                    var stringType;
+                    if (type == MessageForwarder.Debug)
+                        stringType = "Debug";
+                    else if (type == MessageForwarder.Warning)
+                        stringType = "Warning"; 
+                    else if (type == MessageForwarder.Critical)
+                        stringType = "Critical";
+                    else if (type == MessageForwarder.Fatal)
+                        stringType = "Fatal";
+
+                    console_view.append(message, stringType);
+                }
+            }
+
             ColumnLayout {
                 anchors.fill: parent
-
-                MessageForwarder {
-                    id: message_forwarder
-
-                    onMessageReceived: {
-                        var stringType;
-                        if (type == MessageForwarder.Debug)
-                            stringType = "Debug";
-                        else if (type == MessageForwarder.Warning)
-                            stringType = "Warning"; 
-                        else if (type == MessageForwarder.Critical)
-                            stringType = "Critical";
-                        else if (type == MessageForwarder.Fatal)
-                            stringType = "Fatal";
-
-                        console_view.addLine(message, stringType);
-                    }
-                }
 
                 Console {
                     id: console_view
@@ -223,7 +223,7 @@ Page {
                     autocompleteModel: AutocompleteModel { }
 
                     onSubmitted: { 
-                        console_view.addLine("> " + command, "Command");
+                        console_view.append("> " + command + "\n", "Command");
                         var res = eval(command);
 
                         if (res != undefined)

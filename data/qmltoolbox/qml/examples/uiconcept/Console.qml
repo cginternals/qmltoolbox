@@ -20,12 +20,15 @@ Controls.Pane {
         "Command": "#B4E15E"
     }
 
-    function addLine(text, type) {
+    function append(text, type) {
         var lines = text.split("\n");
 
-        for (var line in lines) {
-            text_edit.append(coloredText(lines[line], type));
+        for (var i = 0; i < lines.length - 1; i++) {
+            text_edit.insert(text_edit.length, coloredText(lines[i], type));
+            text_edit.insert(text_edit.length, "<br>")
         }
+
+        text_edit.insert(text_edit.length, coloredText(lines[lines.length - 1], type));
 
         flickable.positionAtEnd();
     }
@@ -36,7 +39,7 @@ Controls.Pane {
         return defaultColor;
     }
 
-    function coloredText(text, type) {
+    function coloredText(text, type) { 
         return "<font color='" + colorForType(type) + "'>" + text + "</font>"
     }
     
