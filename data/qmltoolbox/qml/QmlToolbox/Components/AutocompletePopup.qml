@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 
 import QmlToolBox.Controls 1.0
+import QmlToolBox.Base 1.0
 
 
 /**
@@ -18,13 +19,13 @@ Popup
 
     signal selected(int index)
 
-    // Max visible elements ...
+    // Maximum number of visible list elements
     property int maxVisibleElements: 4
 
-    // Model ...
+    // Access to the list view model
     property alias model: list_view.model
 
-    // List .. 
+    // Access to the list view
     property alias list: list_view
 
     width: 200
@@ -32,6 +33,9 @@ Popup
 
     padding: 0
     closePolicy: Popup.CloseOnPressOutside
+
+
+    DebugItem { }
 
     Label 
     { 
@@ -47,6 +51,7 @@ Popup
         verticalLayoutDirection: ListView.BottomToTop
         boundsBehavior: Flickable.StopAtBounds
         clip: true
+
 
         ScrollIndicator.vertical: ScrollIndicator 
         { 
@@ -82,6 +87,7 @@ Popup
             root.close();
         }
     }
+
 
     /**
     *  Retrieve height of single row in pixels

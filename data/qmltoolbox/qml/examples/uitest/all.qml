@@ -19,12 +19,7 @@ ApplicationWindow
 
     header: ToolBar 
     {
-        id: toolBar
-    }
-
-    ColumnLayout
-    {
-        spacing: 2
+        id: toolbar
 
         Button 
         {
@@ -41,8 +36,8 @@ ApplicationWindow
     {
         id: autocomplete
 
-        y: button.y + button.height
+        y: toolbar.y + toolbar.height
 
-        model: [ "moep", "foo", "bar" ]
+        model: [ "item 1", "item 2", "item 3", "item 4", "item 5", "item 6", "item 7", "item 8" ]
     }
 }

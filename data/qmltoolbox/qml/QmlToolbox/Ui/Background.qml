@@ -22,7 +22,8 @@ BaseItem
     id: item
 
     property color backgroundColor:  Ui.style.backgroundColor
-    property bool  renderBackground: true
+    property bool renderBackground: true
+
 
     Rectangle
     {

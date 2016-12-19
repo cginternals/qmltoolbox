@@ -1,5 +1,6 @@
 
-import QtQuick 2.0
+import QtQuick 2.7
+import QtQuick.Controls 2.0
 
 import QmlToolbox.Base 1.0
 
@@ -13,21 +14,15 @@ import QmlToolbox.Base 1.0
 *  it will draw a colored rectangle around the space of the item to visualize
 *  the item extends.
 */
-Item
+Rectangle
 {
-    id: item
+    anchors.fill: parent
 
-    // Debug mode enabled? (displays borders around items)
-    property bool debugMode: Ui.debugMode
+    // enable this item only if debugMode is enabled
+    enabled: Ui.debugMode
+    visible: Ui.debugMode
 
-    Rectangle
-    {
-        id: debugBorder
-
-        anchors.fill: parent
-        z:            100
-        color:        'transparent'
-        border.color: debugMode ? Ui.debugColor : 'transparent'
-        border.width: debugMode ? 1 : 0
-    }
+    color: 'transparent'
+    border.color: Ui.debugColor
+    border.width: 1
 }
