@@ -3,8 +3,11 @@ import QtQuick 2.4
 import QtQuick.Controls 1.3
 
 Item {
+    id: root
+
     default property alias contentItems: contentWrapper.data
-    property alias background: background_loader.sourceComponent
+    
+    property Item background
 
     property real bottomPadding: 0
     property real leftPadding: 0
@@ -19,12 +22,10 @@ Item {
         topPadding = padding
     }
 
-    Loader {
-        id: background_loader
-
-        anchors.fill: parent
-
-        sourceComponent: Rectangle {
+    onBackgroundChanged: {
+        if (background !== null) {
+            background.parent = root;
+            background.anchors.fill = root;
         }
     }
 
