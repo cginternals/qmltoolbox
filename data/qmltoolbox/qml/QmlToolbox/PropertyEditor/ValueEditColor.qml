@@ -7,7 +7,7 @@ import QmlToolbox.Controls 1.0
 import QmlToolbox.PipelineEditor 1.0
 
 
-BaseItem
+Item
 {
     id: item
 

@@ -2,7 +2,7 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
-import QmlToolbox.Controls2 1.0 as Controls
+import QmlToolbox.Controls 1.0 as Controls
 
 
 Controls.Pane {

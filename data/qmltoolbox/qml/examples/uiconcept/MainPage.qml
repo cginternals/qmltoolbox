@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 
 import QtQuick.Controls 1.4 as Controls1
 import QtQuick.Controls 2.0
-import QmlToolBox.Controls2 1.0 as Controls
+import QmlToolBox.Controls 1.0 as Controls
 import QmlToolBox.Components 1.0 as Components
 import QmlToolBox.PropertyEditor 1.0 as PropertyEditor
 
