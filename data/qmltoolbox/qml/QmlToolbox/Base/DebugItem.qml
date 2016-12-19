@@ -25,4 +25,40 @@ Rectangle
     color: 'transparent'
     border.color: Ui.debugColor
     border.width: 1
+
+    opacity: mouseArea.containsMouse ? 1.0 : 0.33
+
+    MouseArea
+    {
+        id: mouseArea
+
+        anchors.fill: parent
+
+        hoverEnabled: true
+
+        propagateComposedEvents: true
+
+        onClicked:         mouse.accepted = false;
+        onPressed:         mouse.accepted = false;
+        onReleased:        mouse.accepted = false;
+        onDoubleClicked:   mouse.accepted = false;
+        onPositionChanged: mouse.accepted = false;
+        onPressAndHold:    mouse.accepted = false;
+    }
+
+    Text 
+    {
+        anchors.fill: parent
+        padding: 2
+
+        wrapMode: Text.WordWrap
+
+        opacity: 0.66
+        color: Ui.debugColor
+
+        visible: mouseArea.containsMouse
+
+        text: "x" + parent.parent.x + ", y" + parent.parent.y 
+            + ", w" + parent.parent.width + ", h" + parent.parent.height
+    }
 }

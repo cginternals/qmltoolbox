@@ -11,5 +11,4 @@ import QmlToolBox.Base 1.0
 */
 Control 
 {
-    DebugItem { }
 }

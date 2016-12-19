@@ -17,8 +17,8 @@ Item
     id: item
 
     // Debug mode
-    property bool debugMode: true
+    property bool debugMode: false
 
     // Debug color (e.g., used for outlining items)
-    property color debugColor: '#ff0000'
+    property color debugColor: '#ff00aa'
 }
