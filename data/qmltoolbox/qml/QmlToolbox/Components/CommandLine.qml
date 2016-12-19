@@ -120,6 +120,10 @@ Controls.Pane {
                         event.accepted = false;
                     }
                 }
+
+                // Work around for default theme: TextArea not visible (probably bug)
+                text: " "
+                Component.onCompleted: clear()
             }
 
             ScrollIndicator.vertical: ScrollIndicator { }
