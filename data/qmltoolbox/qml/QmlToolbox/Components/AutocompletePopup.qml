@@ -35,8 +35,6 @@ Popup
     closePolicy: Popup.CloseOnPressOutside
 
 
-    DebugItem { }
-
     Label 
     { 
         id: font_label 
@@ -68,6 +66,8 @@ Popup
             highlighted: ListView.isCurrentItem
 
             onClicked: list_view.select(index)
+
+            DebugItem { }
         }
 
         Keys.onReturnPressed: 

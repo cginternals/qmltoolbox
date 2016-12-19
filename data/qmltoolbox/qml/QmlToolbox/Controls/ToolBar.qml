@@ -1,6 +1,9 @@
 
 import QtQuick.Controls 2.0
 
+import QmlToolBox.Base 1.0
+
+
 /**
 *  Tool Bar
 *
@@ -8,4 +11,5 @@ import QtQuick.Controls 2.0
 */
 ToolBar 
 {
+    DebugItem { }
 }

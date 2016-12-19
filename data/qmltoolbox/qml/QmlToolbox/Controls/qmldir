@@ -3,16 +3,17 @@ module Controls
 
 ApplicationWindow 1.0 ApplicationWindow.qml
 Button 1.0 Button.qml
-ToolBar 1.0 ToolBar.qml
-StatusBar 1.0 StatusBar.qml
-
+CheckBox 1.0 CheckBox.qml
+Control 1.0 Control.qml
 Label 1.0 Label.qml
 Menu 1.0 Menu.qml
 MenuItem 1.0 MenuItem.qml
 Pane 1.0 Pane.qml
 Popup 1.0 Popup.qml
+RadioButton 1.0 RadioButton.qml
 Slider 1.0 Slider.qml
+StatusBar 1.0 StatusBar.qml
 Switch 1.0 Switch.qml
 TextField 1.0 TextField.qml
+ToolBar 1.0 ToolBar.qml
 ToolButton 1.0 ToolButton.qml
-Control 1.0 Control.qml
