@@ -17,12 +17,12 @@ Page {
 
     Shortcut {
         sequence: "CTRL+F6"
-        onActivated: sidePanel.toggle()
+        onActivated: leftPanelView.togglePanel()
     }
 
     Shortcut {
         sequence: "CTRL+F7"
-        onActivated: bottomPanel.toggle()
+        onActivated: bottomPanelView.togglePanel()
     }
 
     Shortcut {
@@ -124,60 +124,57 @@ Page {
                     y: toolBar.height
 
                     Controls.MenuItem { 
-                        text: bottomPanel.isVisible() ? qsTr("Hide Console") : qsTr("Show Console")
-                        onTriggered: bottomPanel.toggle()
+                        text: bottomPanelView.isPanelVisible() ? qsTr("Hide Console") : qsTr("Show Console")
+                        onTriggered: bottomPanelView.togglePanel()
                     }
                     Controls.MenuItem {
-                        text: sidePanel.isVisible() ? qsTr("Hide Side Panel") : qsTr("Show Side Panel")
-                        onTriggered: sidePanel.toggle()
+                        text: leftPanelView.isPanelVisible() ? qsTr("Hide Side Panel") : qsTr("Show Side Panel")
+                        onTriggered: leftPanelView.togglePanel()
                     }
                 }
             }
         }
     }
 
+    BottomPanelView {
+        id: bottomPanelView
 
-    Controls1.SplitView {
         anchors.fill: parent
-        orientation: Qt.Vertical
 
-        Controls1.SplitView {
-            orientation: Qt.Horizontal
-            Layout.minimumHeight: 100
-            Layout.fillHeight: true
+        LeftPanelView {
+            id: leftPanelView
 
-            TestContent {
-                Layout.minimumWidth: 100
-                Layout.fillWidth: true
-            }
+            anchors.fill: parent
 
-            LeftPanel {
-                id: sidePanel
+            TestContent { }
 
-                Flickable {
-                    anchors.fill: parent
+            panel.minimumWidth: 240
 
-                    flickableDirection: Flickable.VerticalFlick
-                    boundsBehavior: Flickable.StopAtBounds
+            panelContent: Flickable {
+                anchors.fill: parent
 
-                    contentHeight: propertyEditor.height
-                
-                    PropertyEditor.PropertyEditor {
-                        id: propertyEditor
+                flickableDirection: Flickable.VerticalFlick
+                boundsBehavior: Flickable.StopAtBounds
 
-                        pipelineInterface: Qt.createComponent("PipelineDummy.qml").createObject(propertyEditor);
-                        path: 'root'
+                contentHeight: propertyEditor.height
+            
+                PropertyEditor.PropertyEditor {
+                    id: propertyEditor
 
-                        Component.onCompleted: propertyEditor.update();
-                    }
+                    pipelineInterface: Qt.createComponent("PipelineDummy.qml").createObject(propertyEditor);
+                    path: 'root'
 
-                    ScrollBar.vertical: ScrollBar {}
+                    Component.onCompleted: propertyEditor.update();
                 }
+
+                ScrollBar.vertical: ScrollBar {}
             }
         }
 
-        BottomPanel {
-            id: bottomPanel
+        panel.minimumHeight: 150
+
+        panelContent: ColumnLayout {
+            anchors.fill: parent
 
             MessageForwarder {
                 id: message_forwarder
@@ -197,39 +194,35 @@ Page {
                 }
             }
 
-            ColumnLayout {
-                anchors.fill: parent
+            Components.Console {
+                id: console_view
 
-                Components.Console {
-                    id: console_view
+                anchors.left: parent.left
+                anchors.right: parent.right
 
-                    anchors.left: parent.left
-                    anchors.right: parent.right
+                rightPadding: 0
 
-                    rightPadding: 0
+                Layout.minimumHeight: 50
+                Layout.fillHeight: true
+            }
 
-                    Layout.minimumHeight: 50
-                    Layout.fillHeight: true
-                }
+            Components.CommandLine {
+                id: command_line
 
-                Components.CommandLine {
-                    id: command_line
+                anchors.left: parent.left
+                anchors.right: parent.right
 
-                    anchors.left: parent.left
-                    anchors.right: parent.right
+                topPadding: 0
+                bottomPadding: 0
 
-                    topPadding: 0
-                    bottomPadding: 0
+                autocompleteModel: AutocompleteModel { }
 
-                    autocompleteModel: AutocompleteModel { }
+                onSubmitted: { 
+                    console_view.append("> " + command + "\n", "Command");
+                    var res = eval(command);
 
-                    onSubmitted: { 
-                        console_view.append("> " + command + "\n", "Command");
-                        var res = eval(command);
-
-                        if (res != undefined)
-                            console.log(res);
-                    }
+                    if (res != undefined)
+                        console.log(res);
                 }
             }
         }
