@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 
 import QtQuick.Controls 1.4 as Controls1
 
-import QmlToolBox.Controls  1.0 as Controls
+import QmlToolBox.Controls 1.0 as Controls
 
 import Qt.labs.settings 1.0 as Labs
 

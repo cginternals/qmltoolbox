@@ -136,12 +136,12 @@ Page {
         }
     }
 
-    BottomPanelView {
+    Components.BottomPanelView {
         id: bottomPanelView
 
         anchors.fill: parent
 
-        LeftPanelView {
+        Components.LeftPanelView {
             id: leftPanelView
 
             anchors.fill: parent
