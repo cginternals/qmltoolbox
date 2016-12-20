@@ -8,7 +8,7 @@ import QmlToolBox.Controls 1.0 as Controls
 
 import Qt.labs.settings 1.0 as Labs
 
-Controls1.SplitView {
+Item {
     id: root
 
     default property alias mainContent: mainContentWrapper.data
@@ -29,89 +29,94 @@ Controls1.SplitView {
         return (stateWrapper.state == "visible");
     }
 
-    orientation: Qt.Horizontal
+    Controls1.SplitView {
+        id: splitView
 
-    Item {
-        id: mainContentWrapper
-
-        Layout.minimumWidth: root.main.minimumWidth
-        Layout.maximumWidth: root.main.maximumWidth
-        Layout.preferredWidth: root.main.preferredWidth
-
-        Layout.fillWidth: true
-    }
-
-    Item {
-        id: panel
-
-        Layout.minimumWidth: root.panel.minimumWidth
-        Layout.maximumWidth: root.panel.maximumWidth
-        Layout.preferredWidth: root.panel.preferredWidth
+        anchors.fill: parent
+        orientation: Qt.Horizontal
 
         Item {
-            id: stateWrapper
+            id: mainContentWrapper
 
-            state: "visible"
+            Layout.minimumWidth: root.main.minimumWidth
+            Layout.maximumWidth: root.main.maximumWidth
+            Layout.preferredWidth: root.main.preferredWidth
 
-            states: [
-                State { 
-                    name: "visible"
-                    PropertyChanges {
-                        target: panel
-                        Layout.minimumWidth: root.panel.minimumWidth
-                        visible: true
-                    }
-                },
-                State {
-                    name: "hidden"
-                    PropertyChanges { 
-                        target: panel
-                        width: 0
-                        Layout.minimumWidth: 0
-                        visible: false 
-                    }
-                }
-            ]
-
-            transitions: [
-                Transition {
-                    from: "hidden"; to: "visible" 
-
-                    SequentialAnimation {
-                        PropertyAction { properties: "visible" }
-                        NumberAnimation { properties: "width"; easing.type: Easing.InOutQuad }
-                        PropertyAction { properties: "Layout.minimumWidth" }
-                    }
-                },
-                Transition {
-                    from: "visible"; to: "hidden"
-
-                    SequentialAnimation {
-                        ScriptAction { script: settings.width = panel.width }
-                        NumberAnimation { properties: "width"; easing.type: Easing.InOutQuad }
-                        PropertyAction { properties: "visible" }
-                    }
-                }
-            ]
+            Layout.fillWidth: true
         }
 
-        Labs.Settings {
-            id: settings
-            category: "leftPanel"
-            property bool visible: true
-            property int width
-        }
+        Item {
+            id: panel
 
-        Component.onCompleted: {
-            width = settings.width;
-            root.setPanelVisibility(settings.visible);
-        }
+            Layout.minimumWidth: root.panel.minimumWidth
+            Layout.maximumWidth: root.panel.maximumWidth
+            Layout.preferredWidth: root.panel.preferredWidth
 
-        Component.onDestruction: {
-            settings.visible = root.isPanelVisible();
+            Item {
+                id: stateWrapper
 
-            if (root.isPanelVisible())
-                settings.width = width;
+                state: "visible"
+
+                states: [
+                    State { 
+                        name: "visible"
+                        PropertyChanges {
+                            target: panel
+                            Layout.minimumWidth: root.panel.minimumWidth
+                            visible: true
+                        }
+                    },
+                    State {
+                        name: "hidden"
+                        PropertyChanges { 
+                            target: panel
+                            width: 0
+                            Layout.minimumWidth: 0
+                            visible: false 
+                        }
+                    }
+                ]
+
+                transitions: [
+                    Transition {
+                        from: "hidden"; to: "visible" 
+
+                        SequentialAnimation {
+                            PropertyAction { properties: "visible" }
+                            NumberAnimation { properties: "width"; easing.type: Easing.InOutQuad }
+                            PropertyAction { properties: "Layout.minimumWidth" }
+                        }
+                    },
+                    Transition {
+                        from: "visible"; to: "hidden"
+
+                        SequentialAnimation {
+                            ScriptAction { script: settings.width = panel.width }
+                            NumberAnimation { properties: "width"; easing.type: Easing.InOutQuad }
+                            PropertyAction { properties: "visible" }
+                        }
+                    }
+                ]
+            }
+
+            Labs.Settings {
+                id: settings
+                category: "leftPanel"
+                property bool visible: true
+                property int width
+            }
+
+            Component.onCompleted: {
+                width = settings.width;
+                root.setPanelVisibility(settings.visible);
+            }
+
+            Component.onDestruction: {
+                settings.visible = root.isPanelVisible();
+
+                if (root.isPanelVisible())
+                    settings.width = width;
+            }
         }
     }
 }
