@@ -102,7 +102,7 @@ void MessageHandler::attach(AbstractMessageReceiver & receiver)
 
 void MessageHandler::detach(AbstractMessageReceiver & receiver)
 {
-    m_receivers.remove(&receiver);
+    m_receivers.erase(&receiver);
 }
     
 void MessageHandler::installStdHandlers()

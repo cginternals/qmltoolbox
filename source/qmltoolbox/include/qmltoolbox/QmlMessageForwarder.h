@@ -82,6 +82,9 @@ public:
         const QMessageLogContext & context, 
         const QDateTime & timestamp, 
         const QString & message) override;
+
+    Q_INVOKABLE void attach();
+    Q_INVOKABLE void detach();
 };
 
 

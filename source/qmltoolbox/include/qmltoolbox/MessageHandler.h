@@ -3,7 +3,9 @@
 
 #include <memory>
 
-#include <QSet>
+#include <set>
+
+#include <QtCore/qglobal.h>
 
 #include <qmltoolbox/qmltoolbox_api.h>
 
@@ -119,7 +121,7 @@ public:
         const QString & message);
 
 private:
-    QSet<AbstractMessageReceiver *> m_receivers; ///< List of registered message receivers
+    std::set<AbstractMessageReceiver *> m_receivers; ///< List of registered message receivers
     
     std::unique_ptr<ForwardingStreamBuffer> m_coutBuffer; ///< Stream buffer forwarding std::cout output
     std::unique_ptr<ForwardingStreamBuffer> m_cerrBuffer; ///< Stream buffer forwarding std::cerr output

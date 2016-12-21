@@ -14,12 +14,12 @@ namespace qmltoolbox
 
 QmlMessageForwarder::QmlMessageForwarder()
 {
-    MessageHandler::instance().attach(*this);
+    attach();
 }
 
 QmlMessageForwarder::~QmlMessageForwarder()
 {
-    MessageHandler::instance().detach(*this);
+    detach();
 }
 
 void QmlMessageForwarder::print(
@@ -31,6 +31,18 @@ void QmlMessageForwarder::print(
     const auto messageType = static_cast<MessageType>(type);
     emit messageReceived(messageType, timestamp, message);
 }
+    
+void QmlMessageForwarder::attach()
+{
+    MessageHandler::instance().attach(*this);
+}
+
+void QmlMessageForwarder::detach()
+{
+    MessageHandler::instance().detach(*this);
+}
+    
+
 
 
 } // namespace qmltoolbox

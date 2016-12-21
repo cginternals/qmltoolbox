@@ -176,24 +176,6 @@ Page {
         panelContent: ColumnLayout {
             anchors.fill: parent
 
-            MessageForwarder {
-                id: message_forwarder
-
-                onMessageReceived: {
-                    var stringType;
-                    if (type == MessageForwarder.Debug)
-                        stringType = "Debug";
-                    else if (type == MessageForwarder.Warning)
-                        stringType = "Warning"; 
-                    else if (type == MessageForwarder.Critical)
-                        stringType = "Critical";
-                    else if (type == MessageForwarder.Fatal)
-                        stringType = "Fatal";
-
-                    console_view.append(message, stringType);
-                }
-            }
-
             Components.Console {
                 id: console_view
 
@@ -204,6 +186,24 @@ Page {
 
                 Layout.minimumHeight: 50
                 Layout.fillHeight: true
+
+                MessageForwarder {
+                    id: message_forwarder
+
+                    onMessageReceived: {
+                        var stringType;
+                        if (type == MessageForwarder.Debug)
+                            stringType = "Debug";
+                        else if (type == MessageForwarder.Warning)
+                            stringType = "Warning"; 
+                        else if (type == MessageForwarder.Critical)
+                            stringType = "Critical";
+                        else if (type == MessageForwarder.Fatal)
+                            stringType = "Fatal";
+
+                        console_view.append(message, stringType);
+                    }
+                }
             }
 
             Components.CommandLine {
