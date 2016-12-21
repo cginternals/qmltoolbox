@@ -2,7 +2,7 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
-import QtQuick.Controls 2.0
+import QmlToolBox.Base 1.0
 import QmlToolBox.Controls 1.0 as Controls
 
 Controls.Pane {
@@ -24,11 +24,11 @@ Controls.Pane {
         var lines = text.split("\n");
 
         for (var i = 0; i < lines.length - 1; i++) {
-            text_edit.insert(text_edit.length, coloredText(lines[i], type));
-            text_edit.insert(text_edit.length, "<br>")
+            textEdit.insert(textEdit.length, coloredText(lines[i], type));
+            textEdit.insert(textEdit.length, "<br>")
         }
 
-        text_edit.insert(text_edit.length, coloredText(lines[lines.length - 1], type));
+        textEdit.insert(textEdit.length, coloredText(lines[lines.length - 1], type));
 
         flickable.positionAtEnd();
     }
@@ -47,7 +47,7 @@ Controls.Pane {
         color: root.backgroundColor;
     }
 
-    Flickable {
+    ScrollableFlickable {
         id: flickable
 
         function ensureVisible(r)
@@ -68,13 +68,18 @@ Controls.Pane {
         }
 
         anchors.fill: parent
-        contentHeight: text_edit.height
+
+        contentHeight: textEdit.paintedHeight
 
         clip: true
         boundsBehavior: Flickable.StopAtBounds
 
+        scrollBarColor: "#3F4042"
+        verticalScrollbar: true
+        horizontalScrollbar: false
+
         TextEdit {
-            id: text_edit
+            id: textEdit
 
             width: flickable.width
 
@@ -88,12 +93,6 @@ Controls.Pane {
             font.family: "Menlo"
 
             onCursorRectangleChanged: flickable.ensureVisible(cursorRectangle)
-        }
-
-        ScrollBar.vertical: ScrollBar {
-            Component.onCompleted: {
-                contentItem.color = "#3F4042"
-            }
         }
     }
 }
