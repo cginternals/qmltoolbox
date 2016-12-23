@@ -17,12 +17,12 @@ Page {
 
     Shortcut {
         sequence: "CTRL+F6"
-        onActivated: sidePanel.toggle()
+        onActivated: leftPanelView.togglePanel()
     }
 
     Shortcut {
         sequence: "CTRL+F7"
-        onActivated: bottomPanel.toggle()
+        onActivated: bottomPanelView.togglePanel()
     }
 
     Shortcut {
@@ -124,112 +124,105 @@ Page {
                     y: toolBar.height
 
                     Controls.MenuItem { 
-                        text: bottomPanel.isVisible() ? qsTr("Hide Console") : qsTr("Show Console")
-                        onTriggered: bottomPanel.toggle()
+                        text: bottomPanelView.isPanelVisible() ? qsTr("Hide Console") : qsTr("Show Console")
+                        onTriggered: bottomPanelView.togglePanel()
                     }
                     Controls.MenuItem {
-                        text: sidePanel.isVisible() ? qsTr("Hide Side Panel") : qsTr("Show Side Panel")
-                        onTriggered: sidePanel.toggle()
+                        text: leftPanelView.isPanelVisible() ? qsTr("Hide Side Panel") : qsTr("Show Side Panel")
+                        onTriggered: leftPanelView.togglePanel()
                     }
                 }
             }
         }
     }
 
+    Components.BottomPanelView {
+        id: bottomPanelView
 
-    Controls1.SplitView {
         anchors.fill: parent
-        orientation: Qt.Vertical
 
-        Controls1.SplitView {
-            orientation: Qt.Horizontal
-            Layout.minimumHeight: 100
-            Layout.fillHeight: true
+        Components.LeftPanelView {
+            id: leftPanelView
 
-            TestContent {
-                Layout.minimumWidth: 100
-                Layout.fillWidth: true
-            }
+            anchors.fill: parent
 
-            LeftPanel {
-                id: sidePanel
+            TestContent { }
 
-                Flickable {
-                    anchors.fill: parent
+            panel.minimumWidth: 240
 
-                    flickableDirection: Flickable.VerticalFlick
-                    boundsBehavior: Flickable.StopAtBounds
+            panelContent: Flickable {
+                anchors.fill: parent
 
-                    contentHeight: propertyEditor.height
-                
-                    PropertyEditor.PropertyEditor {
-                        id: propertyEditor
+                flickableDirection: Flickable.VerticalFlick
+                boundsBehavior: Flickable.StopAtBounds
 
-                        pipelineInterface: Qt.createComponent("PipelineDummy.qml").createObject(propertyEditor);
-                        path: 'root'
+                contentHeight: propertyEditor.height
+            
+                PropertyEditor.PropertyEditor {
+                    id: propertyEditor
 
-                        Component.onCompleted: propertyEditor.update();
-                    }
+                    pipelineInterface: Qt.createComponent("PipelineDummy.qml").createObject(propertyEditor);
+                    path: 'root'
 
-                    ScrollBar.vertical: ScrollBar {}
+                    Component.onCompleted: propertyEditor.update();
                 }
+
+                ScrollBar.vertical: ScrollBar {}
             }
         }
 
-        BottomPanel {
-            id: bottomPanel
+        panel.minimumHeight: 150
 
-            MessageForwarder {
-                id: message_forwarder
+        panelContent: ColumnLayout {
+            anchors.fill: parent
 
-                onMessageReceived: {
-                    var stringType;
-                    if (type == MessageForwarder.Debug)
-                        stringType = "Debug";
-                    else if (type == MessageForwarder.Warning)
-                        stringType = "Warning"; 
-                    else if (type == MessageForwarder.Critical)
-                        stringType = "Critical";
-                    else if (type == MessageForwarder.Fatal)
-                        stringType = "Fatal";
+            Components.Console {
+                id: console_view
 
-                    console_view.append(message, stringType);
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                rightPadding: 0
+
+                Layout.minimumHeight: 50
+                Layout.fillHeight: true
+
+                MessageForwarder {
+                    id: message_forwarder
+
+                    onMessageReceived: {
+                        var stringType;
+                        if (type == MessageForwarder.Debug)
+                            stringType = "Debug";
+                        else if (type == MessageForwarder.Warning)
+                            stringType = "Warning"; 
+                        else if (type == MessageForwarder.Critical)
+                            stringType = "Critical";
+                        else if (type == MessageForwarder.Fatal)
+                            stringType = "Fatal";
+
+                        console_view.append(message, stringType);
+                    }
                 }
             }
 
-            ColumnLayout {
-                anchors.fill: parent
+            Components.CommandLine {
+                id: command_line
 
-                Components.Console {
-                    id: console_view
+                anchors.left: parent.left
+                anchors.right: parent.right
 
-                    anchors.left: parent.left
-                    anchors.right: parent.right
+                topPadding: 0
+                bottomPadding: 0
 
-                    rightPadding: 0
+                autocompleteModel: AutocompleteModel { }
 
-                    Layout.minimumHeight: 50
-                    Layout.fillHeight: true
-                }
+                onSubmitted: { 
+                    console_view.append("> " + command + "\n", "Command");
+                    var res = eval(command);
 
-                Components.CommandLine {
-                    id: command_line
-
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-
-                    topPadding: 0
-                    bottomPadding: 0
-
-                    autocompleteModel: AutocompleteModel { }
-
-                    onSubmitted: { 
-                        console_view.append("> " + command + "\n", "Command");
-                        var res = eval(command);
-
-                        if (res != undefined)
-                            console.log(res);
-                    }
+                    if (res != undefined)
+                        console.log(res);
                 }
             }
         }

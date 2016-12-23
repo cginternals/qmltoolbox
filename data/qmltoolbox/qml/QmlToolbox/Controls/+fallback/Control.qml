@@ -32,6 +32,8 @@ Item {
     Item {
         id: contentWrapper
 
+        z: 1
+
         anchors {
             fill: parent
             bottomMargin: parent.bottomPadding
