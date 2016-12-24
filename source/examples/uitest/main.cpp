@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 #endif
 
     // Load and show QML
-    engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uitest/all.qml"));
+    engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uitest/uitest.qml"));
     
 
     // Run application

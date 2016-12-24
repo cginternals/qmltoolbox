@@ -11,5 +11,5 @@ import QmlToolBox.Base 1.0
 */
 Pane
 {
-    DebugItem { }
+    // No debug item required
 }

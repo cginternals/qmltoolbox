@@ -4,6 +4,7 @@ module Controls
 ApplicationWindow 1.0 ApplicationWindow.qml
 Button 1.0 Button.qml
 CheckBox 1.0 CheckBox.qml
+ComboBox 1.0 ComboBox.qml
 Control 1.0 Control.qml
 Label 1.0 Label.qml
 Menu 1.0 Menu.qml

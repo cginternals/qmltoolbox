@@ -11,5 +11,5 @@ import QmlToolBox.Base 1.0
 */
 Menu 
 {
-    // This should not contain a debug item to prevent errors
+    // This should not contain a debug item to prevent malfunction
 }
