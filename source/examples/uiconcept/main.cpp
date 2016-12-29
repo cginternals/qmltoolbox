@@ -7,9 +7,9 @@
 #include <QTranslator>
 #include <QDebug>
 
+#include <qmltoolbox/qmltoolbox-version.h>
 #include <qmltoolbox/QmlApplicationEngine.h>
 #include <qmltoolbox/MessageHandler.h>
-#include <qmltoolbox/qmltoolbox-version.h>
 
 
 int main(int argc, char *argv[])
@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
    // qInstallMessageHandler(qmltoolbox::globalMessageHandler);
     qmltoolbox::MessageHandler::instance().installStdHandlers();
 
-#ifndef QML_FALLBACK
+#ifndef QMLTOOLBOX_QT57
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 
@@ -34,9 +34,9 @@ int main(int argc, char *argv[])
     translator.load(QLocale::system(), "uiconcept", ".", engine.qmlToolboxModulePath() + "/examples/uiconcept/i18n");
     app.installTranslator(&translator);
 
-#ifdef QML_FALLBACK
+#ifdef QMLTOOLBOX_QT54
     auto fileSelector = QQmlFileSelector::get(&engine);
-    fileSelector->setExtraSelectors(QStringList{"fallback"});
+    fileSelector->setExtraSelectors(QStringList{ QMLTOOLBOX_QT54 });
 #endif
 
     // Load and show QML

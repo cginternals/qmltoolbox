@@ -3,6 +3,7 @@ import QtQml.Models 2.2
 
 import QtQuick 2.7
 import QtQuick.Layouts 1.3 
+import QtQuick.Controls 1.4
 
 import QmlToolbox.Base 1.0
 import QmlToolBox.Controls 1.0
@@ -13,29 +14,39 @@ ApplicationWindow
 {
     id: window
 
-    width: 800
-    height: 600
+    width: 640
+    height: 512
 
     visible: true
 
 
     GridLayout 
     {
+        id: grid
+
+        anchors.fill: parent
+
         columns: 2
-
-        Layout.fillWidth: true
-
-
-        Label { text: "Application Window" }
-
-        Label { text: "This window is an ApplicationWindow." }
+        columnSpacing: 16
+        rowSpacing: 8
 
 
-        Label { text: "Button" }
+        Item
+        {
+            Layout.columnSpan: 2
+            Layout.fillHeight: true
+        }
+
+        Label 
+        {
+            Layout.alignment: Qt.AlignRight
+            text: "Button" 
+        }
 
         Button 
         {
             text: "Button 1"
+
             property int numClicked: 0
 
             onClicked: 
@@ -49,19 +60,27 @@ ApplicationWindow
         }
 
 
-        Label { text: "Check Box" }
+        Label 
+        {
+            Layout.alignment: Qt.AlignRight
+            text: "Check Box" 
+        }
 
         CheckBox
         {
-            checked: Ui.debugMode
-
             text: "enable Debug Mode"
+
+            checked: Ui.debugMode
 
             onClicked: Ui.debugMode = !Ui.debugMode;
         }
 
 
-        Label { text: "Combo Box" }
+        Label 
+        {
+            Layout.alignment: Qt.AlignRight
+            text: "Combo Box" 
+        }
 
         ComboBox 
         {
@@ -69,7 +88,11 @@ ApplicationWindow
         }
 
 
-        Label { text: "Label" }
+        Label 
+        {
+            Layout.alignment: Qt.AlignRight
+            text: "Label" 
+        }
 
         Label
         {
@@ -77,25 +100,34 @@ ApplicationWindow
         }
 
 
-        Label { text: "Label with Link" }
+        Label 
+        { 
+            Layout.alignment: Qt.AlignRight
+            text: "Label with Link" 
+        }
 
         Label
         { 
-            textFormat: Text.RichText 
-
             text: "<a href=\"https://github.com/cginternals/qmltoolbox\">QML item library</a> for cross-platform graphics applications ..."
+            
+            textFormat: Text.RichText 
 
             onLinkActivated: console.log(link)
         }
 
         
-        Label { text: "Menu" }
+        Label 
+        {
+            Layout.alignment: Qt.AlignRight
+            text: "Menu" 
+        }
 
         Button
         {
             id: menuButton
 
             text: "Button 2 to trigger Menu"
+
             onClicked: menu.open()
 
             Menu 
@@ -110,10 +142,15 @@ ApplicationWindow
         }
 
 
-        Label { text: "Radio Buttons" }
+        Label 
+        {
+            Layout.alignment: Qt.AlignRight
+            text: "Radio Buttons" 
+        }
 
         RowLayout
         {
+
             Label { text: "What happens when you get 'scared half to death' twice?"}
             
             RadioButton { text: "1"; checked: true }
@@ -121,30 +158,54 @@ ApplicationWindow
         }
 
 
-        Label { text: "Slider" }
+        Label 
+        {
+            Layout.alignment: Qt.AlignRight
+            text: "Slider" 
+        }
 
         RowLayout
         {
+
             Slider { id: slider } 
             
             Label { text: slider.value }
         }
         
 
-        Label { text: "Switch" }
+        Label 
+        {
+            Layout.alignment: Qt.AlignRight
+            text: "Switch" 
+        }
 
-        Switch { text: "Switch 1" }
+        Switch 
+        {
+            text: "Switch 1" 
+        }
 
 
-        Label { text: "Text Field" }
+        Label 
+        {
+            Layout.alignment: Qt.AlignRight
+            text: "Text Field" 
+        }
 
-        TextField { placeholderText: "Type in me." }
+        TextField 
+        {
+            placeholderText: "Type in me." 
+        }
 
         
-        Label { text: "Toolbar  (not \"Tool Bar\")" }
+        Label 
+        {
+            Layout.alignment: Qt.AlignRight
+            text: "Toolbar  (not \"Tool Bar\")" 
+        }
 
         ToolBar 
         { 
+
             RowLayout 
             {
                 anchors.fill: parent
@@ -154,6 +215,13 @@ ApplicationWindow
 
                 Switch { text: "Swtich 2"}
             }
+        }
+
+
+        Item
+        {
+            Layout.columnSpan: 2
+            Layout.fillHeight: true
         }
     }
 }
