@@ -1,20 +1,22 @@
 
-import QtQuick 2.4
-import QtQuick.Controls 1.3
+import QtQuick.Controls 1.1
 
-Item {
+import QmlToolBox.Base 1.0
+    
+
+/**
+*  Slider
+*
+*  Default implementation of Slider using Controls 1.1
+*/
+Slider
+{
+    id: slider
+
     property alias from: slider.minimumValue
     property alias to: slider.maximumValue
-    property alias value: slider.value
-    property alias stepSize: slider.stepSize
 
-    implicitHeight: slider.implicitHeight
-    implicitWidth: slider.implicitWidth
+    updateValueWhileDragging: false
 
-    Slider {
-        id: slider
-
-        anchors.fill: parent
-        updateValueWhileDragging: false
-    }
+    DebugItem { }
 }
