@@ -1,11 +1,13 @@
 
-import QtQuick.Controls 1.3
+import QtQuick.Controls 1.0
+
+import QmlToolBox.Base 1.0
 
 
 /**
 *  Application Window
 *
-*  Fallback implementation of Application Window using Controls 1.3
+*  Implementation of Application Window using Controls 1.0
 *  This implementation renames the toolbar and status bar.
 */
 ApplicationWindow 
@@ -14,4 +16,6 @@ ApplicationWindow
 
     property alias header: applicationWindow.toolBar
     property alias footer: applicationWindow.statusBar
+
+    DebugItem { }
 }

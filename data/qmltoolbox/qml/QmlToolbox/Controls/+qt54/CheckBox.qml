@@ -1,16 +1,15 @@
 
-import QtQuick 2.4
 import QtQuick.Controls 1.0
 
 import QmlToolBox.Base 1.0
 
 
 /**
-*  Label
+*  Check Box
 *
-*  Implementation of Label using Controls 1.0.
+*  Implementation of CheckBox using Controls 1.0
 */
-Label
+CheckBox 
 {
     DebugItem { }
 }

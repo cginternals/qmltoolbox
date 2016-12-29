@@ -1,12 +1,13 @@
 
-import QtQuick.Controls 1.3
+import QtQuick.Controls 1.0
+
 
 /**
 *  Tool Bar
 *
-*  Fallback implementation of ToolBar using Controls 1.3
-*  This implementation is identical to the 2.0 version.
+*  Implementation of ToolBar using Controls 1.0
 */
 ToolBar 
 {
+    // This should not contain a debug item to prevent malfunction
 }

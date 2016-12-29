@@ -1,6 +1,6 @@
 
-import QtQuick 2.7
-import QtQuick.Controls 2.0
+import QtQuick 2.4
+import QtQuick.Controls 1.0
 
 import QmlToolbox.Base 1.0
 
@@ -13,6 +13,8 @@ import QmlToolbox.Base 1.0
 *  This class adds debug capabilities to items. If Ui.debugMode is enabled,
 *  it will draw a colored rectangle around the space of the item to visualize
 *  the item extends.
+* 
+*  To avoid overdraw this item should be arranged last within a control.
 */
 Rectangle
 {
@@ -49,7 +51,6 @@ Rectangle
     Text 
     {
         anchors.fill: parent
-        padding: 2
 
         wrapMode: Text.WordWrap
 

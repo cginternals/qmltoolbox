@@ -1,5 +1,15 @@
 
-import QtQuick 2.4
-import QtQuick.Controls 1.3
+import QtQuick.Controls 1.0
 
-MenuItem {}
+import QmlToolBox.Base 1.0
+
+
+/**
+*  Menu Item
+*
+*  Implementation of Menu Item using Controls 1.0.
+*/
+MenuItem 
+{
+    // TODO: inserting debug item results in "non-existent default property" error
+}

@@ -11,7 +11,6 @@
 #include <QTextStream>
 
 #include <qmltoolbox/AbstractMessageReceiver.h>
-#include <qmltoolbox/make_unique.h>
 
 
 namespace qmltoolbox
@@ -107,8 +106,8 @@ void MessageHandler::detach(AbstractMessageReceiver & receiver)
     
 void MessageHandler::installStdHandlers()
 {
-    m_coutBuffer = std::make_unique<ForwardingStreamBuffer>(*this, QtDebugMsg, std::cout);
-    m_cerrBuffer = std::make_unique<ForwardingStreamBuffer>(*this, QtFatalMsg, std::cerr);
+    m_coutBuffer.reset(new ForwardingStreamBuffer{ *this, QtDebugMsg, std::cout });
+    m_cerrBuffer.reset(new ForwardingStreamBuffer{ *this, QtFatalMsg, std::cerr });
 }
     
 void MessageHandler::deinstallStdHandlers()

@@ -1,8 +1,6 @@
 
 import QtQuick.Controls 2.0
 
-import QmlToolBox.Base 1.0
-
 
 /**
 *  Tool Bar
@@ -12,5 +10,5 @@ import QmlToolBox.Base 1.0
 */
 ToolBar
 {
-    // This should not contain a debug item to prevent errors
+    // This should not contain a debug item to prevent malfunction
 }

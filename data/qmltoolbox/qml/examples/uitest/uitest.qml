@@ -1,9 +1,6 @@
 
-import QtQml.Models 2.2
-
-import QtQuick 2.7
-import QtQuick.Layouts 1.3 
-import QtQuick.Controls 1.4
+import QtQuick 2.4
+import QtQuick.Layouts 1.0
 
 import QmlToolbox.Base 1.0
 import QmlToolBox.Controls 1.0
@@ -96,7 +93,7 @@ ApplicationWindow
 
         Label
         {
-            text: "Don't label me."
+            text: "Do NOT label me."
         }
 
 
@@ -115,7 +112,7 @@ ApplicationWindow
             onLinkActivated: console.log(link)
         }
 
-        
+
         Label 
         {
             Layout.alignment: Qt.AlignRight
@@ -196,7 +193,7 @@ ApplicationWindow
             placeholderText: "Type in me." 
         }
 
-        
+
         Label 
         {
             Layout.alignment: Qt.AlignRight

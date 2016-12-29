@@ -26,14 +26,19 @@ public:
      *  @brief
      *    Distinguishes message types in QML
      */
-    enum MessageType {
+    enum MessageType 
+    {
         Debug,
         Warning,
         Critical,
         Fatal
     };
 
+#if (QT_VERSION < QT_VERSION_CHECK(5, 5, 0))
+    Q_ENUMS(MessageType)
+#else
     Q_ENUM(MessageType)
+#endif
 
 
 signals:
