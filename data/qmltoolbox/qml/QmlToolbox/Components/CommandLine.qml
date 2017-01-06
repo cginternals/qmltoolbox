@@ -122,7 +122,7 @@ Controls.Pane {
                 }
 
                 // Work around for default theme: TextArea not visible (probably bug)
-                text: " "
+                text: "_"
                 Component.onCompleted: clear()
             }
 

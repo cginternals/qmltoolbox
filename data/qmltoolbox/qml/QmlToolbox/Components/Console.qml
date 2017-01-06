@@ -9,7 +9,7 @@ Controls.Pane {
     id: root
 
     property color defaultColor: "#C5C8C6";
-    property color backgroundColor: "#1D1F21";
+    property color backgroundColor: "#1D1F21"
     property color selectionColor: "#3F4042"
 
     property var highlightingColors: {

@@ -212,8 +212,6 @@ Page {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                topPadding: 0
-                bottomPadding: 0
 
                 autocompleteModel: AutocompleteModel { }
 

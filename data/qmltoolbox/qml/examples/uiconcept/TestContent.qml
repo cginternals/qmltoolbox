@@ -5,6 +5,8 @@ import QtQuick.Controls 1.4 as Controls1
 import QmlToolBox.Controls 1.0 as Controls
 
 Controls.Pane {
+    anchors.fill: parent
+
     ColumnLayout {
         anchors.top: parent.top
         anchors.left: parent.left
