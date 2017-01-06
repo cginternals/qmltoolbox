@@ -157,6 +157,7 @@ Page {
                 boundsBehavior: Flickable.StopAtBounds
 
                 contentHeight: propertyEditor.height
+                contentWidth: propertyEditor.width
             
                 PropertyEditor.PropertyEditor {
                     id: propertyEditor
@@ -164,7 +165,7 @@ Page {
                     pipelineInterface: Qt.createComponent("PipelineDummy.qml").createObject(propertyEditor);
                     path: 'root'
 
-                    Component.onCompleted: propertyEditor.update();
+                    Component.onCompleted: propertyEditor.update()
                 }
 
                 ScrollBar.vertical: ScrollBar {}
@@ -212,10 +213,9 @@ Page {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
+                autocompleteModel: ["console", "string", "for", "while"]
 
-                autocompleteModel: AutocompleteModel { }
-
-                onSubmitted: { 
+                onSubmitted: {
                     console_view.append("> " + command + "\n", "Command");
                     var res = eval(command);
 

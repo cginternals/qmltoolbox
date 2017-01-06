@@ -146,7 +146,7 @@ Controls.Pane {
         y: flickable.y - (height + 12)
 
         onSelected: {
-            command_line.insert(command_line.length, model.get(index).keyword);
+            command_line.insert(command_line.length, model[index]);
         }
     }
 }
