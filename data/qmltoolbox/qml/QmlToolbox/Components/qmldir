@@ -6,3 +6,4 @@ BottomPanelView 1.0 BottomPanelView.qml
 CommandLine 1.0 CommandLine.qml
 Console 1.0 Console.qml
 LeftPanelView 1.0 LeftPanelView.qml
+ScrollableFlickable 1.0 ScrollableFlickable.qml
