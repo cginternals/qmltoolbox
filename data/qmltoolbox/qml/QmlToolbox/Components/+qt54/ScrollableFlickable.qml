@@ -22,12 +22,10 @@ ScrollView {
     property bool horizontalScrollbar: false
 
     onVerticalScrollbarChanged: {
-        console.log("onVerticalScrollbarChanged");
         root.verticalScrollBarPolicy = verticalScrollbar ? Qt.ScrollBarAlwaysOn : Qt.ScrollBarAlwaysOff;
     }
 
     onHorizontalScrollbarChanged: {
-        console.log("onHorizontalScrollbarChanged");
         root.horizontalScrollBarPolicy = horizontalScrollbar ? Qt.ScrollBarAlwaysOn : Qt.ScrollBarAlwaysOff;
     }
 

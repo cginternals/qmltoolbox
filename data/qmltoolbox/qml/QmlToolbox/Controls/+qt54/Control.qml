@@ -30,6 +30,9 @@ Item {
     property real topPadding: 0
     property real padding: 0
 
+    implicitWidth: { leftPadding + rightPadding + contentItem.implicitWidth }
+    implicitHeight: { topPadding + bottomPadding + contentItem.implicitHeight }
+
     onPaddingChanged: { 
         bottomPadding = padding
         leftPadding = padding
