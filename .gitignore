@@ -36,3 +36,6 @@ _start-cmd.bat
 
 # Local config unix
 .localconfig
+
+# i18n localization binaries
+*.qm
