@@ -39,3 +39,7 @@ _start-cmd.bat
 
 # i18n localization binaries
 *.qm
+
+# Qt QML Caches 
+*.qmlc
+*.jsc
