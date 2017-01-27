@@ -80,6 +80,10 @@ Controls.Pane {
                     return (text.length === 0 || !text.trim());
                 }
 
+                function clear() {
+                    text = "";
+                }
+
                 selectByMouse: true
                 wrapMode: TextEdit.Wrap
                 textFormat: TextEdit.PlainText
