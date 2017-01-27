@@ -12,6 +12,7 @@ MenuItem 1.0 MenuItem.qml
 Pane 1.0 Pane.qml
 Popup 1.0 Popup.qml
 RadioButton 1.0 RadioButton.qml
+Shortcut 1.0 Shortcut.qml
 Slider 1.0 Slider.qml
 StatusBar 1.0 StatusBar.qml
 Switch 1.0 Switch.qml

@@ -15,17 +15,17 @@ import com.cginternals.qmltoolbox 1.0
 Page {
     id: page
 
-    Shortcut {
+    Controls.Shortcut {
         sequence: "CTRL+F6"
         onActivated: leftPanelView.togglePanel()
     }
 
-    Shortcut {
+    Controls.Shortcut {
         sequence: "CTRL+F7"
         onActivated: bottomPanelView.togglePanel()
     }
 
-    Shortcut {
+    Controls.Shortcut {
         sequence: "CTRL+F11"
         onActivated: togglePreviewMode();
     }
