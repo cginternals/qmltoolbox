@@ -17,6 +17,7 @@ ScrollView {
     property alias contentY: flickable.contentY
 
     property var scrollBarColor: null
+    property var flickableDirection: null
 
     property bool verticalScrollbar: false
     property bool horizontalScrollbar: false

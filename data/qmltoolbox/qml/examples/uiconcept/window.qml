@@ -153,7 +153,7 @@ Controls.ApplicationWindow
 
             panel.minimumWidth: 240
 
-            panelContent: Flickable {
+            panelContent: Components.ScrollableFlickable {
                 anchors.fill: parent
 
                 flickableDirection: Flickable.VerticalFlick
@@ -171,7 +171,7 @@ Controls.ApplicationWindow
                     Component.onCompleted: propertyEditor.update()
                 }
 
-                ScrollBar.vertical: ScrollBar {}
+                verticalScrollbar: true
             }
         }
 
