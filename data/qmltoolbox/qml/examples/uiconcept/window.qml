@@ -69,7 +69,7 @@ Controls.ApplicationWindow
         ]
     }
 
-    CustomDrawer {
+    Components.CustomDrawer {
         id: drawer
 
         settingsContent: ColumnLayout {
