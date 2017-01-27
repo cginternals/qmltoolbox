@@ -6,8 +6,8 @@ import QmlToolBox.Controls 1.0 as Controls
 
 Drawer {
     id: drawer
-    width: 0.3 * page.width
-    height: page.height
+    width: 0.3 * window.width
+    height: window.height
 
     property alias settingsContent: settings_content.children
 
@@ -31,7 +31,7 @@ Drawer {
                 name: "collapsed"
                 PropertyChanges {
                     target: drawer
-                    width: page.width * 0.3
+                    width: window.width * 0.3
                 }
                 PropertyChanges {
                     target: drawer_right_side
@@ -43,7 +43,7 @@ Drawer {
                 name: "settings"
                 PropertyChanges { 
                     target: drawer
-                    width: page.width
+                    width: window.width
                 }
                 PropertyChanges {
                     target: drawer_right_side
@@ -79,7 +79,7 @@ Drawer {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
-        width: page.width * 0.3
+        width: window.width * 0.3
 
         Controls.Button {
             text: qsTr("Back")
