@@ -1,14 +1,17 @@
 
 import QtQuick 2.4
 
-QtObject {
+QtObject 
+{
     id: pipeline
 
     property string name: "PipelineDummy"
-    property QtObject stage: QtObject {
+    property QtObject stage: QtObject 
+    {
         id: stage
 
-        property var inputs: [
+        property var inputs: 
+        [
             qsTr("Name of pony"),
             qsTr("Activate magic abilities"),
             qsTr("Length of pony"),
@@ -16,7 +19,8 @@ QtObject {
             qsTr("Name of its left toe")
         ]
 
-        property var slots: [
+        property var slots: 
+        [
             {
                 name:    qsTr('Name of pony'),
                 type:    'string',
@@ -49,10 +53,13 @@ QtObject {
             },
         ]
 
-        function getSlot(slotName) {
-            for (var i = 0; i < stage.slots.length; i++) {
+        function getSlot(slotName) 
+        {
+            for (var i = 0; i < stage.slots.length; i++) 
+            {
                 var slot = stage.slots[i];
-                if (slot.name == slotName) {
+                if (slot.name == slotName) 
+                {
                     return slot;
                 }
             }
@@ -65,18 +72,21 @@ QtObject {
             };
         }
 
-        function setSlotValue(slotName, value) {
+        function setSlotValue(slotName, value) 
+        {
             var slot = getSlot(slotName);
 
             slot.value = value;
         }
     }
 
-    function getStage(path) {
+    function getStage(path) 
+    {
         return pipeline.stage;
     }
 
-    function getSlot(path) {
+    function getSlot(path) 
+    {
         var stage = pipeline.stage;
 
         var names = path.split('.');
@@ -84,7 +94,8 @@ QtObject {
         return stage.getSlot(slotName);
     }
 
-    function setSlotValue(path, value) {
+    function setSlotValue(path, value) 
+    {
         var stage = pipeline.stage;
 
         // Set value

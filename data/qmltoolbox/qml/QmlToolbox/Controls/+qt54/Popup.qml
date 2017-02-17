@@ -83,7 +83,7 @@ Item
             popup.parent = Window.contentItem;
 
             /**
-             * Unfortunately, this doesn't work. Possible explanation:
+             * TODO: Unfortunately, this doesn't work. Possible explanation:
              * If parent is an ancestor of a item that hasn't been added 
              * to the item hierarchy yet, mapFromItem() fails.
              */

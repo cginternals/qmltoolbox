@@ -5,14 +5,22 @@ import QtQuick.Layouts 1.1
 import QmlToolBox.Base 1.0
 import QmlToolBox.Controls 1.0 as Controls
 
-Controls.Pane {
+/**
+*  Console
+*
+*  A console designed to be used with QmlMessageForwarder.
+*  It supports pre-defined as well as custom highlighting colors.
+*/
+Controls.Pane 
+{
     id: root
 
     property color defaultColor: "#C5C8C6";
     property color backgroundColor: "#1D1F21"
     property color selectionColor: "#3F4042"
 
-    property var highlightingColors: {
+    property var highlightingColors: 
+    {
         "Debug": "#C5C8C6",
         "Warning": "#ECC674",
         "Critical": "#FF5E58",
@@ -20,10 +28,12 @@ Controls.Pane {
         "Command": "#C5C8C6"
     }
 
-    function append(text, type) {
+    function append(text, type) 
+    {
         var lines = text.split("\n");
 
-        for (var i = 0; i < lines.length - 1; i++) {
+        for (var i = 0; i < lines.length - 1; i++) 
+        {
             textEdit.insert(textEdit.length, coloredText(lines[i], type));
             textEdit.insert(textEdit.length, "<br>")
         }
@@ -33,21 +43,25 @@ Controls.Pane {
         flickable.positionAtEnd();
     }
 
-    function colorForType(type) {
+    function colorForType(type) 
+    {
         if (type in highlightingColors)
             return highlightingColors[type];
         return defaultColor;
     }
 
-    function coloredText(text, type) { 
+    function coloredText(text, type) 
+    { 
         return "<font color='" + colorForType(type) + "'>" + text + "</font>"
     }
     
-    background: Rectangle {
+    background: Rectangle 
+    {
         color: root.backgroundColor;
     }
 
-    ScrollableFlickable {
+    ScrollableFlickable 
+    {
         id: flickable
 
         function ensureVisible(r)
@@ -62,7 +76,8 @@ Controls.Pane {
                 contentY = r.y+r.height-height;
         }
 
-        function positionAtEnd() {
+        function positionAtEnd() 
+        {
             if (contentHeight > height)
                 contentY = contentHeight - height;
         }
@@ -78,7 +93,8 @@ Controls.Pane {
         verticalScrollbar: true
         horizontalScrollbar: false
 
-        TextEdit {
+        TextEdit 
+        {
             id: textEdit
 
             width: flickable.width

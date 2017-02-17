@@ -8,16 +8,20 @@ import QmlToolbox.Base 1.0
 import QmlToolbox.PipelineEditor 1.0
 import QmlToolBox.Controls 1.0 as Controls
 
-Page {
+Page 
+{
     id: page
 
-    header: Controls.ToolBar {
+    header: Controls.ToolBar 
+    {
         id: toolBar
 
-        RowLayout {
+        RowLayout 
+        {
             anchors.fill: parent
 
-            Controls.ToolButton {
+            Controls.ToolButton 
+            {
                 text: qsTr("Back")
 
                 onClicked: page.StackView.view.pop()

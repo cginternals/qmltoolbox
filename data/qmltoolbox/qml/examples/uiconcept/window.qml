@@ -1,8 +1,6 @@
 
 import QtQuick 2.4
-import QtQuick.Layouts 1.3
-
-import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.1
 
 import Qt.labs.settings 1.0 as Labs
 
@@ -23,78 +21,98 @@ Controls.ApplicationWindow
     width: settings.width
     height: settings.height
 
-    Controls.Shortcut {
+    Controls.Shortcut 
+    {
         sequence: "CTRL+F6"
         onActivated: leftPanelView.togglePanel()
     }
 
-    Controls.Shortcut {
+    Controls.Shortcut 
+    {
         sequence: "CTRL+F7"
         onActivated: bottomPanelView.togglePanel()
     }
 
-    Controls.Shortcut { 
+    Controls.Shortcut 
+    { 
         sequence: "CTRL+F11"
         onActivated: togglePreviewMode();
     }
 
-    function togglePreviewMode() {
+    function togglePreviewMode() 
+    {
         stateWrapper.state = (stateWrapper.state == "normal") ? "preview" : "normal";
     }
 
-    Item {
+    Item 
+    {
         id: stateWrapper
 
         state: "normal"
 
-        states: [
-            State {
+        states: 
+        [
+            State 
+            {
                 name: "preview"
+
                 StateChangeScript { script: leftPanelView.setPanelVisibility(false) }
                 StateChangeScript { script: bottomPanelView.setPanelVisibility(false) }
-                PropertyChanges {
+
+                PropertyChanges 
+                {
                     target: window
                     header: null
                 }
-                PropertyChanges {
+
+                PropertyChanges 
+                {
                     target: drawer
                     visible: false
                 }
             },
-            State {
+            State 
+            {
                 name: "normal"
+
                 StateChangeScript { script: leftPanelView.setPanelVisibility(true) }
                 StateChangeScript { script: bottomPanelView.setPanelVisibility(true) }
             }
         ]
     }
 
-    Components.CustomDrawer {
+    Components.Drawer 
+    {
         id: drawer
 
-        settingsContent: ColumnLayout {
+        settingsContent: ColumnLayout 
+        {
             anchors.fill: parent
 
-            TestContent {}
+            TestContent { }
 
             Item { Layout.fillHeight: true }
         }
     }
 
-    header: Controls.ToolBar {
+    header: Controls.ToolBar 
+    {
         id: toolBar
 
-        RowLayout {
+        RowLayout 
+        {
             anchors.fill: parent
 
-            Controls.ToolButton {
+            Controls.ToolButton 
+            {
                 text: qsTr("Menu")
                 onClicked: drawer.open()
             }
 
             Item { Layout.fillWidth: true }
 
-            Controls.ToolButton {
+            Controls.ToolButton 
+            {
                 text: qsTr("Pipeline")
                 onClicked: pipelineMenu.open()
 
@@ -106,11 +124,14 @@ Controls.ApplicationWindow
                     Controls.MenuItem { text: qsTr("Edit") }
                 }
             }
-            Controls.ToolButton {
+
+            Controls.ToolButton 
+            {
                 text: qsTr("Tools")
                 onClicked: toolsMenu.open()
 
-                Controls.Menu {
+                Controls.Menu 
+                {
                     id: toolsMenu
                     y: toolBar.height
 
@@ -118,19 +139,25 @@ Controls.ApplicationWindow
                     Controls.MenuItem { text: qsTr("Take Screenshot") }
                 }
             }
-            Controls.ToolButton {
+
+            Controls.ToolButton 
+            {
                 text: qsTr("View")
                 onClicked: viewMenu.open()
 
-                Controls.Menu {
+                Controls.Menu 
+                {
                     id: viewMenu
                     y: toolBar.height
 
-                    Controls.MenuItem { 
+                    Controls.MenuItem 
+                    { 
                         text: bottomPanelView.isPanelVisible() ? qsTr("Hide Console") : qsTr("Show Console")
                         onTriggered: bottomPanelView.togglePanel()
                     }
-                    Controls.MenuItem {
+
+                    Controls.MenuItem 
+                    {
                         text: leftPanelView.isPanelVisible() ? qsTr("Hide Side Panel") : qsTr("Show Side Panel")
                         onTriggered: leftPanelView.togglePanel()
                     }
@@ -139,12 +166,14 @@ Controls.ApplicationWindow
         }
     }
 
-    Components.BottomPanelView {
+    Components.BottomPanelView 
+    {
         id: bottomPanelView
 
         anchors.fill: parent
 
-        Components.LeftPanelView {
+        Components.LeftPanelView 
+        {
             id: leftPanelView
 
             anchors.fill: parent
@@ -153,7 +182,8 @@ Controls.ApplicationWindow
 
             panel.minimumWidth: 240
 
-            panelContent: Components.ScrollableFlickable {
+            panelContent: Components.ScrollableFlickable 
+            {
                 anchors.fill: parent
 
                 flickableDirection: Flickable.VerticalFlick
@@ -162,7 +192,8 @@ Controls.ApplicationWindow
                 contentHeight: propertyEditor.height
                 contentWidth: propertyEditor.width
             
-                PropertyEditor.PropertyEditor {
+                PropertyEditor.PropertyEditor 
+                {
                     id: propertyEditor
 
                     pipelineInterface: Qt.createComponent("PipelineDummy.qml").createObject(propertyEditor);
@@ -177,10 +208,12 @@ Controls.ApplicationWindow
 
         panel.minimumHeight: 150
 
-        panelContent: ColumnLayout {
+        panelContent: ColumnLayout 
+        {
             anchors.fill: parent
 
-            Components.Console {
+            Components.Console 
+            {
                 id: console_view
 
                 anchors.left: parent.left
@@ -191,10 +224,12 @@ Controls.ApplicationWindow
                 Layout.minimumHeight: 50
                 Layout.fillHeight: true
 
-                MessageForwarder {
+                MessageForwarder 
+                {
                     id: message_forwarder
 
-                    onMessageReceived: {
+                    onMessageReceived: 
+                    {
                         var stringType;
                         if (type == MessageForwarder.Debug)
                             stringType = "Debug";
@@ -210,7 +245,8 @@ Controls.ApplicationWindow
                 }
             }
 
-            Components.CommandLine {
+            Components.CommandLine 
+            {
                 id: command_line
 
                 anchors.left: parent.left
@@ -218,7 +254,8 @@ Controls.ApplicationWindow
 
                 autocompleteModel: ["console", "string", "for", "while"]
 
-                onSubmitted: {
+                onSubmitted: 
+                {
                     console_view.append("> " + command + "\n", "Command");
                     var res = eval(command);
 
@@ -229,7 +266,8 @@ Controls.ApplicationWindow
         }
     }
 
-    Labs.Settings {
+    Labs.Settings 
+    {
         id: settings
         property int width: 800
         property int height: 600
@@ -237,7 +275,8 @@ Controls.ApplicationWindow
         property int y
     }
 
-    Component.onDestruction: {
+    Component.onDestruction: 
+    {
         settings.x = x;
         settings.y = y;
         settings.width = width;

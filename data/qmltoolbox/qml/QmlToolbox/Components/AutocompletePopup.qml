@@ -10,8 +10,8 @@ import QmlToolBox.Base 1.0
 /**
 *  AutocompletePopup
 *
-*  This item shows a list of configurable labels within a popup that intended 
-*  for autocompletion.
+*  This item shows a list of configurable labels within 
+*  a popup intended for autocompletion.
 */
 Controls.Popup 
 {
@@ -51,9 +51,7 @@ Controls.Popup
         clip: true
 
 
-        ScrollIndicator.vertical: ScrollIndicator 
-        { 
-        }
+        ScrollIndicator.vertical: ScrollIndicator { }
 
         delegate: ItemDelegate 
         {

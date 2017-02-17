@@ -8,34 +8,55 @@ import QmlToolBox.Controls 1.0 as Controls
 
 import Qt.labs.settings 1.0 as Labs
 
-Item {
+/**
+*  LeftPanelView
+*
+*  This item implements a resizable and collapsible left panel.
+*/
+Item 
+{
     id: root
 
+    // Main content (outside of panel)
     default property alias mainContent: mainContentWrapper.data
+
+    // Content of the panel
     property alias panelContent: panel.data
 
+    /**
+     * Set the following properties for both the main content 
+     * and the content of the panel:
+     * - minimumWidth
+     * - maximumWidth
+     * - preferredWidth
+     */
     readonly property LayoutPropertiesWidth panel: LayoutPropertiesWidth { }
     readonly property LayoutPropertiesWidth main: LayoutPropertiesWidth { }
 
-    function togglePanel() {
+    function togglePanel() 
+    {
         setPanelVisibility(!isPanelVisible());
     }
 
-    function setPanelVisibility(visible) {
+    function setPanelVisibility(visible) 
+    {
         stateWrapper.state = visible ? "visible" : "hidden";
     }
 
-    function isPanelVisible() {
+    function isPanelVisible() 
+    {
         return (stateWrapper.state == "visible");
     }
 
-    Controls1.SplitView {
+    Controls1.SplitView 
+    {
         id: splitView
 
         anchors.fill: parent
         orientation: Qt.Horizontal
 
-        Item {
+        Item 
+        {
             id: mainContentWrapper
 
             Layout.minimumWidth: root.main.minimumWidth
@@ -45,30 +66,37 @@ Item {
             Layout.fillWidth: true
         }
 
-        Item {
+        Item 
+        {
             id: panel
 
             Layout.minimumWidth: root.panel.minimumWidth
             Layout.maximumWidth: root.panel.maximumWidth
             Layout.preferredWidth: root.panel.preferredWidth
 
-            Item {
+            Item 
+            {
                 id: stateWrapper
 
                 state: "visible"
 
-                states: [
-                    State { 
+                states: 
+                [
+                    State 
+                    { 
                         name: "visible"
-                        PropertyChanges {
+                        PropertyChanges 
+                        {
                             target: panel
                             Layout.minimumWidth: root.panel.minimumWidth
                             visible: true
                         }
                     },
-                    State {
+                    State 
+                    {
                         name: "hidden"
-                        PropertyChanges { 
+                        PropertyChanges 
+                        { 
                             target: panel
                             width: 0
                             Layout.minimumWidth: 0
@@ -77,20 +105,25 @@ Item {
                     }
                 ]
 
-                transitions: [
-                    Transition {
+                transitions: 
+                [
+                    Transition 
+                    {
                         from: "hidden"; to: "visible" 
 
-                        SequentialAnimation {
+                        SequentialAnimation 
+                        {
                             PropertyAction { properties: "visible" }
                             NumberAnimation { properties: "width"; easing.type: Easing.InOutQuad }
                             PropertyAction { properties: "Layout.minimumWidth" }
                         }
                     },
-                    Transition {
+                    Transition 
+                    {
                         from: "visible"; to: "hidden"
 
-                        SequentialAnimation {
+                        SequentialAnimation 
+                        {
                             ScriptAction { script: settings.width = panel.width }
                             NumberAnimation { properties: "width"; easing.type: Easing.InOutQuad }
                             PropertyAction { properties: "visible" }
@@ -99,19 +132,22 @@ Item {
                 ]
             }
 
-            Labs.Settings {
+            Labs.Settings 
+            {
                 id: settings
                 category: "leftPanel"
                 property bool visible: true
                 property int width
             }
 
-            Component.onCompleted: {
+            Component.onCompleted: 
+            {
                 width = settings.width;
                 root.setPanelVisibility(settings.visible);
             }
 
-            Component.onDestruction: {
+            Component.onDestruction: 
+            {
                 settings.visible = root.isPanelVisible();
 
                 if (root.isPanelVisible())

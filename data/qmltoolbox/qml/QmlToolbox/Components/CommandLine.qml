@@ -5,18 +5,32 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QmlToolBox.Controls 1.0 as Controls
 
-Controls.Pane {
+/**
+*  CommandLine
+*
+*  A multi-line command line including autocompletion and history.
+*  Controls:
+*  - Shift+Enter inserts new line
+*  - Shift+[Up|Down] navigate through history
+*  - Tab opens autocompletion
+*/
+Controls.Pane 
+{
     id: root
 
-    property real textHeight: flickable.contentHeight
+    // Expects an array of strings
     property alias autocompleteModel: autocomplete.model
+
+    property real textHeight: flickable.contentHeight
 
     signal submitted(string command)
 
-    RowLayout {
+    RowLayout 
+    {
         anchors.fill: parent
 
-        Flickable {
+        Flickable 
+        {
             id: flickable
 
             clip: true
@@ -26,7 +40,8 @@ Controls.Pane {
             Layout.maximumHeight: 100
             Layout.fillWidth: true
 
-            TextArea.flickable: TextArea {
+            TextArea.flickable: TextArea 
+            {
                 id: command_line
 
                 property var commandHistory: []
@@ -35,8 +50,10 @@ Controls.Pane {
 
                 signal submitted(string command);
 
-                function submit() {
-                    if (!isEmpty()) {
+                function submit() 
+                {
+                    if (!isEmpty()) 
+                    {
                         root.submitted(text);
                         commandHistory.unshift(text);
                         historyIndex = -1;
@@ -44,7 +61,8 @@ Controls.Pane {
                     }
                 }
 
-                function moveUpInHistory() {
+                function moveUpInHistory() 
+                {
                     if (historyIndex == -1)
                         lastUnsavedText = text;
 
@@ -54,7 +72,8 @@ Controls.Pane {
                     updateText();
                 }
 
-                function moveDownInHistory() {
+                function moveDownInHistory() 
+                {
                     if (historyIndex == -1)
                         lastUnsavedText = text;
 
@@ -64,7 +83,8 @@ Controls.Pane {
                     updateText();
                 }
 
-                function updateText() {
+                function updateText() 
+                {
                     if (historyIndex < 0) {
                         text = lastUnsavedText;
                         return;
@@ -74,7 +94,8 @@ Controls.Pane {
                     cursorPosition = length;
                 }
 
-                function isEmpty() {
+                function isEmpty() 
+                {
                     return (text.length === 0 || !text.trim());
                 }
 
@@ -82,7 +103,6 @@ Controls.Pane {
                 selectByMouse: true
                 wrapMode: TextEdit.Wrap
                 textFormat: TextEdit.PlainText
-                font.family: "Menlo"
 
                 Keys.onTabPressed: autocomplete.open()
 
@@ -90,33 +110,45 @@ Controls.Pane {
 
                 Keys.onEnterPressed: submit()
 
-                /*
-                  Without this code, the editor respects the original distinction between Return
-                  and Enter: Return creates a new line, while Enter executes the code.
-                  However, this behaviour may be unfamiliar to most user. Uncomment this to
-                  enable the alternative mapping: Shift-Return creates a new line, Return and Enter
-                  execute the code.
-                */
-                Keys.onReturnPressed: {
-                    if ((event.modifiers & Qt.ShiftModifier) == 0) {
+                /**
+                 * Without this code, the editor respects the original distinction between Return
+                 * and Enter: Return creates a new line, while Enter executes the code.
+                 * However, this behaviour may be unfamiliar to most user. Uncomment this to
+                 * enable the alternative mapping: Shift-Return creates a new line, Return and Enter
+                 * execute the code.
+                 */
+                Keys.onReturnPressed: 
+                {
+                    if ((event.modifiers & Qt.ShiftModifier) == 0)
+                    {
                         submit();
-                    } else {
+                    }
+                    else
+                    {
                         event.accepted = false;
                     }
                 }
 
-                Keys.onUpPressed: {
-                    if ((event.modifiers & Qt.ShiftModifier)) {
+                Keys.onUpPressed: 
+                {
+                    if ((event.modifiers & Qt.ShiftModifier))
+                    {
                         moveUpInHistory();
-                    } else {
+                    }
+                    else
+                    {
                         event.accepted = false;
                     }
                 }
 
-                Keys.onDownPressed: {
-                    if ((event.modifiers & Qt.ShiftModifier)) {
+                Keys.onDownPressed: 
+                {
+                    if ((event.modifiers & Qt.ShiftModifier))
+                    {
                         moveDownInHistory();
-                    } else {
+                    }
+                    else 
+                    {
                         event.accepted = false;
                     }
                 }
@@ -129,7 +161,8 @@ Controls.Pane {
             ScrollIndicator.vertical: ScrollIndicator { }
         }
 
-        Controls.Button {
+        Controls.Button 
+        {
             id: button
 
             text: qsTr("Enter")
@@ -139,14 +172,13 @@ Controls.Pane {
         }           
     }
 
-    AutocompletePopup {
+    AutocompletePopup 
+    {
         id: autocomplete
 
         width: 200
         y: flickable.y - (height + 12)
 
-        onSelected: {
-            command_line.insert(command_line.length, model[index]);
-        }
+        onSelected: command_line.insert(command_line.length, model[index]);
     }
 }

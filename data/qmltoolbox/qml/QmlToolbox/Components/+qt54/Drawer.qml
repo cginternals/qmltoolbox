@@ -3,69 +3,94 @@ import QtQuick.Layouts 1.1
 
 import QmlToolBox.Controls 1.0 as Controls
 
-Controls.Popup {
+/**
+*  Drawer
+*
+*  Implementation of Drawer using QtQuick 2.4 and Controls 1.0
+*/
+Controls.Popup 
+{
     id: drawer
     width: 0.3 * window.width
     height: window.height
 
     property alias settingsContent: settings_content.children
 
-    function toggleSettings() {
+    function toggleSettings() 
+    {
         stateWrapper.state = (stateWrapper.state == "collapsed") ? "settings" : "collapsed";
     }
 
-    function closeSettings() {
+    function closeSettings() 
+    {
         stateWrapper.state = "collapsed";
     }
 
     padding: 0
 
-    onClosed: { closeSettings(); }
+    onClosed: closeSettings();
 
-    Item {
+    Item 
+    {
         id: stateWrapper
 
         state: "collapsed"
 
-        states: [
-            State { 
+        states: 
+        [
+            State 
+            { 
                 name: "collapsed"
-                PropertyChanges {
+
+                PropertyChanges 
+                {
                     target: drawer
                     width: window.width * 0.3
                 }
-                PropertyChanges {
+
+                PropertyChanges 
+                {
                     target: drawer_right_side
                     visible: false
                 }
             },
 
-            State {
+            State 
+            {
                 name: "settings"
-                PropertyChanges { 
+
+                PropertyChanges 
+                { 
                     target: drawer
                     width: window.width
                 }
-                PropertyChanges {
+
+                PropertyChanges 
+                {
                     target: drawer_right_side
                     visible: true
                 }
             }
         ]
 
-        transitions: [
-            Transition {
+        transitions: 
+        [
+            Transition 
+            {
                 from: "collapsed"; to: "settings" 
 
-                SequentialAnimation {
+                SequentialAnimation 
+                {
                     NumberAnimation { properties: "width"; easing.type: Easing.InOutQuad }
                     PropertyAction { target: drawer_right_side; properties: "visible" }
                 }
             },
-            Transition {
+            Transition 
+            {
                 from: "settings"; to: "collapsed"
 
-                SequentialAnimation {
+                SequentialAnimation 
+                {
                     PropertyAction { target: drawer_right_side; properties: "visible" }
                     NumberAnimation { properties: "width"; easing.type: Easing.InOutQuad }
                 }
@@ -73,7 +98,8 @@ Controls.Popup {
         ]
     }
 
-    ColumnLayout {
+    ColumnLayout 
+    {
         id: drawer_left_side
 
         anchors.top: parent.top
@@ -82,13 +108,15 @@ Controls.Popup {
 
         width: window.width * 0.3
 
-        Controls.Button {
+        Controls.Button 
+        {
             text: qsTr("Back")
             flat: true
             onClicked: drawer.close()
         }
 
-        Controls.ToolButton {
+        Controls.ToolButton 
+        {
             anchors.left: parent.left
             anchors.right: parent.right
 
@@ -99,10 +127,12 @@ Controls.Popup {
 
         // ToolSeparator { orientation: Qt.Horizontal }
 
-        Repeater {
+        Repeater 
+        {
             model: 4
 
-            Controls.ToolButton {
+            Controls.ToolButton 
+            {
                 text: "Element " + index
             }
         }
@@ -110,7 +140,8 @@ Controls.Popup {
         Item { Layout.fillHeight: true }
     }
 
-    Controls.Pane {
+    Controls.Pane 
+    {
         id: drawer_right_side
         
         anchors.top: parent.top
@@ -120,7 +151,8 @@ Controls.Popup {
 
         visible: true
 
-        Item {
+        Item 
+        {
             id: settings_content
 
             anchors.fill: parent

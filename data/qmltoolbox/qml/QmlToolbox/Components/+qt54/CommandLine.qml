@@ -5,7 +5,13 @@ import QtQuick.Layouts 1.1
 import QmlToolBox.Base 1.0
 import QmlToolBox.Controls 1.0 as Controls
 
-Controls.Pane {
+/**
+*  CommandLine
+*
+*  Implementation of CommandLine using QtQuick 2.4 and Controls 1.0
+*/
+Controls.Pane 
+{
     id: root
 
     property real textHeight: flickable.contentHeight
@@ -13,10 +19,12 @@ Controls.Pane {
 
     signal submitted(string command)
 
-    RowLayout {
+    RowLayout 
+    {
         anchors.fill: parent
 
-        Flickable {
+        Flickable 
+        {
             id: flickable
 
             clip: true
@@ -28,7 +36,8 @@ Controls.Pane {
 
             contentHeight: command_line.paintedHeight
 
-            TextEdit {
+            TextEdit 
+            {
                 id: command_line
 
                 property var commandHistory: []
@@ -37,8 +46,10 @@ Controls.Pane {
 
                 signal submitted(string command);
 
-                function submit() {
-                    if (!isEmpty()) {
+                function submit() 
+                {
+                    if (!isEmpty()) 
+                    {
                         root.submitted(text);
                         commandHistory.unshift(text);
                         historyIndex = -1;
@@ -46,7 +57,8 @@ Controls.Pane {
                     }
                 }
 
-                function moveUpInHistory() {
+                function moveUpInHistory() 
+                {
                     if (historyIndex == -1)
                         lastUnsavedText = text;
 
@@ -56,7 +68,8 @@ Controls.Pane {
                     updateText();
                 }
 
-                function moveDownInHistory() {
+                function moveDownInHistory() 
+                {
                     if (historyIndex == -1)
                         lastUnsavedText = text;
 
@@ -66,8 +79,10 @@ Controls.Pane {
                     updateText();
                 }
 
-                function updateText() {
-                    if (historyIndex < 0) {
+                function updateText() 
+                {
+                    if (historyIndex < 0) 
+                    {
                         text = lastUnsavedText;
                         return;
                     }
@@ -76,11 +91,13 @@ Controls.Pane {
                     cursorPosition = length;
                 }
 
-                function isEmpty() {
+                function isEmpty() 
+                {
                     return (text.length === 0 || !text.trim());
                 }
 
-                function clear() {
+                function clear() 
+                {
                     text = "";
                 }
 
@@ -92,33 +109,45 @@ Controls.Pane {
 
                 Keys.onEnterPressed: submit()
 
-                /*
-                  Without this code, the editor respects the original distinction between Return
-                  and Enter: Return creates a new line, while Enter executes the code.
-                  However, this behaviour may be unfamiliar to most user. Uncomment this to
-                  enable the alternative mapping: Shift-Return creates a new line, Return and Enter
-                  execute the code.
-                */
-                Keys.onReturnPressed: {
-                    if ((event.modifiers & Qt.ShiftModifier) == 0) {
+                /**
+                 * Without this code, the editor respects the original distinction between Return
+                 * and Enter: Return creates a new line, while Enter executes the code.
+                 * However, this behaviour may be unfamiliar to most user. Uncomment this to
+                 * enable the alternative mapping: Shift-Return creates a new line, Return and Enter
+                 * execute the code.
+                 */
+                Keys.onReturnPressed: 
+                {
+                    if ((event.modifiers & Qt.ShiftModifier) == 0) 
+                    {
                         submit();
-                    } else {
+                    } 
+                    else 
+                    {
                         event.accepted = false;
                     }
                 }
 
-                Keys.onUpPressed: {
-                    if ((event.modifiers & Qt.ShiftModifier)) {
+                Keys.onUpPressed: 
+                {
+                    if ((event.modifiers & Qt.ShiftModifier)) 
+                    {
                         moveUpInHistory();
-                    } else {
+                    } 
+                    else 
+                    {
                         event.accepted = false;
                     }
                 }
 
-                Keys.onDownPressed: {
-                    if ((event.modifiers & Qt.ShiftModifier)) {
+                Keys.onDownPressed: 
+                {
+                    if ((event.modifiers & Qt.ShiftModifier)) 
+                    {
                         moveDownInHistory();
-                    } else {
+                    } 
+                    else 
+                    {
                         event.accepted = false;
                     }
                 }
@@ -131,7 +160,8 @@ Controls.Pane {
             DebugItem { }
         }
 
-        Controls.Button {
+        Controls.Button 
+        {
             id: button
 
             text: qsTr("Enter")

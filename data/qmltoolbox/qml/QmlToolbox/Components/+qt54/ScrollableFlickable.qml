@@ -4,6 +4,12 @@ import QtQuick.Layouts 1.1
 
 import QtQuick.Controls 1.3
 
+
+/**
+*  Scrollable Flickable
+*
+*  Implementation of ScrollableFlickable using Controls 1.0
+*/
 ScrollView 
 {
     id: root
@@ -20,19 +26,9 @@ ScrollView
 
     property var scrollBarColor: null
 
+    // TODO: react to changes of these properties
     property bool verticalScrollbar
     property bool horizontalScrollbar
-
-    // vertical and horizontal scrollbar means something different in Controls 1 and Controls 2 ...
-    onVerticalScrollbarChanged: 
-    {
-        root.horizontalScrollBarPolicy = verticalScrollbar ? Qt.ScrollBarAlwaysOn : Qt.ScrollBarAlwaysOff;
-    }
-
-    onHorizontalScrollbarChanged: 
-    {
-        root.verticalScrollBarPolicy = horizontalScrollbar ? Qt.ScrollBarAlwaysOn : Qt.ScrollBarAlwaysOff;
-    }
 
     onContentChanged: 
     {
@@ -43,10 +39,4 @@ ScrollView
     }
 
     Flickable { id: flickable }
-
-    Component.onCompleted: 
-    {
-        verticalScrollbar = false;
-        horizontalScrollbar = false;
-    }
 }

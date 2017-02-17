@@ -20,13 +20,13 @@ ApplicationWindow
     {
         anchors.fill: parent
 
-        flickableDirection: Flickable.VerticalFlick
         boundsBehavior: Flickable.StopAtBounds
 
         contentHeight: pane.height
         contentWidth: pane.width
 
         verticalScrollbar: true
+        horizontalScrollbar: true
 
         Pane 
         {
