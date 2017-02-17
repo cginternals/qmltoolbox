@@ -214,6 +214,44 @@ ApplicationWindow
             }
         }
 
+        Label 
+        {
+            Layout.alignment: Qt.AlignRight
+            text: "Popup Button" 
+        }
+
+        Button
+        {
+            text: "Open"
+
+            onClicked: popup.open()
+
+            Popup
+            {
+                id: popup
+
+                width: popupLayout.implicitWidth + leftPadding + rightPadding
+                height: popupLayout.implicitHeight + bottomPadding + topPadding
+
+                RowLayout
+                {
+                    id: popupLayout
+
+                    Label 
+                    { 
+                        text: "Nice looking popup, isn't it? ;)"
+                        wrapMode: Text.WordWrap
+                    }
+
+                    Button
+                    {
+                        text: "Close"
+                        onClicked: popup.close()
+                    }
+                }
+            }
+        }
+
 
         Item
         {
