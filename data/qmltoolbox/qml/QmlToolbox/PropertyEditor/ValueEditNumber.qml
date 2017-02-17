@@ -4,7 +4,8 @@ import QtQuick 2.4
 import QmlToolbox.Controls 1.0 as Controls
 
 
-Item {
+Item 
+{
     id: item
 
     property var    pipelineInterface: null ///< Interface for communicating with the actual pipeline
@@ -13,7 +14,8 @@ Item {
     implicitWidth:  input.implicitWidth
     implicitHeight: input.implicitHeight
 
-    Controls.Slider {
+    Controls.Slider 
+    {
         id: input
 
         anchors.fill: parent
@@ -23,7 +25,8 @@ Item {
         onValueChanged: pipelineInterface.setSlotValue(path, value);
     }
 
-    function update() {
+    function update() 
+    {
         var slotInfo = pipelineInterface.getSlot(path);
         input.value = slotInfo.value;
     }

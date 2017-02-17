@@ -5,7 +5,8 @@ import QtQuick.Layouts 1.1
 import QmlToolbox.Controls 1.0 as Controls
 
 
-Controls.Pane {
+Controls.Pane 
+{
     id: item
 
     property var    pipelineInterface: null ///< Interface for communicating with the actual pipeline
@@ -13,15 +14,18 @@ Controls.Pane {
     
     property var properties: []
 
-    ColumnLayout {
+    ColumnLayout 
+    {
         anchors.fill: parent
 
         spacing: 20
 
-        Repeater {
+        Repeater 
+        {
             model: item.properties
 
-            delegate: ValueEdit {
+            delegate: ValueEdit 
+            {
                 pipelineInterface: item.pipelineInterface
                 path: item.path + '.' + modelData
 
@@ -30,7 +34,8 @@ Controls.Pane {
         }
     }
 
-    function update() {
+    function update() 
+    {
         // Get stage info
         var stage = pipelineInterface.getStage(path);
 
@@ -38,9 +43,8 @@ Controls.Pane {
 
         var names = [];
 
-        for (var i=0; i<num; i++) {
+        for (var i=0; i<num; i++) 
             names.push(stage.inputs[i]);
-        }
 
         item.properties = names;
     }

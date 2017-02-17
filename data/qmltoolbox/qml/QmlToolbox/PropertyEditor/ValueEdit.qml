@@ -5,7 +5,8 @@ import QtQuick.Layouts 1.1
 import QmlToolbox.Controls 1.0 as Controls
 
 
-Item {
+Item 
+{
     id: item
 
     property var    pipelineInterface: null ///< Interface for communicating with the actual pipeline
@@ -52,16 +53,19 @@ Item {
         input.update();
     }
 
-    ColumnLayout {
+    ColumnLayout 
+    {
         id: layout
 
         anchors.fill: parent
 
-        Controls.Label {
+        Controls.Label 
+        {
             text: pipelineInterface.getSlot(path).name
         }
 
-        Item {
+        Item 
+        {
             id: inputWrapper
 
             implicitWidth:  input ? input.implicitWidth  : 0

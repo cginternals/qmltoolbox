@@ -4,7 +4,8 @@ import QtQuick 2.4
 import QmlToolbox.Controls 1.0 as Controls
 
 
-Item {
+Item 
+{
     id: item
 
     property var    pipelineInterface: null ///< Interface for communicating with the actual pipeline
@@ -13,7 +14,8 @@ Item {
     implicitWidth:  input.implicitWidth
     implicitHeight: input.implicitHeight
 
-    Controls.Switch {
+    Controls.Switch 
+    {
         id: input
 
         anchors.fill: parent
@@ -21,7 +23,8 @@ Item {
         onClicked: pipelineInterface.setSlotValue(path, checked);
     }
 
-    function update() {
+    function update() 
+    {
         var slotInfo = pipelineInterface.getSlot(path);
         input.checked = (slotInfo.value == 'true' || slotInfo.value == true);
     }

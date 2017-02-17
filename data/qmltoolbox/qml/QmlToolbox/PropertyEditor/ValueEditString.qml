@@ -13,7 +13,8 @@ Item {
     implicitWidth:  input.implicitWidth
     implicitHeight: input.implicitHeight
 
-    Controls.TextField {
+    Controls.TextField 
+    {
         id: input
 
         anchors.fill: parent
@@ -23,7 +24,8 @@ Item {
         onEditingFinished: pipelineInterface.setSlotValue(path, text);
     }
 
-    function update() {
+    function update() 
+    {
         var slotInfo = pipelineInterface.getSlot(path);
         input.text = slotInfo.value;
     }
