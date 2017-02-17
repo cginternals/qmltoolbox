@@ -3,17 +3,31 @@ import QtQuick 2.4
 
 import QmlToolBox.Base 1.0
 
-Item {
+/**
+*  Control
+*
+*  Implementation of Control using QtQuick 2.4
+*
+*  The following parts of Control as it is realized 
+*  in QtQuick Controls 2 have been implemented:
+*  - Content Item
+*  - Paddings
+*  - Background
+*/
+Item 
+{
     id: root
 
     default property alias content: content_item.data
     
-    readonly property Item contentItem: Item {
+    readonly property Item contentItem: Item 
+    {
         id: content_item
 
         z: 2
 
-        anchors {
+        anchors 
+        {
             fill: parent
             bottomMargin: parent.bottomPadding
             leftMargin: parent.leftPadding
@@ -33,25 +47,29 @@ Item {
     implicitWidth: { leftPadding + rightPadding + contentItem.implicitWidth }
     implicitHeight: { topPadding + bottomPadding + contentItem.implicitHeight }
 
-    onPaddingChanged: { 
+    onPaddingChanged: 
+    { 
         bottomPadding = padding
         leftPadding = padding
         rightPadding = padding
         topPadding = padding
     }
 
-    onBackgroundChanged: {
-        if (background !== null) {
+    onBackgroundChanged: 
+    {
+        if (background !== null) 
+        {
             background.parent = root;
+
+            // The background item automatically follows the control's size
             background.anchors.fill = root;
         }
     }
 
-    Component.onCompleted: {
+    Component.onCompleted: 
+    {
         content_item.parent = root;
     }
 
-    DebugItem { 
-        z: 1
-    }
+    DebugItem { z: 1 }
 }

@@ -17,7 +17,8 @@ QtObject
 
     signal activated()
 
-    property Action _action: Action {
+    property Action _action: Action 
+    {
         id: action
 
         onTriggered: root.activated()

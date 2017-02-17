@@ -1,8 +1,20 @@
 
 import QtQuick 2.4
-import QtQuick.Controls 1.3
 import QtQuick.Window 2.2
 
+
+/**
+*  Popup
+*
+*  Implementation of Popup using QtQuick 2.4
+*
+*  This is a work in progress. Todos:
+*  - (x, y) coordinates are currently in the window's 
+*    coordinate system but should be in the popup's parent's
+*  - close policies are yet to be added, especially to close
+*    the popup when the mouse is clicked outside of it 
+*    (could be done with a transparent item spanning the whole window)  
+*/
 Item 
 {
     id: root
@@ -17,16 +29,23 @@ Item
     property alias topPadding: popup.topPadding
     property alias padding: popup.padding
 
-    readonly property Item popupItem: Pane {
+    readonly property Item popupItem: Pane 
+    {
         id: popup
 
         visible: false
         z: 100
 
+        background: Rectangle
+        {
+            border { color: "black"; width: 1 }
+        }
+
         width: root.width
         height: root.height
 
-        Item {
+        Item 
+        {
             id: popupContent
 
             anchors.fill: parent
@@ -36,12 +55,14 @@ Item
     signal closed()
     signal opened()
 
-    function close() {
+    function close() 
+    {
         popup.visible = false;
         closed();
     }
 
-    function open() {
+    function open() 
+    {
         popup.visible = true;
         opened();
     }
@@ -49,21 +70,26 @@ Item
     visible: false
     z: -1000
 
-    Component.onCompleted: {
+    Component.onCompleted: 
+    {
         privateItem.parentItem = root.parent;
     }
 
-    Window.onContentItemChanged: {
-        if (Window.contentItem !== null) {
+    Window.onContentItemChanged: 
+    {
+        if (Window.contentItem !== null) 
+        {
             root.parent = Window.contentItem;
             popup.parent = Window.contentItem;
 
+            // Unfortunately, this doesn't work.
             popup.x = Qt.binding(function() { return root.parent.mapFromItem(privateItem.parentItem, root.x, root.y).x; });
             popup.y = Qt.binding(function() { return root.parent.mapFromItem(privateItem.parentItem, root.x, root.y).y; });
         }
     }
 
-    QtObject {
+    QtObject 
+    {
         id: privateItem
 
         property Item parentItem
