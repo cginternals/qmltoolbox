@@ -4,7 +4,8 @@ import QtQuick.Layouts 1.1
 
 import QtQuick.Controls 1.3
 
-ScrollView {
+ScrollView 
+{
     id: root
 
     // TODO: Should be list<Item>
@@ -15,26 +16,37 @@ ScrollView {
     property alias contentWidth: flickable.contentWidth
     property alias contentX: flickable.contentX
     property alias contentY: flickable.contentY
+    property alias flickableDirection: flickable.flickableDirection
 
     property var scrollBarColor: null
-    property var flickableDirection: null
 
-    property bool verticalScrollbar: false
-    property bool horizontalScrollbar: false
+    property bool verticalScrollbar
+    property bool horizontalScrollbar
 
-    onVerticalScrollbarChanged: {
-        root.verticalScrollBarPolicy = verticalScrollbar ? Qt.ScrollBarAlwaysOn : Qt.ScrollBarAlwaysOff;
+    // vertical and horizontal scrollbar means something different in Controls 1 and Controls 2 ...
+    onVerticalScrollbarChanged: 
+    {
+        root.horizontalScrollBarPolicy = verticalScrollbar ? Qt.ScrollBarAlwaysOn : Qt.ScrollBarAlwaysOff;
     }
 
-    onHorizontalScrollbarChanged: {
-        root.horizontalScrollBarPolicy = horizontalScrollbar ? Qt.ScrollBarAlwaysOn : Qt.ScrollBarAlwaysOff;
+    onHorizontalScrollbarChanged: 
+    {
+        root.verticalScrollBarPolicy = horizontalScrollbar ? Qt.ScrollBarAlwaysOn : Qt.ScrollBarAlwaysOff;
     }
 
-    onContentChanged: {
-        if (content !== null) {
+    onContentChanged: 
+    {
+        if (content !== null) 
+        {
             content.parent = flickable.contentItem;
         }
     }
 
     Flickable { id: flickable }
+
+    Component.onCompleted: 
+    {
+        verticalScrollbar = false;
+        horizontalScrollbar = false;
+    }
 }

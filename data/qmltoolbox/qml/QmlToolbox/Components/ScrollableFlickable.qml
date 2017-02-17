@@ -19,7 +19,7 @@ Flickable {
         if (root.ScrollBar.horizontal !== null)
             root.ScrollBar.horizontal.color = scrollBarColor;
     }
-
+    
     onVerticalScrollbarChanged: {
         if (verticalScrollbar) {
             root.ScrollBar.vertical = scrollBar.createObject(root, { color: scrollBarColor });
