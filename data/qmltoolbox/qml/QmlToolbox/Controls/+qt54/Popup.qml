@@ -82,7 +82,11 @@ Item
             root.parent = Window.contentItem;
             popup.parent = Window.contentItem;
 
-            // Unfortunately, this doesn't work.
+            /**
+             * Unfortunately, this doesn't work. Possible explanation:
+             * If parent is an ancestor of a item that hasn't been added 
+             * to the item hierarchy yet, mapFromItem() fails.
+             */
             popup.x = Qt.binding(function() { return root.parent.mapFromItem(privateItem.parentItem, root.x, root.y).x; });
             popup.y = Qt.binding(function() { return root.parent.mapFromItem(privateItem.parentItem, root.x, root.y).y; });
         }
