@@ -1,11 +1,8 @@
 
-#include <iostream>
-
 #include <QGuiApplication>
 #include <QQmlFileSelector>
 #include <QStringList>
 #include <QTranslator>
-#include <QDebug>
 
 #include <qmltoolbox/qmltoolbox-version.h>
 #include <qmltoolbox/QmlApplicationEngine.h>
@@ -14,7 +11,7 @@
 
 int main(int argc, char *argv[])
 {
-   // qInstallMessageHandler(qmltoolbox::globalMessageHandler);
+    qInstallMessageHandler(qmltoolbox::globalMessageHandler);
     qmltoolbox::MessageHandler::instance().installStdHandlers();
 
 #ifndef QMLTOOLBOX_QT57
@@ -41,11 +38,6 @@ int main(int argc, char *argv[])
 
     // Load and show QML
     engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uiconcept/window.qml"));
-
-    qDebug() << "qDebug() message \n with line break";
-    std::cout << "std::cout w/o line break";
-    std::cout << std::endl << "hallo";
-    std::cout << "std::cerr w/o line break";
     
     // Run application
     int res = app.exec();
