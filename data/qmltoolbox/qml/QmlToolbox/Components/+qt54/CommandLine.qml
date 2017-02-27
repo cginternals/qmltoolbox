@@ -9,6 +9,9 @@ import QmlToolBox.Controls 1.0 as Controls
 *  CommandLine
 *
 *  Implementation of CommandLine using QtQuick 2.4 and Controls 1.0
+*
+*  This is a work in progress. Todos:
+*  - add auto-completion (working popup fallback needed)
 */
 Controls.Pane 
 {
