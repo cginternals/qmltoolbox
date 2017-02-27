@@ -4,7 +4,8 @@ import QtQuick 2.4
 import QmlToolbox.Controls 1.0 as Controls
 
 
-Item {
+Item 
+{
     id: item
 
     property var    pipelineInterface: null ///< Interface for communicating with the actual pipeline

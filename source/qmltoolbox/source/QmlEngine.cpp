@@ -1,10 +1,12 @@
 
 #include <qmltoolbox/QmlEngine.h>
 
+#include <QtQml>
 #include <QQmlContext>
 
 #include <qmltoolbox/qmltoolbox.h>
 #include <qmltoolbox/QmlUtils.h>
+#include <qmltoolbox/QmlMessageForwarder.h>
 
     
 namespace qmltoolbox
@@ -22,6 +24,8 @@ QmlEngine::QmlEngine()
 
     QmlUtils * qmlUtils = new QmlUtils(this);
     rootContext()->setContextProperty("QmlUtils", qmlUtils);
+
+    qmlRegisterType<QmlMessageForwarder>("com.cginternals.qmltoolbox", 1, 0, "MessageForwarder");
 }
 
 QmlEngine::~QmlEngine()
