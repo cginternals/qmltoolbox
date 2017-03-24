@@ -21,6 +21,9 @@ Controls.ApplicationWindow
     width: settings.width
     height: settings.height
 
+    signal toFullScreen()
+    signal toNormalScreen()
+
     Controls.Shortcut 
     {
         sequence: "CTRL+F6"
@@ -37,6 +40,18 @@ Controls.ApplicationWindow
     { 
         sequence: "CTRL+F11"
         onActivated: togglePreviewMode();
+    }
+
+    Controls.Shortcut
+    {
+        sequence: "F11"
+        onActivated: toggleFullScreenMode();
+    }
+
+    Controls.Shortcut
+    {
+        sequence: "ALT+RETURN"
+        onActivated: toggleFullScreenMode();
     }
 
     function togglePreviewMode() 
@@ -77,6 +92,34 @@ Controls.ApplicationWindow
 
                 StateChangeScript { script: leftPanelView.setPanelVisibility(true) }
                 StateChangeScript { script: bottomPanelView.setPanelVisibility(true) }
+            }
+        ]
+    }
+
+    function toggleFullScreenMode()
+    {
+        fsStateWrapper.state = (fsStateWrapper.state == "normalScreen") ? "fullScreen" : "normalScreen";
+    }
+
+    Item 
+    {
+        id: fsStateWrapper
+
+        state: "normalScreen"
+
+        states: 
+        [
+            State 
+            {
+                name: "normalScreen"
+
+                StateChangeScript { script: window.toNormalScreen() }
+            },
+            State 
+            {
+                name: "fullScreen"
+
+                StateChangeScript { script: window.toFullScreen() }
             }
         ]
     }
@@ -162,6 +205,12 @@ Controls.ApplicationWindow
                         onTriggered: leftPanelView.togglePanel()
                     }
                 }
+            }
+
+            Controls.ToolButton
+            {
+                text: (fsStateWrapper.state == "normalScreen") ? qsTr("Fullscreen") : qsTr("Normal screen")
+                onClicked: window.toggleFullScreenMode()
             }
         }
     }
