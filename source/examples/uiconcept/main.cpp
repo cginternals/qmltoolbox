@@ -3,6 +3,7 @@
 #include <QQmlFileSelector>
 #include <QStringList>
 #include <QTranslator>
+#include <QWindow>
 
 #include <qmltoolbox/qmltoolbox-version.h>
 #include <qmltoolbox/QmlApplicationEngine.h>
@@ -38,6 +39,14 @@ int main(int argc, char *argv[])
 
     // Load and show QML
     engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uiconcept/window.qml"));
+    
+    auto windows = app.allWindows();
+	if (!windows.empty())
+	{
+		auto window = windows.first();
+		QObject::connect(window, SIGNAL(toFullScreen()), window, SLOT(showFullScreen()));
+		QObject::connect(window, SIGNAL(toNormalScreen()), window, SLOT(showNormal()));
+	}
     
     // Run application
     int res = app.exec();
