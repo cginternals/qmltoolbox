@@ -41,13 +41,12 @@ int main(int argc, char *argv[])
     engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uiconcept/window.qml"));
     
     auto windows = app.allWindows();
-	if (!windows.empty())
-	{
-		auto window = windows.first();
-		QObject::connect(window, SIGNAL(toFullScreen()), window, SLOT(showFullScreen()));
-		QObject::connect(window, SIGNAL(toNormalScreen()), window, SLOT(showNormal()));
-	}
-    
+    for(auto& window : app.allWindows())
+    {
+        QObject::connect(window, SIGNAL(toFullScreenMode()), window, SLOT(showFullScreen()));
+        QObject::connect(window, SIGNAL(toWindowedMode()), window, SLOT(showNormal()));
+    }
+       
     // Run application
     int res = app.exec();
 

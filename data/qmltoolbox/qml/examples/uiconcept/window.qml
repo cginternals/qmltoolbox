@@ -21,8 +21,8 @@ Controls.ApplicationWindow
     width: settings.width
     height: settings.height
 
-    signal toFullScreen()
-    signal toNormalScreen()
+    signal toFullScreenMode()
+    signal toWindowedMode()
 
     Controls.Shortcut 
     {
@@ -98,28 +98,28 @@ Controls.ApplicationWindow
 
     function toggleFullScreenMode()
     {
-        fsStateWrapper.state = (fsStateWrapper.state == "normalScreen") ? "fullScreen" : "normalScreen";
+        fsStateWrapper.state = (fsStateWrapper.state == "windowedMode") ? "fullScreenMode" : "windowedMode";
     }
 
     Item 
     {
         id: fsStateWrapper
 
-        state: "normalScreen"
+        state: "windowedMode"
 
         states: 
         [
             State 
             {
-                name: "normalScreen"
+                name: "windowedMode"
 
-                StateChangeScript { script: window.toNormalScreen() }
+                StateChangeScript { script: window.toWindowedMode() }
             },
             State 
             {
-                name: "fullScreen"
+                name: "fullScreenMode"
 
-                StateChangeScript { script: window.toFullScreen() }
+                StateChangeScript { script: window.toFullScreenMode() }
             }
         ]
     }
@@ -209,7 +209,7 @@ Controls.ApplicationWindow
 
             Controls.ToolButton
             {
-                text: (fsStateWrapper.state == "normalScreen") ? qsTr("Fullscreen") : qsTr("Normal screen")
+                text: (fsStateWrapper.state == "windowedMode") ? qsTr("Fullscreen") : qsTr("Windowed")
                 onClicked: window.toggleFullScreenMode()
             }
         }
