@@ -40,7 +40,6 @@ int main(int argc, char *argv[])
     // Load and show QML
     engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uiconcept/window.qml"));
     
-    auto windows = app.allWindows();
     for(auto& window : app.allWindows())
     {
         QObject::connect(window, SIGNAL(toFullScreenMode()), window, SLOT(showFullScreen()));
