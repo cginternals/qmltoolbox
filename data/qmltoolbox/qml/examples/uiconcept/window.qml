@@ -21,6 +21,9 @@ Controls.ApplicationWindow
     width: settings.width
     height: settings.height
 
+    signal toFullScreenMode()
+    signal toWindowedMode()
+
     Controls.Shortcut 
     {
         sequence: "CTRL+F6"
@@ -37,6 +40,18 @@ Controls.ApplicationWindow
     { 
         sequence: "CTRL+F11"
         onActivated: togglePreviewMode();
+    }
+
+    Controls.Shortcut
+    {
+        sequence: "F11"
+        onActivated: toggleFullScreenMode();
+    }
+
+    Controls.Shortcut
+    {
+        sequence: "ALT+RETURN"
+        onActivated: toggleFullScreenMode();
     }
 
     function togglePreviewMode() 
@@ -77,6 +92,34 @@ Controls.ApplicationWindow
 
                 StateChangeScript { script: leftPanelView.setPanelVisibility(true) }
                 StateChangeScript { script: bottomPanelView.setPanelVisibility(true) }
+            }
+        ]
+    }
+
+    function toggleFullScreenMode()
+    {
+        fsStateWrapper.state = (fsStateWrapper.state == "windowedMode") ? "fullScreenMode" : "windowedMode";
+    }
+
+    Item 
+    {
+        id: fsStateWrapper
+
+        state: "windowedMode"
+
+        states: 
+        [
+            State 
+            {
+                name: "windowedMode"
+
+                StateChangeScript { script: window.toWindowedMode() }
+            },
+            State 
+            {
+                name: "fullScreenMode"
+
+                StateChangeScript { script: window.toFullScreenMode() }
             }
         ]
     }
@@ -162,6 +205,12 @@ Controls.ApplicationWindow
                         onTriggered: leftPanelView.togglePanel()
                     }
                 }
+            }
+
+            Controls.ToolButton
+            {
+                text: (fsStateWrapper.state == "windowedMode") ? qsTr("Fullscreen") : qsTr("Windowed")
+                onClicked: window.toggleFullScreenMode()
             }
         }
     }
