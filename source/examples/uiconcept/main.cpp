@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     qInstallMessageHandler(qmltoolbox::globalMessageHandler);
     qmltoolbox::MessageHandler::instance().installStdHandlers();
 
-#ifndef QMLTOOLBOX_QT57
+#ifdef QMLTOOLBOX_QT57
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 
