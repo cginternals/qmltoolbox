@@ -2,9 +2,9 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 
-import QmlToolBox.Controls 1.0 as Controls
-import QmlToolBox.Components 1.0 as Components
-import QmlToolBox.PropertyEditor 1.0 as PropertyEditor
+import QmlToolbox.Controls 1.0 as Controls
+import QmlToolbox.Components 1.0 as Components
+import QmlToolbox.PropertyEditor 1.0 as PropertyEditor
 
 import com.cginternals.qmltoolbox 1.0
 

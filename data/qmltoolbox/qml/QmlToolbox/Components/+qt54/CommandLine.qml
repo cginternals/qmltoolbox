@@ -2,8 +2,8 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 
-import QmlToolBox.Base 1.0
-import QmlToolBox.Controls 1.0 as Controls
+import QmlToolbox.Base 1.0
+import QmlToolbox.Controls 1.0 as Controls
 
 /**
 *  CommandLine

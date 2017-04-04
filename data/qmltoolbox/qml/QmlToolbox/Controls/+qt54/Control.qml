@@ -1,7 +1,7 @@
 
 import QtQuick 2.4
 
-import QmlToolBox.Base 1.0
+import QmlToolbox.Base 1.0
 
 /**
 *  Control
