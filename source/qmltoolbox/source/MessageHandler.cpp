@@ -71,6 +71,26 @@ void MessageHandler::handleMessage(QtMsgType type, const QMessageLogContext & co
     for (auto receiver : m_receivers) {
         receiver->print(type, context, timestamp, message + "\n");
     }
+
+    // Output message also to standard streams
+    switch (type)
+    {
+        case QtWarningMsg:
+        case QtCriticalMsg:
+        case QtFatalMsg:
+        {
+            std::string msg = message.toStdString();
+            m_cerr->redirected()->sputn(msg.c_str(), msg.size());
+            break;
+        }
+
+        default:
+        {
+            std::string msg = message.toStdString();
+            m_cout->redirected()->sputn(msg.c_str(), msg.size());
+            break;
+        }
+    }
 }
 
 
