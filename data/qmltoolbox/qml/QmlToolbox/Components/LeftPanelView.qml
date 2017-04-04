@@ -1,12 +1,9 @@
 
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
-
 import QtQuick.Controls 1.3 as Controls1
-
 import QmlToolBox.Controls 1.0 as Controls
 
-import Qt.labs.settings 1.0 as Labs
 
 /**
 *  LeftPanelView
@@ -132,10 +129,12 @@ Item
                 ]
             }
 
-            Labs.Settings 
+            Item
+//          Labs.Settings 
             {
                 id: settings
-                category: "leftPanel"
+
+                property string category: "leftPanel"
                 property bool visible: true
                 property int width
             }

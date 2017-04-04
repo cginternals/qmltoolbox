@@ -1,12 +1,9 @@
 
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
-
 import QtQuick.Controls 1.3 as Controls1
-
 import QmlToolBox.Controls 1.0 as Controls
 
-import Qt.labs.settings 1.0 as Labs
 
 /**
 *  BottomPanelView
@@ -132,10 +129,13 @@ Item
                 ]
             }
 
-            Labs.Settings 
+//          Labs.Settings 
+            Item
             {
                 id: settings
-                category: "bottomPanel"
+
+                property string category: "bottomPanel"
+
                 property bool visible: true
                 property int height
             }
