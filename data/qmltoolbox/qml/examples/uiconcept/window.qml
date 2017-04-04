@@ -314,8 +314,8 @@ Controls.ApplicationWindow
         }
     }
 
-//  Labs.Settings 
-    Item
+//  Labs.Settings
+    QtObject
     {
         id: settings
 

@@ -130,8 +130,8 @@ Item
                 ]
             }
 
-            Item
-//          Labs.Settings 
+//          Labs.Settings
+            QtObject
             {
                 id: settings
 
