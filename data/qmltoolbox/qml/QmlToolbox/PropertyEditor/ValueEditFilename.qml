@@ -46,10 +46,11 @@ Item
 
         onClicked:
         {
-            fileDialog.open();
+//          fileDialog.open();
         }
     }
 
+    /*
     FileDialog
     {
         id: fileDialog
@@ -68,6 +69,7 @@ Item
             pipelineInterface.setSlotValue(path, path);
         }
     }
+    */
 
     function update()
     {
