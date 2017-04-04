@@ -25,7 +25,6 @@ int main(int argc, char *argv[])
     // Load and show QML
     engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uitest/uitest.qml"));
 
-
     // Run application
     int res = app.exec();
 

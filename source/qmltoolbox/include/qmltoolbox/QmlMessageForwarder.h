@@ -13,9 +13,9 @@ namespace qmltoolbox
 
 
 /**
- *  @brief
- *    Message receiver implementation for QML
- */
+*  @brief
+*    Message receiver implementation for QML
+*/
 class QMLTOOLBOX_API QmlMessageForwarder : public QObject, public AbstractMessageReceiver
 {
     Q_OBJECT
@@ -23,9 +23,9 @@ class QMLTOOLBOX_API QmlMessageForwarder : public QObject, public AbstractMessag
 
 public:
     /**
-     *  @brief
-     *    Distinguishes message types in QML
-     */
+    *  @brief
+    *    Message type
+    */
     enum MessageType 
     {
         Debug,
@@ -43,53 +43,46 @@ public:
 
 signals:
     /**
-     *  @brief
-     *    Emitted whenever a message was received
-     *
-     *  param[in] type
-     *    Message type
-     *
-     *  param[in] timestamp
-     *    Timestamp when message was received
-     *
-     *  param[in] message
-     *    Message string
-     */
-    void messageReceived(
-        MessageType type, 
-        const QDateTime & timestamp, 
-        const QString & message);
+    *  @brief
+    *    Emitted whenever a message was received
+    *
+    *  @param[in] type
+    *    Message type
+    *  @param[in] timestamp
+    *    Timestamp when message was received
+    *  @param[in] message
+    *    Message string
+    */
+    void messageReceived(MessageType type, const QDateTime & timestamp, const QString & message);
 
 
 public:
     /**
-     *  @brief
-     *    Constructor
-     *
-     *  Registers itself with the MessageHandler singleton
-     */
+    *  @brief
+    *    Constructor
+    */
     QmlMessageForwarder();
 
     /**
-     *  @brief
-     *    Constructor
-     *
-     *  Deregisters itself with the MessageHandler singleton
-     */
-    ~QmlMessageForwarder();
+    *  @brief
+    *    Destructor
+    */
+    virtual ~QmlMessageForwarder();
 
     /**
-     *  @brief
-     *    AbstractMessageReceiver interface
-     */
-    void print(
-        QtMsgType type, 
-        const QMessageLogContext & context, 
-        const QDateTime & timestamp, 
-        const QString & message) override;
-
+    *  @brief
+    *    Attach to message handler
+    */
     Q_INVOKABLE void attach();
+
+    /**
+    *  @brief
+    *    Detach from message handler
+    */
     Q_INVOKABLE void detach();
+
+    // Virtual AbstractMessageReceiver interface
+    virtual void print(QtMsgType type, const QMessageLogContext & context, const QDateTime & timestamp, const QString & message) override;
 };
 
 
