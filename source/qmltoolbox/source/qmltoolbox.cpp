@@ -2,7 +2,6 @@
 #include <qmltoolbox/qmltoolbox.h>
 
 #include <cpplocate/cpplocate.h>
-#include <cpplocate/ModuleInfo.h>
 
 
 namespace
@@ -11,10 +10,11 @@ namespace
 
 std::string determineDataPath()
 {
-    const cpplocate::ModuleInfo moduleInfo = cpplocate::findModule("qmltoolbox");
-    const std::string moduleInfoPath = moduleInfo.value("dataPath");
+    std::string path = cpplocate::locatePath("data/qmltoolbox", "share/qmltoolbox", reinterpret_cast<void *>(&qmltoolbox::dataPath));
+    if (path.empty()) path = "./data";
+    else              path = path + "/data";
 
-    return moduleInfoPath.empty() ? "data" : moduleInfoPath;
+    return path;
 }
 
 
