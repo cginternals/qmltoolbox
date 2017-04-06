@@ -20,9 +20,6 @@ Controls.ApplicationWindow
     width: settings.width
     height: settings.height
 
-    signal toFullScreenMode()
-    signal toWindowedMode()
-
     Controls.Shortcut 
     {
         sequence: "CTRL+F6"
@@ -112,13 +109,13 @@ Controls.ApplicationWindow
             {
                 name: "windowedMode"
 
-                StateChangeScript { script: window.toWindowedMode() }
+                StateChangeScript { script: window.showNormal() }
             },
             State 
             {
                 name: "fullScreenMode"
 
-                StateChangeScript { script: window.toFullScreenMode() }
+                StateChangeScript { script: window.showFullScreen() }
             }
         ]
     }
