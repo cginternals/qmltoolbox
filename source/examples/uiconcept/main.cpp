@@ -1,7 +1,5 @@
 
 #include <QGuiApplication>
-#include <QQmlFileSelector>
-#include <QStringList>
 #include <QTranslator>
 #include <QWindow>
 
@@ -30,11 +28,6 @@ int main(int argc, char *argv[])
     QTranslator translator;
     translator.load(QLocale::system(), "uiconcept", ".", engine.qmlToolboxModulePath() + "/examples/uiconcept/i18n");
     app.installTranslator(&translator);
-
-#ifdef QMLTOOLBOX_QT54
-    auto fileSelector = QQmlFileSelector::get(&engine);
-    fileSelector->setExtraSelectors(QStringList{ QMLTOOLBOX_QT54 });
-#endif
 
     // Load and show QML
     engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uiconcept/window.qml"));

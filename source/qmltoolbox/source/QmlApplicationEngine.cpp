@@ -3,8 +3,10 @@
 
 #include <QtQml>
 #include <QQmlContext>
+#include <QQmlFileSelector>
 
 #include <qmltoolbox/qmltoolbox.h>
+#include <qmltoolbox/qmltoolbox-version.h>
 #include <qmltoolbox/QmlUtils.h>
 #include <qmltoolbox/QmlMessageForwarder.h>
 
@@ -26,6 +28,12 @@ QmlApplicationEngine::QmlApplicationEngine()
     rootContext()->setContextProperty("QmlUtils", qmlUtils);
 
     qmlRegisterType<QmlMessageForwarder>("com.cginternals.qmltoolbox", 1, 0, "MessageForwarder");
+
+#ifdef QMLTOOLBOX_QT54
+    auto fileSelector = QQmlFileSelector::get(this);
+    if (!fileSelector) fileSelector = new QQmlFileSelector(this);
+    fileSelector->setExtraSelectors(QStringList{ QMLTOOLBOX_QT54 });
+#endif
 }
 
 QmlApplicationEngine::~QmlApplicationEngine()

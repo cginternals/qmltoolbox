@@ -1,9 +1,6 @@
 
 #include <QGuiApplication>
-#include <QQmlFileSelector>
-#include <QStringList>
 
-#include <qmltoolbox/qmltoolbox-version.h>
 #include <qmltoolbox/QmlApplicationEngine.h>
 
 
@@ -16,11 +13,6 @@ int main(int argc, char *argv[])
 
     // Create QtQuick engine
     qmltoolbox::QmlApplicationEngine engine;
-
-#ifdef QMLTOOLBOX_QT54
-    auto fileSelector = QQmlFileSelector::get(&engine);
-    fileSelector->setExtraSelectors(QStringList{ QMLTOOLBOX_QT54 });
-#endif
 
     // Load and show QML
     engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uitest/uitest.qml"));
