@@ -79,7 +79,7 @@ Item
     {
         if (Window.contentItem !== null) 
         {
-            root.parent = Window.contentItem;
+            //root.parent = Window.contentItem; // TODO: reevaluate the need for this line
             popup.parent = Window.contentItem;
 
             /**
