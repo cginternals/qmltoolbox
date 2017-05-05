@@ -9,5 +9,5 @@ import QtQuick 2.7
 */
 Shortcut
 {
-    // This should not contain a debug item to prevent malfunction
+    // This must not contain a debug item to prevent malfunction
 }

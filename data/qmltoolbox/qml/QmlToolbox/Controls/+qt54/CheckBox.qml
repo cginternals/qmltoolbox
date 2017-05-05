@@ -5,11 +5,13 @@ import QmlToolbox.Base 1.0
 
 
 /**
-*  Check Box
+*  CheckBox
 *
 *  Implementation of CheckBox using Controls 1.0
 */
 CheckBox 
 {
-    DebugItem { }
+    DebugItem
+    {
+    }
 }

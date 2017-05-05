@@ -3,7 +3,7 @@ import QtQuick.Controls 1.0
 
 
 /**
-*  Tool Bar
+*  ToolBar
 *
 *  Implementation of ToolBar using Controls 1.0
 */

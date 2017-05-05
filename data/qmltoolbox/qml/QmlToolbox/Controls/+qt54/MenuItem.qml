@@ -5,7 +5,7 @@ import QmlToolbox.Base 1.0
 
 
 /**
-*  Menu Item
+*  MenuItem
 *
 *  Implementation of Menu Item using Controls 1.0.
 */

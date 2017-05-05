@@ -52,5 +52,7 @@ Item
         switch_item.clicked.connect(clicked);
     }
 
-    DebugItem { }
+    DebugItem
+    {
+    }
 }

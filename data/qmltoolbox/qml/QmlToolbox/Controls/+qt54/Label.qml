@@ -12,5 +12,7 @@ import QmlToolbox.Base 1.0
 */
 Label
 {
-    DebugItem { }
+    DebugItem
+    {
+    }
 }

@@ -5,13 +5,15 @@ import QmlToolbox.Base 1.0
 
 
 /**
-*  Text Field
+*  TextField
 *
 *  Default implementation of TextField using Controls 2.0
 */
 TextField 
 {
-    DebugItem { }
+    DebugItem
+    {
+    }
 
     selectByMouse: true
 }

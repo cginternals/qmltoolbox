@@ -18,5 +18,7 @@ Slider
 
     updateValueWhileDragging: false
 
-    DebugItem { }
+    DebugItem
+    {
+    }
 }

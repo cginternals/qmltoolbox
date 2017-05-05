@@ -14,5 +14,7 @@ Button
     property bool flat: true
     property bool highlighted: true
 
-    DebugItem { }
+    DebugItem
+    {
+    }
 }

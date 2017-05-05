@@ -5,11 +5,13 @@ import QmlToolbox.Base 1.0
 
 
 /**
-*  Combo Box
+*  ComboBox
 *
 *  Implementation of ComboBox using Controls 1.0
 */
 ComboBox 
 {
-    DebugItem { }
+    DebugItem
+    {
+    }
 }

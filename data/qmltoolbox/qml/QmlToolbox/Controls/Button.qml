@@ -11,5 +11,7 @@ import QmlToolbox.Base 1.0
 */
 Button 
 {
-    DebugItem { }
+    DebugItem
+    {
+    }
 }

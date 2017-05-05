@@ -5,7 +5,7 @@ import QmlToolbox.Base 1.0
 
 
 /**
-*  Application Window
+*  ApplicationWindow
 *
 *  Implementation of Application Window using Controls 1.0
 *  This implementation renames the toolbar and status bar.
@@ -17,5 +17,7 @@ ApplicationWindow
     property alias header: applicationWindow.toolBar
     property alias footer: applicationWindow.statusBar
 
-    DebugItem { }
+    DebugItem
+    {
+    }
 }

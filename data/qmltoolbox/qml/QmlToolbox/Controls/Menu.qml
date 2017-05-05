@@ -9,5 +9,5 @@ import QtQuick.Controls 2.0
 */
 Menu 
 {
-    // This should not contain a debug item to prevent malfunction
+    // This must not contain a debug item to prevent malfunction
 }

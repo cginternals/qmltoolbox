@@ -5,11 +5,13 @@ import QmlToolbox.Base 1.0
 
 
 /**
-*  Radio Button
+*  RadioButton
 *
 *  Default implementation of RadioButton using Controls 2.0
 */
 RadioButton 
 {
-    DebugItem { }
+    DebugItem
+    {
+    }
 }
