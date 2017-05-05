@@ -142,7 +142,7 @@ Controls.Popup
         Item { Layout.fillHeight: true }
     }
 
-    Controls.Pane 
+    Controls.Pane
     {
         id: drawer_right_side
         

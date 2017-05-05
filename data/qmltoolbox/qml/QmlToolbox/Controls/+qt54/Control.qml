@@ -17,7 +17,7 @@ import QmlToolbox.Base 1.0
 */
 Item 
 {
-    id: root
+    id: item
 
     default property alias content: content_item.data
     
@@ -25,52 +25,51 @@ Item
     {
         id: content_item
 
-        z: 2
+        anchors.fill:         parent
+        anchors.bottomMargin: parent.bottomPadding
+        anchors.leftMargin:   parent.leftPadding
+        anchors.rightMargin:  parent.rightPadding
+        anchors.topMargin:    parent.topPadding
 
-        anchors 
-        {
-            fill: parent
-            bottomMargin: parent.bottomPadding
-            leftMargin: parent.leftPadding
-            rightMargin: parent.rightPadding  
-            topMargin: parent.topPadding
-        }
+        z: 2
     }
 
     property Item background
-
     property real bottomPadding: 0
-    property real leftPadding: 0
-    property real rightPadding: 0
-    property real topPadding: 0
-    property real padding: 0
+    property real leftPadding:   0
+    property real rightPadding:  0
+    property real topPadding:    0
+    property real padding:       0
 
-    implicitWidth: { leftPadding + rightPadding + contentItem.implicitWidth }
-    implicitHeight: { topPadding + bottomPadding + contentItem.implicitHeight }
+    implicitWidth:  leftPadding + rightPadding + contentItem.implicitWidth
+    implicitHeight: topPadding + bottomPadding + contentItem.implicitHeight
 
     onPaddingChanged: 
     { 
-        bottomPadding = padding
-        leftPadding = padding
-        rightPadding = padding
-        topPadding = padding
+        bottomPadding = padding;
+        leftPadding   = padding;
+        rightPadding  = padding;
+        topPadding    = padding;
     }
 
     onBackgroundChanged: 
     {
         if (background !== null) 
         {
-            background.parent = root;
+            background.parent = item;
 
             // The background item automatically follows the control's size
-            background.anchors.fill = root;
+            background.anchors.fill = item;
         }
     }
 
-    Component.onCompleted: 
+    Component.onCompleted:
     {
-        content_item.parent = root;
+        content_item.parent = item;
     }
 
-    DebugItem { z: 1 }
+    DebugItem
+    {
+        z: 1
+    }
 }

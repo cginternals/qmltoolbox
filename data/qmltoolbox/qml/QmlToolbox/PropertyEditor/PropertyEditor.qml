@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.1
 import QmlToolbox.Controls 1.0 as Controls
 
 
-Controls.Pane 
+Controls.Pane
 {
     id: item
 

@@ -7,11 +7,13 @@ import QtQuick.Controls 1.3
 /**
 *  Shortcut
 *
+*  Keyboard shortcut
+*
 *  Default implementation of Shortcut using Controls 1.3
 */
 QtObject
 {
-    id: root
+    id: item
 
     property alias sequence: action.shortcut
 
@@ -21,6 +23,6 @@ QtObject
     {
         id: action
 
-        onTriggered: root.activated()
+        onTriggered: item.activated()
     }
 }

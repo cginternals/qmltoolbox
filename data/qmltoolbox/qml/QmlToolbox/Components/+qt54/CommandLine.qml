@@ -14,7 +14,7 @@ import QmlToolbox.Controls 1.0 as Controls
 *  This is a work in progress. Todos:
 *  - add auto-completion (working popup fallback needed)
 */
-Controls.Pane 
+Controls.Pane
 {
     id: root
 

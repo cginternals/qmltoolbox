@@ -6,7 +6,7 @@ import QtQuick.Controls 1.3 as Controls1
 import QmlToolbox.Controls 1.0 as Controls
 
 
-Controls.Pane 
+Controls.Pane
 {
     anchors.fill: parent
 

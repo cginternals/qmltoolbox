@@ -7,8 +7,9 @@ import QmlToolbox.Base 1.0
 /**
 *  ApplicationWindow
 *
+*  Top-level application window
+*
 *  Implementation of Application Window using Controls 1.0
-*  This implementation renames the toolbar and status bar.
 */
 ApplicationWindow 
 {

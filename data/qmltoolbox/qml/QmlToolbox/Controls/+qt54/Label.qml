@@ -8,6 +8,8 @@ import QmlToolbox.Base 1.0
 /**
 *  Label
 *
+*  Text label
+*
 *  Implementation of Label using Controls 1.0.
 */
 Label

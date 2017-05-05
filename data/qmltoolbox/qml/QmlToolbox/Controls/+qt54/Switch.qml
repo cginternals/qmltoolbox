@@ -9,47 +9,42 @@ import QmlToolbox.Base 1.0
 /**
 *  Switch
 *
+*  Two-state toggle switch
+*
 *  Implementation of Switch using Controls 1.2
 */
 Item
 {
-    property alias checked: switch_item.checked
-    property alias text: switch_label.text
+    id: item
 
-    implicitHeight: switch_layout.implicitHeight
-    implicitWidth: switch_layout.implicitWidth
+    property alias checked: sw.checked
+    property alias text:    label.text
+
+    implicitHeight: row.implicitHeight
+    implicitWidth:  row.implicitWidth
 
     signal clicked()
 
-
-    MouseArea
+    RowLayout
     {
-        id: switch_mouse
+        id: row
 
         anchors.fill: parent
-
-        propagateComposedEvents: true
-
-        onClicked:
+    
+        Switch
         {
-            switch_item.checked = !switch_item.checked
+            id: sw
+
+            onClicked:
+            {
+                item.clicked();
+            }
         }
 
-        RowLayout
+        Label
         {
-            anchors.fill: parent
-            id: switch_layout
-        
-            Switch { id: switch_item }
-
-            Label { id: switch_label }
+            id: label
         }
-    }
-
-    Component.onCompleted: 
-    {
-        switch_mouse.clicked.connect(clicked);
-        switch_item.clicked.connect(clicked);
     }
 
     DebugItem
