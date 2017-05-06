@@ -2,8 +2,8 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.0
 
-import QmlToolbox.Base 1.0
-import QmlToolbox.Controls 1.0
+import QmlToolbox.Base       1.0
+import QmlToolbox.Controls   1.0
 import QmlToolbox.Components 1.0
 
 
@@ -11,37 +11,35 @@ ApplicationWindow
 {
     id: window
 
-    width: 640
+    width:  640
     height: 512
 
     visible: true
 
-    ScrollableFlickable 
+    ScrollableFlickable
     {
         anchors.fill: parent
 
-        boundsBehavior: Flickable.StopAtBounds
-
         contentHeight: pane.height
-        contentWidth: pane.width
+        contentWidth:  pane.width
 
-        verticalScrollbar: true
+        verticalScrollbar:   true
         horizontalScrollbar: true
+        boundsBehavior:      Flickable.StopAtBounds
 
-        Pane 
+        Pane
         {
             id: pane
 
-            GridLayout 
+            GridLayout
             {
                 id: grid
 
                 anchors.fill: parent
 
-                columns: 2
+                columns:       2
                 columnSpacing: 16
-                rowSpacing: 8
-
+                rowSpacing:    8
 
                 Item
                 {
@@ -49,61 +47,65 @@ ApplicationWindow
                     Layout.fillHeight: true
                 }
 
-                Label 
+                Label
                 {
                     Layout.alignment: Qt.AlignRight
+
                     text: "Button" 
                 }
 
-                Button 
+                Button
                 {
-                    text: "Button 1"
-
                     property int numClicked: 0
 
-                    onClicked: 
-                    { 
-                        if(numClicked < 4)
+                    text: "Button 1"
+
+                    onClicked:
+                    {
+                        if (numClicked < 4) {
                             text += " clicked";
-                        if(numClicked == 4)
+                        }
+
+                        if (numClicked == 4) {
                             text += " ... enough you fool!"
+                        }
+
                         numClicked++;
                     }
                 }
 
-
-                Label 
+                Label
                 {
                     Layout.alignment: Qt.AlignRight
-                    text: "Check Box" 
+
+                    text: "Check Box"
                 }
 
                 CheckBox
                 {
-                    text: "enable Debug Mode"
-
+                    text:    "enable Debug Mode"
                     checked: Ui.debugMode
 
-                    onClicked: Ui.debugMode = !Ui.debugMode;
+                    onClicked: Ui.debugMode = !Ui.debugMode
                 }
 
-
-                Label 
+                Label
                 {
                     Layout.alignment: Qt.AlignRight
-                    text: "Combo Box" 
+
+                    text: "Combo Box"
                 }
 
-                ComboBox 
+                ComboBox
                 {
                     model: [ "First", "Second", "Third" ]
                 }
 
-
-                Label 
+                Label
                 {
                     Layout.alignment: Qt.AlignRight
-                    text: "Label" 
+
+                    text: "Label"
                 }
 
                 Label
@@ -111,27 +113,26 @@ ApplicationWindow
                     text: "Do NOT label me."
                 }
 
-
-                Label 
-                { 
+                Label
+                {
                     Layout.alignment: Qt.AlignRight
-                    text: "Label with Link" 
+
+                    text: "Label with Link"
                 }
 
                 Label
-                { 
+                {
                     text: "<a href=\"https://github.com/cginternals/qmltoolbox\">QML item library</a> for cross-platform graphics applications ..."
-                    
-                    textFormat: Text.RichText 
+
+                    textFormat: Text.RichText
 
                     onLinkActivated: console.log(link)
                 }
 
-
-                Label 
+                Label
                 {
                     Layout.alignment: Qt.AlignRight
-                    text: "Menu" 
+                    text: "Menu"
                 }
 
                 Button
@@ -142,127 +143,157 @@ ApplicationWindow
 
                     onClicked: menu.open()
 
-                    Menu 
+                    Menu
                     {
                         id: menu
+
                         y: menuButton.height
 
                         MenuItem { text: "item 1" }
-
                         MenuItem { text: "item 2" }
                     }
                 }
 
-
-                Label 
+                Label
                 {
                     Layout.alignment: Qt.AlignRight
-                    text: "Radio Buttons" 
+
+                    text: "Radio Buttons"
                 }
 
                 RowLayout
                 {
-
-                    Label { text: "What happens when you get 'scared half to death' twice?"}
-                    
-                    RadioButton { text: "1"; checked: true }
-                    RadioButton { text: "0" }
-                }
-
-
-                Label 
-                {
-                    Layout.alignment: Qt.AlignRight
-                    text: "Slider" 
-                }
-
-                RowLayout
-                {
-
-                    Slider { id: slider } 
-                    
-                    Label { text: slider.value }
-                }
-                
-
-                Label 
-                {
-                    Layout.alignment: Qt.AlignRight
-                    text: "Switch" 
-                }
-
-                Switch 
-                {
-                    text: "Switch 1" 
-                }
-
-
-                Label 
-                {
-                    Layout.alignment: Qt.AlignRight
-                    text: "Text Field" 
-                }
-
-                TextField 
-                {
-                    placeholderText: "Type in me." 
-                }
-
-
-                Label 
-                {
-                    Layout.alignment: Qt.AlignRight
-                    text: "Toolbar  (not \"Tool Bar\")" 
-                }
-
-                ToolBar 
-                { 
-
-                    RowLayout 
+                    Label
                     {
-                        anchors.fill: parent
+                        text: "What happens when you get 'scared half to death' twice?"
+                    }
 
-                        ToolButton { text: "Button 3" }
-                        ToolButton { text: "Button 4" }
+                    RadioButton
+                    {
+                        text: "1"
+                        checked: true
+                    }
 
-                        Switch { text: "Swtich 2"}
+                    RadioButton
+                    {
+                        text: "0"
                     }
                 }
 
-                Label 
+                Label
                 {
                     Layout.alignment: Qt.AlignRight
-                    text: "Popup Button" 
+
+                    text: "Slider"
+                }
+
+                RowLayout
+                {
+                    Slider
+                    {
+                        id: slider
+                    }
+
+                    Label
+                    {
+                        text: slider.value
+                    }
+                }
+
+                Label
+                {
+                    Layout.alignment: Qt.AlignRight
+
+                    text: "Switch"
+                }
+
+                Switch
+                {
+                    text: "Switch 1"
+                }
+
+                Label
+                {
+                    Layout.alignment: Qt.AlignRight
+
+                    text: "Text Field"
+                }
+
+                TextField
+                {
+                    placeholderText: "Type in me."
+                }
+
+                Label
+                {
+                    Layout.alignment: Qt.AlignRight
+
+                    text: "Toolbar  (not \"Tool Bar\")"
+                }
+
+                ToolBar
+                {
+                    RowLayout
+                    {
+                        anchors.fill: parent
+
+                        ToolButton
+                        {
+                            text: "Button 3"
+                        }
+
+                        ToolButton
+                        {
+                            text: "Button 4"
+                        }
+
+                        Switch
+                        {
+                            text: "Switch 2"
+                        }
+                    }
+                }
+
+                Label
+                {
+                    Layout.alignment: Qt.AlignRight
+
+                    text: "Popup Button"
                 }
 
                 Button
                 {
+                    id: button
+
                     text: "Open"
 
                     onClicked: popup.open()
+                }
 
-                    Popup
+                Popup
+                {
+                    id: popup
+
+                    y: button.y - height - 20
+
+                    width:  popupLayout.implicitWidth  + leftPadding   + rightPadding
+                    height: popupLayout.implicitHeight + bottomPadding + topPadding
+
+                    RowLayout
                     {
-                        id: popup
+                        id: popupLayout
 
-                        width: popupLayout.implicitWidth + leftPadding + rightPadding
-                        height: popupLayout.implicitHeight + bottomPadding + topPadding
-
-                        RowLayout
+                        Label
                         {
-                            id: popupLayout
+                            text:     "Nice looking popup, isn't it? ;)"
+                            wrapMode: Text.WordWrap
+                        }
 
-                            Label 
-                            { 
-                                text: "Nice looking popup, isn't it? ;)"
-                                wrapMode: Text.WordWrap
-                            }
+                        Button
+                        {
+                            text: "Close"
 
-                            Button
-                            {
-                                text: "Close"
-                                onClicked: popup.close()
-                            }
+                            onClicked: popup.close()
                         }
                     }
                 }
