@@ -2,6 +2,7 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 
+import QmlToolbox.Base           1.0
 import QmlToolbox.Controls       1.0 as Controls
 import QmlToolbox.Components     1.0 as Components
 import QmlToolbox.PropertyEditor 1.0 as PropertyEditor
@@ -15,41 +16,6 @@ Controls.ApplicationWindow
 
     visible: true
 
-/*
-    Controls.Pane
-    {
-        anchors.left:   parent.left
-        anchors.top:    parent.top
-        anchors.bottom: parent.bottom
-        width:          300
-
-        background: Rectangle
-        {
-            color: '#ff8888'
-        }
-
-        Column
-        {
-            width: parent.width
-
-            Repeater
-            {
-                model: 10
-
-                Controls.Button
-                {
-                    width: parent.width
-
-                    text: 'Test'
-                }
-            }
-        }
-    }
-
-    width:  1024
-    height:  768
-*/
-
     x:      settings.x
     y:      settings.y
     width:  settings.width
@@ -58,13 +24,13 @@ Controls.ApplicationWindow
     Controls.Shortcut 
     {
         sequence: "CTRL+F6"
-        onActivated: leftPanelView.togglePanel()
+        onActivated: rightPanel.togglePanel()
     }
 
     Controls.Shortcut 
     {
         sequence: "CTRL+F7"
-        onActivated: bottomPanelView.togglePanel()
+        onActivated: bottomPanel.togglePanel()
     }
 
     Controls.Shortcut 
@@ -102,8 +68,8 @@ Controls.ApplicationWindow
             {
                 name: "preview"
 
-                StateChangeScript { script: leftPanelView.setPanelVisibility(false) }
-                StateChangeScript { script: bottomPanelView.setPanelVisibility(false) }
+                StateChangeScript { script: rightPanel.setPanelVisibility(false) }
+                StateChangeScript { script: bottomPanel.setPanelVisibility(false) }
 
                 PropertyChanges 
                 {
@@ -121,8 +87,8 @@ Controls.ApplicationWindow
             {
                 name: "normal"
 
-                StateChangeScript { script: leftPanelView.setPanelVisibility(true) }
-                StateChangeScript { script: bottomPanelView.setPanelVisibility(true) }
+                StateChangeScript { script: rightPanel.setPanelVisibility(true) }
+                StateChangeScript { script: bottomPanel.setPanelVisibility(true) }
             }
         ]
     }
@@ -159,7 +125,7 @@ Controls.ApplicationWindow
     {
         id: drawer
 
-        settingsContent: ColumnLayout 
+        settingsContent: ColumnLayout
         {
             anchors.fill: parent
 
@@ -226,16 +192,22 @@ Controls.ApplicationWindow
 
                     Controls.MenuItem 
                     { 
-                        text: bottomPanelView.isPanelVisible() ? qsTr("Hide Console") : qsTr("Show Console")
-                        onTriggered: bottomPanelView.togglePanel()
+                        text: bottomPanel.isPanelVisible() ? qsTr("Hide Console") : qsTr("Show Console")
+                        onTriggered: bottomPanel.togglePanel()
                     }
 
                     Controls.MenuItem 
                     {
-                        text: leftPanelView.isPanelVisible() ? qsTr("Hide Side Panel") : qsTr("Show Side Panel")
-                        onTriggered: leftPanelView.togglePanel()
+                        text: rightPanel.isPanelVisible() ? qsTr("Hide Side Panel") : qsTr("Show Side Panel")
+                        onTriggered: rightPanel.togglePanel()
                     }
                 }
+            }
+
+            Controls.ToolButton
+            {
+                text: qsTr("Debug")
+                onClicked: Ui.debugMode = !Ui.debugMode
             }
 
             Controls.ToolButton
@@ -246,23 +218,29 @@ Controls.ApplicationWindow
         }
     }
 
-    Components.BottomPanelView 
+    Item
     {
-        id: bottomPanelView
+        anchors.left:   parent.left
+        anchors.right:  parent.right
+        anchors.top:    parent.top
+        anchors.bottom: bottomPanel.top
 
-        anchors.fill: parent
-
-        Components.LeftPanelView 
+        TestContent
         {
-            id: leftPanelView
+            anchors.left:   parent.left
+            anchors.right:  rightPanel.left
+            anchors.top:    parent.top
+            anchors.bottom: parent.bottom
+        }
 
-            anchors.fill: parent
+        Components.Panel
+        {
+            id: rightPanel
 
-            TestContent { }
+            position:    'right'
+            minimumSize: 240
 
-            panel.minimumWidth: 240
-
-            panelContent: Components.ScrollableFlickable 
+            Components.ScrollableFlickable 
             {
                 anchors.fill: parent
 
@@ -283,12 +261,17 @@ Controls.ApplicationWindow
                 }
 
                 verticalScrollbar: true
-            }
-        }
+            }        }
+    }
 
-        panel.minimumHeight: 150
+    Components.Panel
+    {
+        id: bottomPanel
 
-        panelContent: ColumnLayout 
+        position:    'bottom'
+        minimumSize: 150
+
+        ColumnLayout
         {
             anchors.fill: parent
 

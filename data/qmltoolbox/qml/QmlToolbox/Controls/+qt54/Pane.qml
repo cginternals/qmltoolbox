@@ -17,8 +17,8 @@ Control
 
     padding: Ui.style.panePadding
 
-    property real contentWidth:  contentItem.implicitWidth
-    property real contentHeight: contentItem.implicitHeight
+    property real contentWidth:  contentItem.childWidth
+    property real contentHeight: contentItem.childHeight
 
     implicitWidth:  contentWidth  + leftPadding + rightPadding
     implicitHeight: contentHeight + topPadding  + bottomPadding

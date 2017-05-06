@@ -37,12 +37,15 @@ Item
     // Put child items into content item
     default property alias data: content.data
 
-    implicitWidth:  contentItem.implicitWidth  + leftPadding + rightPadding
-    implicitHeight: contentItem.implicitHeight + topPadding  + bottomPadding
+    implicitWidth:  contentItem.childWidth  + leftPadding + rightPadding
+    implicitHeight: contentItem.childHeight + topPadding  + bottomPadding
 
     Item
     {
         id: content
+
+        property real childWidth:  children.length == 1 ? children[0].implicitWidth  : 0
+        property real childHeight: children.length == 1 ? children[0].implicitHeight : 0
 
         anchors.fill:         parent
         anchors.bottomMargin: parent.bottomPadding
@@ -51,17 +54,6 @@ Item
         anchors.topMargin:    parent.topPadding
 
         z: 1
-
-        onChildrenChanged:
-        {
-            implicitWidth = Qt.binding(function() {
-                return children[0].implicitWidth;
-            } );
-
-            implicitHeight = Qt.binding(function() {
-                return children[0].implicitHeight;
-            } );
-        }
     }
 
     DebugItem

@@ -8,8 +8,6 @@ import QmlToolbox.Controls 1.0 as Controls
 
 Controls.Pane
 {
-    anchors.fill: parent
-
     ColumnLayout 
     {
         anchors.top: parent.top
