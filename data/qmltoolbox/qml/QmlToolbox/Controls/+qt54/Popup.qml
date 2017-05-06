@@ -6,97 +6,59 @@ import QtQuick.Window 2.2
 /**
 *  Popup
 *
-*  Implementation of Popup using QtQuick 2.4
+*  Base type of popup-like user interface controls
 *
-*  This is a work in progress. Todos:
-*  - (x, y) coordinates are currently in the window's 
-*    coordinate system but should be in the popup's parent's
-*  - close policies are yet to be added, especially to close
-*    the popup when the mouse is clicked outside of it 
-*    (could be done with a transparent item spanning the whole window)  
+*  Implementation of Popup using QtQuick 2.4
 */
-Item 
+QtObject
 {
     id: root
 
-    default property alias content: popupContent.data
+    signal opened()
+    signal closed()
 
-    property var closePolicy
+    property Item parent: window.contentItem
 
+    property alias x:             popup.x
+    property alias y:             popup.y
+    property alias z:             popup.z
+    property alias width:         popup.width
+    property alias height:        popup.height
+    property alias padding:       popup.padding
+    property alias leftPadding:   popup.leftPadding
+    property alias rightPadding:  popup.rightPadding
+    property alias topPadding:    popup.topPadding
     property alias bottomPadding: popup.bottomPadding
-    property alias leftPadding: popup.leftPadding
-    property alias rightPadding: popup.rightPadding
-    property alias topPadding: popup.topPadding
-    property alias padding: popup.padding
 
-    readonly property Item popupItem: Pane 
+    property var closePolicy: 0
+
+    default property alias data: popup.data
+
+    readonly property Item popupItem: Pane
     {
         id: popup
 
+        parent: root.parent
+
         visible: false
-        z: 100
+        z:       100
 
         background: Rectangle
         {
-            border { color: "black"; width: 1 }
-        }
-
-        width: root.width
-        height: root.height
-
-        Item 
-        {
-            id: popupContent
-
-            anchors.fill: parent
+            border.color: 'black'
+            border.width: 1
         }
     }
 
-    signal closed()
-    signal opened()
-
-    function close() 
-    {
-        popup.visible = false;
-        closed();
-    }
-
-    function open() 
+    function open()
     {
         popup.visible = true;
         opened();
     }
 
-    visible: false
-    z: -1000
-
-    Component.onCompleted: 
+    function close()
     {
-        privateItem.parentItem = root.parent;
-    }
-
-    Window.onContentItemChanged: 
-    {
-        if (Window.contentItem !== null) 
-        {
-            //root.parent = Window.contentItem; // TODO: reevaluate the need for this line
-            popup.parent = Window.contentItem;
-
-            /**
-             * TODO: Unfortunately, this doesn't work. Possible explanation:
-             * If parent is an ancestor of a item that hasn't been added 
-             * to the item hierarchy yet, mapFromItem() fails. This is for example
-             * the case for the contentItem in Control.qml.
-             */
-            popup.x = Qt.binding(function() { return root.parent.mapFromItem(privateItem.parentItem, root.x, root.y).x; });
-            popup.y = Qt.binding(function() { return root.parent.mapFromItem(privateItem.parentItem, root.x, root.y).y; });
-        }
-    }
-
-    QtObject 
-    {
-        id: privateItem
-
-        property Item parentItem
+        popup.visible = false;
+        closed();
     }
 }

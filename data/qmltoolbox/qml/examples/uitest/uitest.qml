@@ -269,32 +269,34 @@ ApplicationWindow
 
                     onClicked: popup.open()
                 }
+            }
 
-                Popup
+            Popup
+            {
+                id: popup
+
+                parent: pane.contentItem
+
+                x:      0
+                y:      button.y - height - 20
+                width:  popupLayout.implicitWidth  + leftPadding   + rightPadding
+                height: popupLayout.implicitHeight + bottomPadding + topPadding
+
+                RowLayout
                 {
-                    id: popup
+                    id: popupLayout
 
-                    y: button.y - height - 20
-
-                    width:  popupLayout.implicitWidth  + leftPadding   + rightPadding
-                    height: popupLayout.implicitHeight + bottomPadding + topPadding
-
-                    RowLayout
+                    Label
                     {
-                        id: popupLayout
+                        text:     "Nice looking popup, isn't it? ;)"
+                        wrapMode: Text.WordWrap
+                    }
 
-                        Label
-                        {
-                            text:     "Nice looking popup, isn't it? ;)"
-                            wrapMode: Text.WordWrap
-                        }
+                    Button
+                    {
+                        text: "Close"
 
-                        Button
-                        {
-                            text: "Close"
-
-                            onClicked: popup.close()
-                        }
+                        onClicked: popup.close()
                     }
                 }
             }
