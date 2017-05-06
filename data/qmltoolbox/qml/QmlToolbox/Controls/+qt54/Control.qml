@@ -7,6 +7,8 @@ import QmlToolbox.Base 1.0
 /**
 *  Control
 *
+*  Abstract base type providing functionality common to all controls
+*
 *  Implementation of Control using QtQuick 2.4
 *
 *  The following parts of Control as it is realized 
@@ -19,11 +21,28 @@ Item
 {
     id: item
 
-    default property alias content: content_item.data
-    
-    readonly property Item contentItem: Item 
+    // Padding sizes
+    property real padding:       0       ///< Padding between background and content item (all sides)
+    property real leftPadding:   padding ///< Padding between background and content item (left side)
+    property real rightPadding:  padding ///< Padding between background and content item (right side)
+    property real topPadding:    padding ///< Padding between background and content item (top side)
+    property real bottomPadding: padding ///< Padding between background and content item (bottom side)
+
+    // Background item
+    property Item background: null
+
+    // Content item
+    readonly property Item contentItem: content
+
+    // Put child items into content item
+    default property alias data: content.data
+
+    implicitWidth:  contentItem.implicitWidth  + leftPadding + rightPadding
+    implicitHeight: contentItem.implicitHeight + topPadding  + bottomPadding
+
+    Item
     {
-        id: content_item
+        id: content
 
         anchors.fill:         parent
         anchors.bottomMargin: parent.bottomPadding
@@ -31,45 +50,33 @@ Item
         anchors.rightMargin:  parent.rightPadding
         anchors.topMargin:    parent.topPadding
 
-        z: 2
+        z: 1
+
+        onChildrenChanged:
+        {
+            implicitWidth = Qt.binding(function() {
+                return children[0].implicitWidth;
+            } );
+
+            implicitHeight = Qt.binding(function() {
+                return children[0].implicitHeight;
+            } );
+        }
     }
 
-    property Item background
-    property real bottomPadding: 0
-    property real leftPadding:   0
-    property real rightPadding:  0
-    property real topPadding:    0
-    property real padding:       0
-
-    implicitWidth:  leftPadding + rightPadding + contentItem.implicitWidth
-    implicitHeight: topPadding + bottomPadding + contentItem.implicitHeight
-
-    onPaddingChanged: 
-    { 
-        bottomPadding = padding;
-        leftPadding   = padding;
-        rightPadding  = padding;
-        topPadding    = padding;
+    DebugItem
+    {
+        z: 2
     }
 
     onBackgroundChanged: 
     {
         if (background !== null) 
         {
-            background.parent = item;
-
-            // The background item automatically follows the control's size
+            // Reparent background item and make it fill the control's size
+            background.parent       = item;
             background.anchors.fill = item;
+            background.z            = 0;
         }
-    }
-
-    Component.onCompleted:
-    {
-        content_item.parent = item;
-    }
-
-    DebugItem
-    {
-        z: 1
     }
 }

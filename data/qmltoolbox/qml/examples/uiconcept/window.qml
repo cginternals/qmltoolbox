@@ -2,8 +2,8 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 
-import QmlToolbox.Controls 1.0 as Controls
-import QmlToolbox.Components 1.0 as Components
+import QmlToolbox.Controls       1.0 as Controls
+import QmlToolbox.Components     1.0 as Components
 import QmlToolbox.PropertyEditor 1.0 as PropertyEditor
 
 import com.cginternals.qmltoolbox 1.0
@@ -15,9 +15,44 @@ Controls.ApplicationWindow
 
     visible: true
 
-    x: settings.x
-    y: settings.y
-    width: settings.width
+/*
+    Controls.Pane
+    {
+        anchors.left:   parent.left
+        anchors.top:    parent.top
+        anchors.bottom: parent.bottom
+        width:          300
+
+        background: Rectangle
+        {
+            color: '#ff8888'
+        }
+
+        Column
+        {
+            width: parent.width
+
+            Repeater
+            {
+                model: 10
+
+                Controls.Button
+                {
+                    width: parent.width
+
+                    text: 'Test'
+                }
+            }
+        }
+    }
+
+    width:  1024
+    height:  768
+*/
+
+    x:      settings.x
+    y:      settings.y
+    width:  settings.width
     height: settings.height
 
     Controls.Shortcut 

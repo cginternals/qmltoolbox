@@ -21,4 +21,9 @@ Item
 
     // Debug color (e.g., used for outlining items)
     property color debugColor: '#ff00aa'
+
+    property QtObject style: QtObject
+    {
+        property int panePadding: 12
+    }
 }

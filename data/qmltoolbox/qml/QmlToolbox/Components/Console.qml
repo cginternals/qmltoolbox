@@ -56,9 +56,9 @@ Controls.Pane
         return "<font color='" + colorForType(type) + "'>" + text + "</font>"
     }
 
-    background: Rectangle 
+    background: Rectangle
     {
-        color: root.backgroundColor;
+        color: root.backgroundColor
     }
 
     ScrollableFlickable 
