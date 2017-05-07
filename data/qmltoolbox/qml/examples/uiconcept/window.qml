@@ -79,7 +79,7 @@ Controls.ApplicationWindow
 
                 PropertyChanges 
                 {
-                    target: drawer
+                    target: mainMenu
                     visible: false
                 }
             },
@@ -121,18 +121,9 @@ Controls.ApplicationWindow
         ]
     }
 
-    Components.Drawer 
+    MainMenu 
     {
-        id: drawer
-
-        settingsContent: ColumnLayout
-        {
-            anchors.fill: parent
-
-            TestContent { }
-
-            Item { Layout.fillHeight: true }
-        }
+        id: mainMenu
     }
 
     header: Controls.ToolBar 
@@ -146,7 +137,7 @@ Controls.ApplicationWindow
             Controls.ToolButton 
             {
                 text: qsTr("Menu")
-                onClicked: drawer.open()
+                onClicked: mainMenu.open()
             }
 
             Item { Layout.fillWidth: true }
@@ -224,14 +215,6 @@ Controls.ApplicationWindow
         anchors.right:  parent.right
         anchors.top:    parent.top
         anchors.bottom: bottomPanel.top
-
-        TestContent
-        {
-            anchors.left:   parent.left
-            anchors.right:  rightPanel.left
-            anchors.top:    parent.top
-            anchors.bottom: parent.bottom
-        }
 
         Controls.Panel
         {
