@@ -15,7 +15,7 @@ import QmlToolbox.Controls 1.0 as Controls
 *  - Shift+[Up|Down] navigate through history
 *  - Tab opens autocompletion
 */
-Controls.Pane 
+Controls.Pane
 {
     id: root
 
@@ -26,11 +26,11 @@ Controls.Pane
 
     signal submitted(string command)
 
-    RowLayout 
+    RowLayout
     {
         anchors.fill: parent
 
-        Flickable 
+        Flickable
         {
             id: flickable
 
@@ -41,7 +41,7 @@ Controls.Pane
             Layout.maximumHeight: 100
             Layout.fillWidth: true
 
-            TextArea.flickable: TextArea 
+            TextArea.flickable: TextArea
             {
                 id: command_line
 
@@ -51,9 +51,9 @@ Controls.Pane
 
                 signal submitted(string command);
 
-                function submit() 
+                function submit()
                 {
-                    if (!isEmpty()) 
+                    if (!isEmpty())
                     {
                         root.submitted(text);
                         commandHistory.unshift(text);
@@ -62,7 +62,7 @@ Controls.Pane
                     }
                 }
 
-                function moveUpInHistory() 
+                function moveUpInHistory()
                 {
                     if (historyIndex == -1)
                         lastUnsavedText = text;
@@ -73,7 +73,7 @@ Controls.Pane
                     updateText();
                 }
 
-                function moveDownInHistory() 
+                function moveDownInHistory()
                 {
                     if (historyIndex == -1)
                         lastUnsavedText = text;
@@ -84,7 +84,7 @@ Controls.Pane
                     updateText();
                 }
 
-                function updateText() 
+                function updateText()
                 {
                     if (historyIndex < 0) {
                         text = lastUnsavedText;
@@ -95,7 +95,7 @@ Controls.Pane
                     cursorPosition = length;
                 }
 
-                function isEmpty() 
+                function isEmpty()
                 {
                     return (text.length === 0 || !text.trim());
                 }
@@ -118,7 +118,7 @@ Controls.Pane
                  * enable the alternative mapping: Shift-Return creates a new line, Return and Enter
                  * execute the code.
                  */
-                Keys.onReturnPressed: 
+                Keys.onReturnPressed:
                 {
                     if ((event.modifiers & Qt.ShiftModifier) == 0)
                     {
@@ -130,7 +130,7 @@ Controls.Pane
                     }
                 }
 
-                Keys.onUpPressed: 
+                Keys.onUpPressed:
                 {
                     if ((event.modifiers & Qt.ShiftModifier))
                     {
@@ -142,13 +142,13 @@ Controls.Pane
                     }
                 }
 
-                Keys.onDownPressed: 
+                Keys.onDownPressed:
                 {
                     if ((event.modifiers & Qt.ShiftModifier))
                     {
                         moveDownInHistory();
                     }
-                    else 
+                    else
                     {
                         event.accepted = false;
                     }
@@ -162,7 +162,7 @@ Controls.Pane
             ScrollIndicator.vertical: ScrollIndicator { }
         }
 
-        Controls.Button 
+        Controls.Button
         {
             id: button
 
@@ -170,10 +170,10 @@ Controls.Pane
             flat: true
             highlighted: true
             onClicked: command_line.submit()
-        }           
+        }
     }
 
-    AutocompletePopup 
+    AutocompletePopup
     {
         id: autocomplete
 
