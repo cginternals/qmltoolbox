@@ -7,9 +7,9 @@ import QmlToolbox.Controls 1.0
 
 
 /**
-*  Console
+*  ConsoleLog
 *
-*  A console designed to be used with QmlMessageForwarder.
+*  A text window that displays a log of messages.
 *  It supports pre-defined as well as custom highlighting colors.
 */
 Pane
@@ -76,7 +76,7 @@ Pane
         }
     }
 
-    function append(text, type)
+    function output(text, type)
     {
         var lines = text.split("\n");
 

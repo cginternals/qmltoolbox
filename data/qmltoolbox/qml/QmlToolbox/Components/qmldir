@@ -1,7 +1,9 @@
 
 module Components
 
-AutocompletePopup 1.0 AutocompletePopup.qml
-CommandLine       1.0 CommandLine.qml
-Console           1.0 Console.qml
-Drawer            1.0 Drawer.qml
+CommandLine    1.0 CommandLine.qml
+ConsoleLog     1.0 ConsoleLog.qml
+ConsolePrompt  1.0 ConsolePrompt.qml
+Drawer         1.0 Drawer.qml
+ScriptConsole  1.0 ScriptConsole.qml
+SelectionPopup 1.0 SelectionPopup.qml

@@ -7,10 +7,9 @@ import QmlToolbox.Controls 1.0
 
 
 /**
-*  AutocompletePopup
+*  SelectionPopup
 *
-*  This item shows a list of configurable labels within
-*  a popup intended for autocompletion.
+*  Popup that displays a list of items the user can select
 */
 Popup
 {

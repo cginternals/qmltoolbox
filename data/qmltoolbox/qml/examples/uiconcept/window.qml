@@ -270,63 +270,44 @@ Controls.ApplicationWindow
         position:    'bottom'
         minimumSize: 150
 
-        ColumnLayout
+        Components.ScriptConsole
         {
+            id: scriptConsole
+
             anchors.fill: parent
 
-            spacing: 0
+            keywords: ["console", "Math", "Date", "if", "for", "while", "function", "exit"]
 
-            Components.Console 
+            onSubmitted:
             {
-                id: console_view
+                scriptConsole.output("> " + command + "\n", "Command");
+                var res = eval(command);
 
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                rightPadding: 0
-
-                Layout.minimumHeight: 50
-                Layout.fillHeight: true
-
-                MessageForwarder 
+                if (res != undefined)
                 {
-                    id: message_forwarder
-
-                    onMessageReceived: 
-                    {
-                        var stringType;
-                        if (type == MessageForwarder.Debug)
-                            stringType = "Debug";
-                        else if (type == MessageForwarder.Warning)
-                            stringType = "Warning"; 
-                        else if (type == MessageForwarder.Critical)
-                            stringType = "Critical";
-                        else if (type == MessageForwarder.Fatal)
-                            stringType = "Fatal";
-
-                        console_view.append(message, stringType);
-                    }
+                    console.log(res);
                 }
             }
+        }
+    }
 
-            Components.CommandLine 
-            {
-                id: command_line
+    MessageForwarder 
+    {
+        id: message_forwarder
 
-                anchors.left: parent.left
-                anchors.right: parent.right
+        onMessageReceived: 
+        {
+            var stringType;
+            if (type == MessageForwarder.Debug)
+                stringType = "Debug";
+            else if (type == MessageForwarder.Warning)
+                stringType = "Warning"; 
+            else if (type == MessageForwarder.Critical)
+                stringType = "Critical";
+            else if (type == MessageForwarder.Fatal)
+                stringType = "Fatal";
 
-                autocompleteModel: ["console", "Math", "Date", "if", "for", "while", "function", "exit"]
-
-                onSubmitted: 
-                {
-                    console_view.append("> " + command + "\n", "Command");
-                    var res = eval(command);
-
-                    if (res != undefined)
-                        console.log(res);
-                }
-            }
+            scriptConsole.output(message, stringType);
         }
     }
 

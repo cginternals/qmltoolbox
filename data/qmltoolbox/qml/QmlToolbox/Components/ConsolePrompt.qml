@@ -7,7 +7,7 @@ import QmlToolbox.Controls 1.0
 
 
 /**
-*  CommandLine
+*  ConsolePrompt
 *
 *  A multi-line command line including autocompletion and history.
 *  Controls:
@@ -23,7 +23,7 @@ Control
     signal submitted(string command)
 
     // List of auto-completion words (array of strings)
-    property alias autocompleteModel: autocomplete.model
+    property alias keywords: autocomplete.model
 
     // Height of the text element
     property real textHeight: input.height
@@ -143,7 +143,7 @@ Control
         }
     }
 
-    AutocompletePopup
+    SelectionPopup
     {
         id: autocomplete
 
