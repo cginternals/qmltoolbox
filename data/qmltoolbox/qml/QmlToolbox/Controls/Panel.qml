@@ -2,6 +2,7 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 
+import QmlToolbox.Base 1.0
 import QmlToolbox.Controls 1.0
 
 
@@ -71,10 +72,10 @@ Item
 
         Rectangle
         {
-            anchors.fill: parent
+            anchors.fill:    parent
             anchors.margins: 2
 
-            color: '#66666666'
+            color: Ui.style.panelHandleColor
         }
 
         onPressed:

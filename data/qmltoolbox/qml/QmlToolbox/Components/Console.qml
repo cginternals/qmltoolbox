@@ -14,58 +14,16 @@ import QmlToolbox.Controls 1.0 as Controls
 */
 Controls.Pane
 {
-    id: root
-
-    property color defaultColor:    "#C5C8C6"
-    property color backgroundColor: "#1D1F21"
-    property color selectionColor:  "#3F4042"
-
-    property var highlightingColors:
-    {
-        "Debug":    "#C5C8C6",
-        "Warning":  "#ECC674",
-        "Critical": "#FF5E58",
-        "Fatal":    "#FF5E58",
-        "Command":  "#C5C8C6"
-    }
-
-    function append(text, type)
-    {
-        var lines = text.split("\n");
-
-        for (var i = 0; i < lines.length - 1; i++)
-        {
-            textEdit.insert(textEdit.length, coloredText(lines[i], type));
-            textEdit.insert(textEdit.length, "<br>")
-        }
-
-        textEdit.insert(textEdit.length, coloredText(lines[lines.length - 1], type));
-
-        flickable.positionAtEnd();
-    }
-
-    function colorForType(type) 
-    {
-        if (type in highlightingColors) {
-            return highlightingColors[type];
-        }
-
-        return defaultColor;
-    }
-
-    function coloredText(text, type) 
-    { 
-        return "<font color='" + colorForType(type) + "'>" + text + "</font>"
-    }
+    id: item
 
     background: Rectangle
     {
-        color: root.backgroundColor
+        color: Ui.style.consoleBackgroundColor
     }
 
     Controls.ScrollArea
     {
-        id: flickable
+        id: scrollArea
 
         anchors.fill: parent
 
@@ -73,40 +31,79 @@ Controls.Pane
         boundsBehavior: Flickable.StopAtBounds
         contentHeight:  textEdit.paintedHeight
 
-        TextEdit 
+        TextEdit
         {
             id: textEdit
 
-            width: flickable.width
+            width: parent.width
 
-            readOnly: true
-            selectByMouse: true 
-            selectionColor: root.selectionColor
+            readOnly:       true
+            color:          Ui.style.consoleTextColor
+            wrapMode:       TextEdit.Wrap
+            textFormat:     TextEdit.RichText
+            font.family:    Ui.style.consoleFontFamily
+            selectByMouse:  true
+            selectionColor: Ui.style.consoleSelectionColor
 
-            color: defaultColor
-            wrapMode: TextEdit.Wrap
-            textFormat: TextEdit.RichText
-            font.family: "Menlo"
-
-            onCursorRectangleChanged: flickable.ensureVisible(cursorRectangle)
+            onCursorRectangleChanged:
+            {
+                scrollArea.ensureVisible(cursorRectangle);
+            }
         }
 
         function ensureVisible(r)
         {
-            if (contentX >= r.x)
+            if (contentX >= r.x) {
                 contentX = r.x;
-            else if (contentX+width <= r.x+r.width)
+            }
+            else if (contentX+width <= r.x+r.width) {
                 contentX = r.x+r.width-width;
-            if (contentY >= r.y)
+            }
+
+            if (contentY >= r.y) {
                 contentY = r.y;
-            else if (contentY+height <= r.y+r.height)
+            }
+            else if (contentY+height <= r.y+r.height) {
                 contentY = r.y+r.height-height;
+            }
         }
 
-        function positionAtEnd() 
+        function positionAtEnd()
         {
-            if (contentHeight > height)
+            if (contentHeight > height) {
                 contentY = contentHeight - height;
+            }
         }
+    }
+
+    function append(text, type)
+    {
+        var lines = text.split("\n");
+
+        for (var i=0; i<lines.length-1; i++)
+        {
+            textEdit.insert(textEdit.length, coloredText(lines[i], type));
+            textEdit.insert(textEdit.length, "<br>")
+        }
+
+        textEdit.insert(textEdit.length, coloredText(lines[lines.length - 1], type));
+
+        scrollArea.positionAtEnd();
+    }
+
+    function colorForType(type)
+    {
+        if (type === 'Fatal')    return Ui.style.consoleTextColorFatal;
+        if (type === 'Critical') return Ui.style.consoleTextColorCritical;
+        if (type === 'Warning')  return Ui.style.consoleTextColorWarning;
+        if (type === 'Debug')    return Ui.style.consoleTextColorDebug;
+        if (type === 'Command')  return Ui.style.consoleTextColorCommand;
+
+        return Ui.style.consoleTextColor;
+    }
+
+    function coloredText(text, type)
+    {
+        return "<font color='" + colorForType(type) + "'>" + text + "</font>"
     }
 }

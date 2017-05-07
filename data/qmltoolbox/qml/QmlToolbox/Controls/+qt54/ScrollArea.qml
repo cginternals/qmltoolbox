@@ -16,12 +16,6 @@ Item
 
     default property alias data: flickable.flickableData
 
-    property real  handleSize:   10
-    property real  padding:      2
-    property real  borderRadius: 2
-    property color handleColor:  '#888888'
-    property color hoverColor:   '#aaaaaa'
-
     property alias contentWidth:       flickable.contentWidth
     property alias contentHeight:      flickable.contentHeight
     property alias contentX:           flickable.contentX
@@ -36,8 +30,8 @@ Item
         anchors.right:   parent.right
         anchors.top:     parent.top
         anchors.bottom:  parent.bottom
-        anchors.margins: item.padding
-        width:           item.handleSize
+        anchors.margins: Ui.style.scrollBarPadding
+        width:           Ui.style.scrollBarSize
 
         visible: flickable.contentHeight > flickable.height
 
@@ -50,13 +44,13 @@ Item
 
             anchors.left:    parent.left
             anchors.right:   parent.right
-            anchors.margins: item.padding
+            anchors.margins: Ui.style.scrollBarPadding
             height:          Math.max(30, Math.min(flickable.height / flickable.contentHeight, 1.0) * scrollBar.height)
 
             y: mouseArea.drag.active ? 0 : (flickable.contentY / (flickable.contentHeight - flickable.height)) * (scrollBar.height - handle.height)
 
-            color:  scrollBar.hovered ? item.handleColor : item.hoverColor
-            radius: item.borderRadius
+            color:  scrollBar.hovered ? Ui.style.scrollBarColor : Ui.style.scrollBarHoverColor
+            radius: Ui.style.scrollBarRadius
 
             MouseArea
             {
