@@ -16,24 +16,24 @@ Controls.Pane
 {
     id: root
 
-    property color defaultColor: "#C5C8C6";
+    property color defaultColor:    "#C5C8C6"
     property color backgroundColor: "#1D1F21"
-    property color selectionColor: "#3F4042"
+    property color selectionColor:  "#3F4042"
 
-    property var highlightingColors: 
+    property var highlightingColors:
     {
-        "Debug": "#C5C8C6",
-        "Warning": "#ECC674",
+        "Debug":    "#C5C8C6",
+        "Warning":  "#ECC674",
         "Critical": "#FF5E58",
-        "Fatal": "#FF5E58",
-        "Command": "#C5C8C6"
+        "Fatal":    "#FF5E58",
+        "Command":  "#C5C8C6"
     }
 
-    function append(text, type) 
+    function append(text, type)
     {
         var lines = text.split("\n");
 
-        for (var i = 0; i < lines.length - 1; i++) 
+        for (var i = 0; i < lines.length - 1; i++)
         {
             textEdit.insert(textEdit.length, coloredText(lines[i], type));
             textEdit.insert(textEdit.length, "<br>")
@@ -46,8 +46,10 @@ Controls.Pane
 
     function colorForType(type) 
     {
-        if (type in highlightingColors)
+        if (type in highlightingColors) {
             return highlightingColors[type];
+        }
+
         return defaultColor;
     }
 
@@ -61,38 +63,15 @@ Controls.Pane
         color: root.backgroundColor
     }
 
-    ScrollableFlickable 
+    Controls.ScrollArea
     {
         id: flickable
 
-        function ensureVisible(r)
-        {
-            if (contentX >= r.x)
-                contentX = r.x;
-            else if (contentX+width <= r.x+r.width)
-                contentX = r.x+r.width-width;
-            if (contentY >= r.y)
-                contentY = r.y;
-            else if (contentY+height <= r.y+r.height)
-                contentY = r.y+r.height-height;
-        }
-
-        function positionAtEnd() 
-        {
-            if (contentHeight > height)
-                contentY = contentHeight - height;
-        }
-
         anchors.fill: parent
 
-        contentHeight: textEdit.paintedHeight
-
-        clip: true
+        clip:           true
         boundsBehavior: Flickable.StopAtBounds
-
-        scrollBarColor: "#3F4042"
-        verticalScrollbar: true
-        horizontalScrollbar: false
+        contentHeight:  textEdit.paintedHeight
 
         TextEdit 
         {
@@ -110,6 +89,24 @@ Controls.Pane
             font.family: "Menlo"
 
             onCursorRectangleChanged: flickable.ensureVisible(cursorRectangle)
+        }
+
+        function ensureVisible(r)
+        {
+            if (contentX >= r.x)
+                contentX = r.x;
+            else if (contentX+width <= r.x+r.width)
+                contentX = r.x+r.width-width;
+            if (contentY >= r.y)
+                contentY = r.y;
+            else if (contentY+height <= r.y+r.height)
+                contentY = r.y+r.height-height;
+        }
+
+        function positionAtEnd() 
+        {
+            if (contentHeight > height)
+                contentY = contentHeight - height;
         }
     }
 }

@@ -240,16 +240,16 @@ Controls.ApplicationWindow
             position:    'right'
             minimumSize: 240
 
-            Components.ScrollableFlickable 
+            Controls.ScrollArea 
             {
                 anchors.fill: parent
+
+                contentHeight: propertyEditor.height
+                contentWidth:  propertyEditor.width
 
                 flickableDirection: Flickable.VerticalFlick
                 boundsBehavior: Flickable.StopAtBounds
 
-                contentHeight: propertyEditor.height
-                contentWidth: propertyEditor.width
-            
                 PropertyEditor.PropertyEditor 
                 {
                     id: propertyEditor
@@ -259,8 +259,6 @@ Controls.ApplicationWindow
 
                     Component.onCompleted: propertyEditor.update()
                 }
-
-                verticalScrollbar: true
             }
         }
     }

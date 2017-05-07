@@ -1,8 +1,7 @@
 
 module Components
 
-AutocompletePopup   1.0 AutocompletePopup.qml
-CommandLine         1.0 CommandLine.qml
-Console             1.0 Console.qml
-Drawer              1.0 Drawer.qml
-ScrollableFlickable 1.0 ScrollableFlickable.qml
+AutocompletePopup 1.0 AutocompletePopup.qml
+CommandLine       1.0 CommandLine.qml
+Console           1.0 Console.qml
+Drawer            1.0 Drawer.qml
