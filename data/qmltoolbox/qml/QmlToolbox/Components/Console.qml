@@ -3,7 +3,7 @@ import QtQuick 2.4
 import QtQuick.Layouts 1.1
 
 import QmlToolbox.Base 1.0
-import QmlToolbox.Controls 1.0 as Controls
+import QmlToolbox.Controls 1.0
 
 
 /**
@@ -12,7 +12,7 @@ import QmlToolbox.Controls 1.0 as Controls
 *  A console designed to be used with QmlMessageForwarder.
 *  It supports pre-defined as well as custom highlighting colors.
 */
-Controls.Pane
+Pane
 {
     id: item
 
@@ -21,7 +21,7 @@ Controls.Pane
         color: Ui.style.consoleBackgroundColor
     }
 
-    Controls.ScrollArea
+    ScrollArea
     {
         id: scrollArea
 
