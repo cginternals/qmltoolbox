@@ -16,16 +16,14 @@ ApplicationWindow
 
     visible: true
 
-    ScrollableFlickable
+    ScrollArea
     {
         anchors.fill: parent
 
         contentHeight: pane.height
         contentWidth:  pane.width
 
-        verticalScrollbar:   true
-        horizontalScrollbar: true
-        boundsBehavior:      Flickable.StopAtBounds
+        boundsBehavior: Flickable.StopAtBounds
 
         Pane
         {
@@ -51,7 +49,7 @@ ApplicationWindow
                 {
                     Layout.alignment: Qt.AlignRight
 
-                    text: "Button" 
+                    text: "Button"
                 }
 
                 Button

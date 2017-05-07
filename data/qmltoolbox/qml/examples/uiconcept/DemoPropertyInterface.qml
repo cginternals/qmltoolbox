@@ -1,17 +1,18 @@
 
-import QtQuick 2.4
+import QtQuick 2.0
 
 
-QtObject 
+QtObject
 {
-    id: pipeline
+    id: propertyInterface
 
     property string name: "PipelineDummy"
-    property QtObject stage: QtObject 
+
+    property QtObject stage: QtObject
     {
         id: stage
 
-        property var inputs: 
+        property var inputs:
         [
             qsTr("Name of pony"),
             qsTr("Activate magic abilities"),
@@ -20,7 +21,7 @@ QtObject
             qsTr("Name of its left toe")
         ]
 
-        property var slots: 
+        property var slots:
         [
             {
                 name:    qsTr('Name of pony'),
@@ -28,24 +29,28 @@ QtObject
                 value:   'Erhardt',
                 options: {}
             },
+
             {
                 name:    qsTr('Activate magic abilities'),
                 type:    'bool',
                 value:   true,
                 options: {}
             },
+
             {
                 name:    qsTr('Length of pony'),
                 type:    'float',
                 value:   1.3,
                 options: {}
             },
+
             {
                 name:    qsTr('Color of pony'),
                 type:    'color',
                 value:   '#000000',
                 options: {}
             },
+
             {
                 name:    qsTr('Name of its left toe'),
                 type:    'string',
@@ -54,12 +59,13 @@ QtObject
             },
         ]
 
-        function getSlot(slotName) 
+        function getSlot(slotName)
         {
-            for (var i = 0; i < stage.slots.length; i++) 
+            for (var i = 0; i < stage.slots.length; i++)
             {
                 var slot = stage.slots[i];
-                if (slot.name == slotName) 
+
+                if (slot.name == slotName)
                 {
                     return slot;
                 }
@@ -73,7 +79,7 @@ QtObject
             };
         }
 
-        function setSlotValue(slotName, value) 
+        function setSlotValue(slotName, value)
         {
             var slot = getSlot(slotName);
 
@@ -81,25 +87,23 @@ QtObject
         }
     }
 
-    function getStage(path) 
+    function getStage(path)
     {
-        return pipeline.stage;
+        return propertyInterface.stage;
     }
 
-    function getSlot(path) 
+    function getSlot(path)
     {
-        var stage = pipeline.stage;
-
+        var stage = propertyInterface.stage;
         var names = path.split('.');
         var slotName = names[names.length - 1];
+
         return stage.getSlot(slotName);
     }
 
-    function setSlotValue(path, value) 
+    function setSlotValue(path, value)
     {
-        var stage = pipeline.stage;
-
-        // Set value
+        var stage = propertyInterface.stage;
         var names = path.split('.');
         var slotName = names[names.length - 1];
 

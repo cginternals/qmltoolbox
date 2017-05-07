@@ -95,7 +95,7 @@ Drawer
 
         visible: drawer.activePage == 'pipeline'
 
-        Item
+        PipelinePage
         {
             anchors.fill: parent
         }

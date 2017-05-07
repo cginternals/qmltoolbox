@@ -21,20 +21,20 @@ Controls.ApplicationWindow
     width:  settings.width
     height: settings.height
 
-    Controls.Shortcut 
+    Controls.Shortcut
     {
         sequence: "CTRL+F6"
-        onActivated: rightPanel.toggleVisible()
+        onActivated: sidePanel.toggleVisible()
     }
 
-    Controls.Shortcut 
+    Controls.Shortcut
     {
         sequence: "CTRL+F7"
         onActivated: bottomPanel.toggleVisible()
     }
 
-    Controls.Shortcut 
-    { 
+    Controls.Shortcut
+    {
         sequence: "CTRL+F11"
         onActivated: togglePreviewMode();
     }
@@ -51,68 +51,60 @@ Controls.ApplicationWindow
         onActivated: toggleFullScreenMode();
     }
 
-    function togglePreviewMode() 
-    {
-        stateWrapper.state = (stateWrapper.state == "normal") ? "preview" : "normal";
-    }
-
-    Item 
+    Item
     {
         id: stateWrapper
 
         state: "normal"
 
-        states: 
+        states:
         [
-            State 
+            State
             {
                 name: "preview"
 
-                StateChangeScript { script: rightPanel.setVisible(false) }
+                StateChangeScript { script: sidePanel.setVisible(false) }
                 StateChangeScript { script: bottomPanel.setVisible(false) }
 
-                PropertyChanges 
+                PropertyChanges
                 {
                     target: window
                     header: null
                 }
 
-                PropertyChanges 
+                PropertyChanges
                 {
-                    target: mainMenu
+                    target:  mainMenu
                     visible: false
                 }
             },
-            State 
+
+            State
             {
                 name: "normal"
 
-                StateChangeScript { script: rightPanel.setVisible(true) }
+                StateChangeScript { script: sidePanel.setVisible(true) }
                 StateChangeScript { script: bottomPanel.setVisible(true) }
             }
         ]
     }
 
-    function toggleFullScreenMode()
-    {
-        fsStateWrapper.state = (fsStateWrapper.state == "windowedMode") ? "fullScreenMode" : "windowedMode";
-    }
-
-    Item 
+    Item
     {
         id: fsStateWrapper
 
         state: "windowedMode"
 
-        states: 
+        states:
         [
-            State 
+            State
             {
                 name: "windowedMode"
 
                 StateChangeScript { script: window.showNormal() }
             },
-            State 
+
+            State
             {
                 name: "fullScreenMode"
 
@@ -121,20 +113,25 @@ Controls.ApplicationWindow
         ]
     }
 
-    MainMenu 
+    function togglePreviewMode()
     {
-        id: mainMenu
+        stateWrapper.state = (stateWrapper.state == "normal") ? "preview" : "normal";
     }
 
-    header: Controls.ToolBar 
+    function toggleFullScreenMode()
+    {
+        fsStateWrapper.state = (fsStateWrapper.state == "windowedMode") ? "fullScreenMode" : "windowedMode";
+    }
+
+    header: Controls.ToolBar
     {
         id: toolBar
 
-        RowLayout 
+        RowLayout
         {
             anchors.fill: parent
 
-            Controls.ToolButton 
+            Controls.ToolButton
             {
                 text: qsTr("Menu")
                 onClicked: mainMenu.open()
@@ -142,7 +139,7 @@ Controls.ApplicationWindow
 
             Item { Layout.fillWidth: true }
 
-            Controls.ToolButton 
+            Controls.ToolButton
             {
                 text: qsTr("Pipeline")
                 onClicked: pipelineMenu.open()
@@ -156,12 +153,12 @@ Controls.ApplicationWindow
                 }
             }
 
-            Controls.ToolButton 
+            Controls.ToolButton
             {
                 text: qsTr("Tools")
                 onClicked: toolsMenu.open()
 
-                Controls.Menu 
+                Controls.Menu
                 {
                     id: toolsMenu
                     y: toolBar.height
@@ -171,26 +168,26 @@ Controls.ApplicationWindow
                 }
             }
 
-            Controls.ToolButton 
+            Controls.ToolButton
             {
                 text: qsTr("View")
                 onClicked: viewMenu.open()
 
-                Controls.Menu 
+                Controls.Menu
                 {
                     id: viewMenu
                     y: toolBar.height
 
-                    Controls.MenuItem 
-                    { 
+                    Controls.MenuItem
+                    {
                         text: bottomPanel.isVisible() ? qsTr("Hide Console") : qsTr("Show Console")
                         onTriggered: bottomPanel.toggleVisible()
                     }
 
-                    Controls.MenuItem 
+                    Controls.MenuItem
                     {
-                        text: rightPanel.isVisible() ? qsTr("Hide Side Panel") : qsTr("Show Side Panel")
-                        onTriggered: rightPanel.toggleVisible()
+                        text: sidePanel.isVisible() ? qsTr("Hide Side Panel") : qsTr("Show Side Panel")
+                        onTriggered: sidePanel.toggleVisible()
                     }
                 }
             }
@@ -209,6 +206,11 @@ Controls.ApplicationWindow
         }
     }
 
+    MainMenu
+    {
+        id: mainMenu
+    }
+
     Item
     {
         anchors.left:   parent.left
@@ -218,12 +220,12 @@ Controls.ApplicationWindow
 
         Controls.Panel
         {
-            id: rightPanel
+            id: sidePanel
 
             position:    'right'
             minimumSize: 240
 
-            Controls.ScrollArea 
+            Controls.ScrollArea
             {
                 anchors.fill: parent
 
@@ -233,15 +235,23 @@ Controls.ApplicationWindow
                 flickableDirection: Flickable.VerticalFlick
                 boundsBehavior: Flickable.StopAtBounds
 
-                PropertyEditor.PropertyEditor 
+                PropertyEditor.PropertyEditor
                 {
                     id: propertyEditor
 
-                    pipelineInterface: Qt.createComponent("PipelineDummy.qml").createObject(propertyEditor);
-                    path: 'root'
+                    pipelineInterface: propertyInterface
+                    path:              'root'
 
-                    Component.onCompleted: propertyEditor.update()
+                    Component.onCompleted:
+                    {
+                        propertyEditor.update()
+                    }
                 }
+            }
+
+            DemoPropertyInterface
+            {
+                id: propertyInterface
             }
         }
     }
@@ -274,17 +284,18 @@ Controls.ApplicationWindow
         }
     }
 
-    MessageForwarder 
+    MessageForwarder
     {
         id: message_forwarder
 
-        onMessageReceived: 
+        onMessageReceived:
         {
             var stringType;
+
             if (type == MessageForwarder.Debug)
                 stringType = "Debug";
             else if (type == MessageForwarder.Warning)
-                stringType = "Warning"; 
+                stringType = "Warning";
             else if (type == MessageForwarder.Critical)
                 stringType = "Critical";
             else if (type == MessageForwarder.Fatal)
@@ -299,17 +310,17 @@ Controls.ApplicationWindow
     {
         id: settings
 
-        property int width: 800
+        property int width:  800
         property int height: 600
         property int x
         property int y
     }
 
-    Component.onDestruction: 
+    Component.onDestruction:
     {
-        settings.x = x;
-        settings.y = y;
-        settings.width = width;
+        settings.x      = x;
+        settings.y      = y;
+        settings.width  = width;
         settings.height = height;
     }
 }

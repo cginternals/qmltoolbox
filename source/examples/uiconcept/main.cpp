@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     app.installTranslator(&translator);
 
     // Load and show QML
-    engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uiconcept/window.qml"));
+    engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uiconcept/uiconcept.qml"));
 
     // Run application
     int res = app.exec();
