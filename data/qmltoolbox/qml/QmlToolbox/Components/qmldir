@@ -1,8 +1,6 @@
 
 module Components
 
-Panel               1.0 Panel.qml
-
 AutocompletePopup   1.0 AutocompletePopup.qml
 CommandLine         1.0 CommandLine.qml
 Console             1.0 Console.qml

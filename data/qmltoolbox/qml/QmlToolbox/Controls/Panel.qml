@@ -32,19 +32,19 @@ Item
 
     clip: true
 
-    function togglePanel()
-    {
-        item.visible = !item.visible;
-    }
-
-    function isPanelVisible()
+    function isVisible()
     {
         return item.visible;
     }
 
-    function setPanelVisibility(visible)
+    function setVisible(visible)
     {
         item.visible = visible;
+    }
+
+    function toggleVisible()
+    {
+        item.visible = !item.visible;
     }
 
     Item

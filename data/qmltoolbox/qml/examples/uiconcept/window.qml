@@ -24,13 +24,13 @@ Controls.ApplicationWindow
     Controls.Shortcut 
     {
         sequence: "CTRL+F6"
-        onActivated: rightPanel.togglePanel()
+        onActivated: rightPanel.toggleVisible()
     }
 
     Controls.Shortcut 
     {
         sequence: "CTRL+F7"
-        onActivated: bottomPanel.togglePanel()
+        onActivated: bottomPanel.toggleVisible()
     }
 
     Controls.Shortcut 
@@ -68,8 +68,8 @@ Controls.ApplicationWindow
             {
                 name: "preview"
 
-                StateChangeScript { script: rightPanel.setPanelVisibility(false) }
-                StateChangeScript { script: bottomPanel.setPanelVisibility(false) }
+                StateChangeScript { script: rightPanel.setVisible(false) }
+                StateChangeScript { script: bottomPanel.setVisible(false) }
 
                 PropertyChanges 
                 {
@@ -87,8 +87,8 @@ Controls.ApplicationWindow
             {
                 name: "normal"
 
-                StateChangeScript { script: rightPanel.setPanelVisibility(true) }
-                StateChangeScript { script: bottomPanel.setPanelVisibility(true) }
+                StateChangeScript { script: rightPanel.setVisible(true) }
+                StateChangeScript { script: bottomPanel.setVisible(true) }
             }
         ]
     }
@@ -192,14 +192,14 @@ Controls.ApplicationWindow
 
                     Controls.MenuItem 
                     { 
-                        text: bottomPanel.isPanelVisible() ? qsTr("Hide Console") : qsTr("Show Console")
-                        onTriggered: bottomPanel.togglePanel()
+                        text: bottomPanel.isVisible() ? qsTr("Hide Console") : qsTr("Show Console")
+                        onTriggered: bottomPanel.toggleVisible()
                     }
 
                     Controls.MenuItem 
                     {
-                        text: rightPanel.isPanelVisible() ? qsTr("Hide Side Panel") : qsTr("Show Side Panel")
-                        onTriggered: rightPanel.togglePanel()
+                        text: rightPanel.isVisible() ? qsTr("Hide Side Panel") : qsTr("Show Side Panel")
+                        onTriggered: rightPanel.toggleVisible()
                     }
                 }
             }
@@ -233,7 +233,7 @@ Controls.ApplicationWindow
             anchors.bottom: parent.bottom
         }
 
-        Components.Panel
+        Controls.Panel
         {
             id: rightPanel
 
@@ -261,10 +261,11 @@ Controls.ApplicationWindow
                 }
 
                 verticalScrollbar: true
-            }        }
+            }
+        }
     }
 
-    Components.Panel
+    Controls.Panel
     {
         id: bottomPanel
 
