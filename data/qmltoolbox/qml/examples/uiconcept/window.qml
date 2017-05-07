@@ -316,7 +316,7 @@ Controls.ApplicationWindow
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                autocompleteModel: ["console", "if", "for", "while", "function", "exit"]
+                autocompleteModel: ["console", "Math", "Date", "if", "for", "while", "function", "exit"]
 
                 onSubmitted: 
                 {

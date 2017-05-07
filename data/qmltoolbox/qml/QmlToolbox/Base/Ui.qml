@@ -24,6 +24,8 @@ Item
 
     property QtObject style: QtObject
     {
+        property real mediumPadding: 12
+
         property real panePadding: 12
 
         property color panelHandleColor: '#66666666'
@@ -48,5 +50,9 @@ Item
 
         property color textAreaColor:   '#ffffff'
         property int   textAreaPadding: 8
+
+        property color itemColor:            '#ffffff'
+        property color itemColorHighlighted: '#dddddd'
+        property int   itemPadding:          4
     }
 }

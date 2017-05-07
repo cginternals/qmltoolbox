@@ -2,6 +2,7 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 
+import QmlToolbox.Base 1.0
 import QmlToolbox.Controls 1.0
 
 
@@ -142,30 +143,19 @@ Control
         }
     }
 
-/*
     AutocompletePopup
     {
         id: autocomplete
 
-        y:     input.y - (height + 12)
+        parent: item
+
+        y:     input.y - (height + Ui.style.mediumPadding)
         width: 200
 
         onSelected:
         {
             input.insert(input.length, model[index]);
-        }
-    }
-*/
-
-    Item
-    {
-        id: autocomplete
-
-        property var model
-        property Item listItem
-
-        function open()
-        {
+            input.forceActiveFocus();
         }
     }
 }

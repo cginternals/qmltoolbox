@@ -11,8 +11,10 @@ import QmlToolbox.Base 1.0
 *
 *  Default implementation of Popup using Controls 2.0
 */
-Popup 
+Popup
 {
+    closePolicy: Popup.CloseOnPressOutside
+
     DebugItem
     {
     }

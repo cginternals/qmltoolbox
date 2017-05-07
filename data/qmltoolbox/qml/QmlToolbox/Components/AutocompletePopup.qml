@@ -1,7 +1,6 @@
 
-import QtQuick 2.4
-import QtQuick.Layouts 1.1
-import QtQuick.Controls 2.0
+
+import QtQuick 2.0
 
 import QmlToolbox.Base 1.0
 import QmlToolbox.Controls 1.0
@@ -26,8 +25,7 @@ Popup
     width:  200
     height: calculateHeight()
 
-    padding:     0
-    closePolicy: Popup.CloseOnPressOutside
+    padding: 0
 
     Label
     {
@@ -43,10 +41,7 @@ Popup
         verticalLayoutDirection: ListView.BottomToTop
         boundsBehavior:          Flickable.StopAtBounds
         clip:                    true
-
-        ScrollIndicator.vertical: ScrollIndicator
-        {
-        }
+        focus:                   true
 
         delegate: ItemDelegate
         {
@@ -81,6 +76,11 @@ Popup
             item.selected(index);
             item.close();
         }
+    }
+
+    onOpened:
+    {
+        list.forceActiveFocus();
     }
 
     function rowHeight()

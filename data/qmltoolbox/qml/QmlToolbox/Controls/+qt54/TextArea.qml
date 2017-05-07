@@ -90,8 +90,18 @@ Rectangle
     {
     }
 
+    function forceActiveFocus()
+    {
+        edit.forceActiveFocus();
+    }
+
     function clear()
     {
         item.text = '';
+    }
+
+    function insert(position, text)
+    {
+        edit.insert(position, text);
     }
 }
