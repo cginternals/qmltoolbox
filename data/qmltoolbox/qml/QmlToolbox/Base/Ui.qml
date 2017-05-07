@@ -41,8 +41,12 @@ Item
         property color  consoleTextColorWarning:  '#ecc674'
         property color  consoleTextColorDebug:    '#c5c8c6'
         property color  consoleTextColorCommand:  '#c5c8c6'
+        property color  consoleBackgroundColor:   '#1d1f21'
+        property color  consoleSelectionColor:    '#3f4042'
 
-        property color consoleBackgroundColor: '#1d1f21'
-        property color consoleSelectionColor:  '#3f4042'
+        property color disabledColor:   '#777777'
+
+        property color textAreaColor:   '#ffffff'
+        property int   textAreaPadding: 8
     }
 }

@@ -274,6 +274,8 @@ Controls.ApplicationWindow
         {
             anchors.fill: parent
 
+            spacing: 0
+
             Components.Console 
             {
                 id: console_view
