@@ -27,7 +27,7 @@ QmlApplicationEngine::QmlApplicationEngine()
     QmlUtils * qmlUtils = new QmlUtils(this);
     rootContext()->setContextProperty("QmlUtils", qmlUtils);
 
-    qmlRegisterType<QmlMessageForwarder>("com.cginternals.qmltoolbox", 1, 0, "MessageForwarder");
+    qmlRegisterType<QmlMessageForwarder>("QmlToolbox.Base", 1, 0, "MessageForwarder");
 
 #ifdef QMLTOOLBOX_QT54
     auto fileSelector = QQmlFileSelector::get(this);

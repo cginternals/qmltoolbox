@@ -3,14 +3,12 @@ import QtQuick 2.4
 import QtQuick.Layouts 1.1
 
 import QmlToolbox.Base           1.0
-import QmlToolbox.Controls       1.0 as Controls
-import QmlToolbox.Components     1.0 as Components
-import QmlToolbox.PropertyEditor 1.0 as PropertyEditor
-
-import com.cginternals.qmltoolbox 1.0
+import QmlToolbox.Controls       1.0
+import QmlToolbox.Components     1.0
+import QmlToolbox.PropertyEditor 1.0
 
 
-Controls.ApplicationWindow
+ApplicationWindow
 {
     id: window
 
@@ -21,31 +19,31 @@ Controls.ApplicationWindow
     width:  settings.width
     height: settings.height
 
-    Controls.Shortcut
+    Shortcut
     {
         sequence: "CTRL+F6"
         onActivated: sidePanel.toggleVisible()
     }
 
-    Controls.Shortcut
+    Shortcut
     {
         sequence: "CTRL+F7"
         onActivated: bottomPanel.toggleVisible()
     }
 
-    Controls.Shortcut
+    Shortcut
     {
         sequence: "CTRL+F11"
         onActivated: togglePreviewMode();
     }
 
-    Controls.Shortcut
+    Shortcut
     {
         sequence: "F11"
         onActivated: toggleFullScreenMode();
     }
 
-    Controls.Shortcut
+    Shortcut
     {
         sequence: "ALT+RETURN"
         onActivated: toggleFullScreenMode();
@@ -122,7 +120,7 @@ Controls.ApplicationWindow
         fsStateWrapper.state = (fsStateWrapper.state == "windowedMode") ? "fullScreenMode" : "windowedMode";
     }
 
-    header: Controls.ToolBar
+    header: ToolBar
     {
         id: toolBar
 
@@ -130,7 +128,7 @@ Controls.ApplicationWindow
         {
             anchors.fill: parent
 
-            Controls.ToolButton
+            ToolButton
             {
                 text: qsTr("Menu")
                 onClicked: mainMenu.open()
@@ -138,57 +136,57 @@ Controls.ApplicationWindow
 
             Item { Layout.fillWidth: true }
 
-            Controls.ToolButton
+            ToolButton
             {
                 text: qsTr("Pipeline")
                 onClicked: pipelineMenu.open()
 
-                Controls.Menu {
+                Menu {
                     id: pipelineMenu
                     y: toolBar.height
 
-                    Controls.MenuItem { text: qsTr("Edit Pipeline") }
+                    MenuItem { text: qsTr("Edit Pipeline") }
                 }
             }
 
-            Controls.ToolButton
+            ToolButton
             {
                 text: qsTr("Tools")
                 onClicked: toolsMenu.open()
 
-                Controls.Menu
+                Menu
                 {
                     id: toolsMenu
                     y: toolBar.height
 
-                    Controls.MenuItem { text: qsTr("Take Screenshot") }
-                    Controls.MenuItem { text: qsTr("Record Video") }
+                    MenuItem { text: qsTr("Take Screenshot") }
+                    MenuItem { text: qsTr("Record Video") }
                 }
             }
 
-            Controls.ToolButton
+            ToolButton
             {
                 text: qsTr("View")
                 onClicked: viewMenu.open()
 
-                Controls.Menu
+                Menu
                 {
                     id: viewMenu
                     y: toolBar.height
 
-                    Controls.MenuItem
+                    MenuItem
                     {
                         text: sidePanel.isVisible() ? qsTr("Hide Side Panel") : qsTr("Show Side Panel")
                         onTriggered: sidePanel.toggleVisible()
                     }
 
-                    Controls.MenuItem
+                    MenuItem
                     {
                         text: bottomPanel.isVisible() ? qsTr("Hide Console") : qsTr("Show Console")
                         onTriggered: bottomPanel.toggleVisible()
                     }
 
-                    Controls.MenuItem
+                    MenuItem
                     {
                         text: sidePanel.isVisible() ? qsTr("Hide All") : qsTr("Show All")
 
@@ -202,13 +200,13 @@ Controls.ApplicationWindow
                 }
             }
 
-            Controls.ToolButton
+            ToolButton
             {
                 text: qsTr("Debug")
                 onClicked: Ui.debugMode = !Ui.debugMode
             }
 
-            Controls.ToolButton
+            ToolButton
             {
                 text: (fsStateWrapper.state == "windowedMode") ? qsTr("Fullscreen") : qsTr("Windowed")
                 onClicked: window.toggleFullScreenMode()
@@ -241,14 +239,14 @@ Controls.ApplicationWindow
         }
 
         // Side Panel
-        Controls.Panel
+        Panel
         {
             id: sidePanel
 
             position:    'right'
             minimumSize: 240
 
-            Controls.ScrollArea
+            ScrollArea
             {
                 anchors.fill: parent
 
@@ -258,7 +256,7 @@ Controls.ApplicationWindow
                 flickableDirection: Flickable.VerticalFlick
                 boundsBehavior: Flickable.StopAtBounds
 
-                PropertyEditor.PropertyEditor
+                PropertyEditor
                 {
                     id: propertyEditor
 
@@ -280,7 +278,7 @@ Controls.ApplicationWindow
     }
 
     // Bottom Panel
-    Controls.Panel
+    Panel
     {
         id: bottomPanel
 
@@ -288,7 +286,7 @@ Controls.ApplicationWindow
         minimumSize: 150
         visible:     false
 
-        Components.ScriptConsole
+        ScriptConsole
         {
             id: scriptConsole
 

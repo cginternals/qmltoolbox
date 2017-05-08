@@ -50,7 +50,6 @@ set(headers
     ${include_path}/AbstractMessageReceiver.h
     ${include_path}/ForwardingStreamBuffer.h
     ${include_path}/QmlApplicationEngine.h
-    ${include_path}/QmlEngine.h
     ${include_path}/QmlMessageForwarder.h
     ${include_path}/QmlUtils.h
 )
@@ -61,7 +60,6 @@ set(sources
     ${source_path}/AbstractMessageReceiver.cpp
     ${source_path}/ForwardingStreamBuffer.cpp
     ${source_path}/QmlApplicationEngine.cpp
-    ${source_path}/QmlEngine.cpp
     ${source_path}/QmlMessageForwarder.cpp
     ${source_path}/QmlUtils.cpp
 )
