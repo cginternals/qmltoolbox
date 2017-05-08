@@ -84,7 +84,6 @@ Controls.ApplicationWindow
                 name: "normal"
 
                 StateChangeScript { script: sidePanel.setVisible(true) }
-                StateChangeScript { script: bottomPanel.setVisible(true) }
             }
         ]
     }
@@ -148,8 +147,7 @@ Controls.ApplicationWindow
                     id: pipelineMenu
                     y: toolBar.height
 
-                    Controls.MenuItem { text: qsTr("Details") }
-                    Controls.MenuItem { text: qsTr("Edit") }
+                    Controls.MenuItem { text: qsTr("Edit Pipeline") }
                 }
             }
 
@@ -163,8 +161,8 @@ Controls.ApplicationWindow
                     id: toolsMenu
                     y: toolBar.height
 
-                    Controls.MenuItem { text: qsTr("Record") }
                     Controls.MenuItem { text: qsTr("Take Screenshot") }
+                    Controls.MenuItem { text: qsTr("Record Video") }
                 }
             }
 
@@ -180,14 +178,26 @@ Controls.ApplicationWindow
 
                     Controls.MenuItem
                     {
+                        text: sidePanel.isVisible() ? qsTr("Hide Side Panel") : qsTr("Show Side Panel")
+                        onTriggered: sidePanel.toggleVisible()
+                    }
+
+                    Controls.MenuItem
+                    {
                         text: bottomPanel.isVisible() ? qsTr("Hide Console") : qsTr("Show Console")
                         onTriggered: bottomPanel.toggleVisible()
                     }
 
                     Controls.MenuItem
                     {
-                        text: sidePanel.isVisible() ? qsTr("Hide Side Panel") : qsTr("Show Side Panel")
-                        onTriggered: sidePanel.toggleVisible()
+                        text: sidePanel.isVisible() ? qsTr("Hide All") : qsTr("Show All")
+
+                        onTriggered:
+                        {
+                            var visible = sidePanel.isVisible();
+                            sidePanel  .setVisible(!visible);
+                            bottomPanel.setVisible(!visible);
+                        }
                     }
                 }
             }
@@ -211,6 +221,7 @@ Controls.ApplicationWindow
         id: mainMenu
     }
 
+    // Wrapper containing main page and side panel
     Item
     {
         anchors.left:   parent.left
@@ -218,6 +229,18 @@ Controls.ApplicationWindow
         anchors.top:    parent.top
         anchors.bottom: bottomPanel.top
 
+        // Main page
+        Rectangle
+        {
+            anchors.left:   parent.left
+            anchors.right:  sidePanel.left
+            anchors.top:    parent.top
+            anchors.bottom: parent.bottom
+
+            color: Ui.style.backgroundColor
+        }
+
+        // Side Panel
         Controls.Panel
         {
             id: sidePanel
@@ -256,12 +279,14 @@ Controls.ApplicationWindow
         }
     }
 
+    // Bottom Panel
     Controls.Panel
     {
         id: bottomPanel
 
         position:    'bottom'
         minimumSize: 150
+        visible:     false
 
         Components.ScriptConsole
         {

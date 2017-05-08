@@ -25,8 +25,8 @@ Item
     readonly property bool horizontal: (item.position === 'left' || item.position === 'right')
     readonly property bool vertical:   (item.position === 'top'  || item.position === 'bottom')
 
-    width:  horizontal ? Math.max(Math.min(size, maximumSize), minimumSize) : 0
-    height: vertical   ? Math.max(Math.min(size, maximumSize), minimumSize) : 0
+    width:  visible && horizontal ? Math.max(Math.min(size, maximumSize), minimumSize) : 0
+    height: visible && vertical   ? Math.max(Math.min(size, maximumSize), minimumSize) : 0
 
     implicitWidth:  content.implicitWidth
     implicitHeight: content.implicitHeight
