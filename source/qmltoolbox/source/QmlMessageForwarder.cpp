@@ -10,6 +10,8 @@ namespace qmltoolbox
 
 QmlMessageForwarder::QmlMessageForwarder()
 {
+    qRegisterMetaType<qmltoolbox::QmlMessageForwarder::MessageType>();
+
     attach();
 }
 

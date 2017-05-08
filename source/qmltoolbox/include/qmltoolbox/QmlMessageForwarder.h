@@ -53,7 +53,7 @@ signals:
     *  @param[in] message
     *    Message string
     */
-    void messageReceived(MessageType type, const QDateTime & timestamp, const QString & message);
+    void messageReceived(qmltoolbox::QmlMessageForwarder::MessageType type, const QDateTime & timestamp, const QString & message);
 
 
 public:
