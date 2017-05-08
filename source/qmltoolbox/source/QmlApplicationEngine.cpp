@@ -9,6 +9,7 @@
 #include <qmltoolbox/qmltoolbox-version.h>
 #include <qmltoolbox/QmlUtils.h>
 #include <qmltoolbox/QmlMessageForwarder.h>
+#include <qmltoolbox/Settings.h>
 
     
 namespace qmltoolbox
@@ -28,6 +29,7 @@ QmlApplicationEngine::QmlApplicationEngine()
     rootContext()->setContextProperty("QmlUtils", qmlUtils);
 
     qmlRegisterType<QmlMessageForwarder>("QmlToolbox.Base", 1, 0, "MessageForwarder");
+    qmlRegisterType<Settings>           ("QmlToolbox.Base", 1, 0, "Settings");
 
 #ifdef QMLTOOLBOX_QT54
     auto fileSelector = QQmlFileSelector::get(this);

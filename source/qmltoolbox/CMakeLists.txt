@@ -52,6 +52,7 @@ set(headers
     ${include_path}/QmlApplicationEngine.h
     ${include_path}/QmlMessageForwarder.h
     ${include_path}/QmlUtils.h
+    ${include_path}/Settings.h
 )
 
 set(sources
@@ -62,6 +63,7 @@ set(sources
     ${source_path}/QmlApplicationEngine.cpp
     ${source_path}/QmlMessageForwarder.cpp
     ${source_path}/QmlUtils.cpp
+    ${source_path}/Settings.cpp
 )
 
 # Group source files

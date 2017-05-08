@@ -203,7 +203,11 @@ ApplicationWindow
             ToolButton
             {
                 text: qsTr("Debug")
-                onClicked: Ui.debugMode = !Ui.debugMode
+
+                onClicked:
+                {
+                    settings.debug = !settings.debug;
+                }
             }
 
             ToolButton
@@ -328,15 +332,25 @@ ApplicationWindow
         }
     }
 
-//  Labs.Settings
-    QtObject
+    Settings
     {
         id: settings
 
-        property int width:  800
-        property int height: 600
-        property int x
-        property int y
+        property int  x:      100
+        property int  y:      100
+        property int  width:  800
+        property int  height: 600
+        property bool debug:  false
+
+        onDebugChanged:
+        {
+            Ui.debugMode = debug;
+        }
+    }
+
+    Component.onCompleted:
+    {
+        settings.load();
     }
 
     Component.onDestruction:
