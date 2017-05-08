@@ -8,33 +8,86 @@ import QmlToolbox.Controls 1.0
 
 Item
 {
-    ColumnLayout
+    anchors.fill: parent
+
+    property var settings: null
+
+    ScrollArea
     {
-        anchors.top:   parent.top
-        anchors.left:  parent.left
-        anchors.right: parent.right
+        anchors.fill: parent
 
-        Label
+        contentHeight: pane.height
+        contentWidth:  pane.width
+
+        Pane
         {
-            text: qsTr("Settings")
-            font.pointSize: Ui.style.fontSizeLarge
-        }
+            id: pane
 
-        Slider
-        {
-            id: slider
-        }
+            implicitWidth:  grid.implicitWidth  + 2 * padding
+            implicitHeight: grid.implicitHeight + 2 * padding
 
-        Label
-        {
-            id: sliderLabel
+            GridLayout
+            {
+                id: grid
 
-            text: qsTr("Slider set to %1").arg(slider.value.toFixed(2));
-        }
+                anchors.fill: parent
 
-        Button
-        {
-            text: qsTr("Save")
+                columns:       2
+                columnSpacing: 16
+                rowSpacing:    8
+
+                Label
+                {
+                    text: qsTr('Settings')
+                    font.pointSize: Ui.style.fontSizeLarge
+
+                    Layout.columnSpan: 2
+                }
+
+                Item
+                {
+                    Layout.columnSpan: 2
+                    Layout.fillHeight: true
+                }
+
+                Label
+                {
+                    Layout.alignment: Qt.AlignRight
+
+                    text: 'Enable Debug Mode'
+                }
+
+                Switch
+                {
+                    text: ''
+                    checked: settings.debugMode
+
+                    onClicked:
+                    {
+                        settings.debugMode = !settings.debugMode;
+                    }
+                }
+
+                Label
+                {
+                    Layout.alignment: Qt.AlignRight
+
+                    text: 'Panel Position'
+                }
+
+                ComboBox
+                {
+                    model: [ 'left', 'right' ]
+
+                    currentIndex: model.indexOf(settings.panelPosition)
+
+                    onActivated:
+                    {
+                        var position = model[index];
+                        settings.panelPosition = position;
+                    }
+                }
+            }
         }
     }
 }

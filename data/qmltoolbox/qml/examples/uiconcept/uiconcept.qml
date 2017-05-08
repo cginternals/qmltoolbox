@@ -202,16 +202,6 @@ ApplicationWindow
 
             ToolButton
             {
-                text: qsTr("Debug")
-
-                onClicked:
-                {
-                    settings.debug = !settings.debug;
-                }
-            }
-
-            ToolButton
-            {
                 text: (fsStateWrapper.state == "windowedMode") ? qsTr("Fullscreen") : qsTr("Windowed")
                 onClicked: window.toggleFullScreenMode()
             }
@@ -221,6 +211,8 @@ ApplicationWindow
     MainMenu
     {
         id: mainMenu
+
+        settingsObj: settings
     }
 
     // Wrapper containing main page and side panel
@@ -234,8 +226,8 @@ ApplicationWindow
         // Main page
         Rectangle
         {
-            anchors.left:   parent.left
-            anchors.right:  sidePanel.left
+            anchors.left:   sidePanel.position == 'left' ? sidePanel.right : parent.left
+            anchors.right:  sidePanel.position == 'left' ? parent.right : sidePanel.left
             anchors.top:    parent.top
             anchors.bottom: parent.bottom
 
@@ -247,7 +239,7 @@ ApplicationWindow
         {
             id: sidePanel
 
-            position:    'right'
+            position:    settings.panelPosition
             minimumSize: 240
 
             ScrollArea
@@ -336,15 +328,16 @@ ApplicationWindow
     {
         id: settings
 
-        property int  x:      100
-        property int  y:      100
-        property int  width:  800
-        property int  height: 600
-        property bool debug:  false
+        property int    x:             100
+        property int    y:             100
+        property int    width:         800
+        property int    height:        600
+        property bool   debugMode:     false
+        property string panelPosition: 'left'
 
-        onDebugChanged:
+        onDebugModeChanged:
         {
-            Ui.debugMode = debug;
+            Ui.debugMode = debugMode;
         }
     }
 

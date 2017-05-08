@@ -12,6 +12,7 @@ Drawer
     property string activePage:     ''
     property real   fullWidth:      parent.width
     property real   collapsedWidth: 0.3 * fullWidth
+    property var    settingsObj:    null
 
     width:  activePage != '' ? fullWidth : collapsedWidth
     height: parent.height
@@ -41,7 +42,7 @@ Drawer
 
         ToolButton
         {
-            text: qsTr("Back")
+            text: qsTr("Close")
             flat: true
 
             onClicked:
@@ -110,11 +111,13 @@ Drawer
         anchors.top:    parent.top
         anchors.bottom: parent.bottom
 
-        visible: drawer.activePage == 'settings'
+        visible:  drawer.activePage == 'settings'
 
         SettingsPage
         {
             anchors.fill: parent
+
+            settings: drawer.settingsObj
         }
     }
 }
