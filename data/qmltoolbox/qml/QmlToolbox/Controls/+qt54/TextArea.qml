@@ -17,7 +17,7 @@ Rectangle
     id: item
 
     property string placeholderText: ''
-    property int    padding:         Ui.style.textAreaPadding
+    property int    padding:         Ui.style.mediumPadding
 
     property alias activeFocusOnPress:           edit.activeFocusOnPress
     property alias baseUrl:                      edit.baseUrl

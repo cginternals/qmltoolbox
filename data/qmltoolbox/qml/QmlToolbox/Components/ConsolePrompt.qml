@@ -149,7 +149,7 @@ Control
 
         parent: item
 
-        y:     input.y - (height + Ui.style.mediumPadding)
+        y:     input.y - (height + Ui.style.largePadding)
         width: 200
 
         onSelected:

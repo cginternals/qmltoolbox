@@ -3,4 +3,5 @@ module QmlToolbox.Base
 
 singleton Ui  1.0 Ui.qml
 
-DebugItem     1.0 DebugItem.qml
+StyleDefault 1.0 StyleDefault.qml
+DebugItem    1.0 DebugItem.qml

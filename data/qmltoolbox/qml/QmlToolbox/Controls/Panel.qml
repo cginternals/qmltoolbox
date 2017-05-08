@@ -75,7 +75,7 @@ Item
             anchors.fill:    parent
             anchors.margins: 2
 
-            color: Ui.style.panelHandleColor
+            color: Ui.style.controlColor
         }
 
         onPressed:

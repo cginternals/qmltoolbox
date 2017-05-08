@@ -21,7 +21,7 @@ Item
     property bool   highlighted: false
     property string text:        ''
 
-    property int padding:       Ui.style.itemPadding
+    property int padding:       Ui.style.smallPadding
     property int leftPadding:   padding
     property int rightPadding:  padding
     property int topPadding:    padding

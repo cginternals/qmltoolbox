@@ -25,7 +25,7 @@ Rectangle
     visible: Ui.debugMode
 
     color: 'transparent'
-    border.color: Ui.debugColor
+    border.color: Ui.style.debugColor
     border.width: 1
 
     opacity: mouseArea.containsMouse ? 1.0 : 0.33
@@ -55,11 +55,11 @@ Rectangle
         wrapMode: Text.WordWrap
 
         opacity: 0.66
-        color: Ui.debugColor
+        color: Ui.style.debugColor
 
         visible: mouseArea.containsMouse
 
-        text: "x" + parent.parent.x + ", y" + parent.parent.y 
-            + ", w" + parent.parent.width + ", h" + parent.parent.height
+        text: "x" + parent.parent.x + ", y" + parent.parent.y +
+              ", w" + parent.parent.width + ", h" + parent.parent.height
     }
 }
