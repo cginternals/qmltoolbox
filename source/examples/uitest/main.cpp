@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     qmltoolbox::QmlApplicationEngine engine;
 
     // Load and show QML
-    engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uitest/uitest.qml"));
+    engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uitest/Main.qml"));
 
     // Run application
     int res = app.exec();
