@@ -1,0 +1,5 @@
+libqmltoolbox (1.1.0-0) UNRELEASED; urgency=medium
+
+  * Initial release.
+
+ -- Willy Scheibel <willy.scheibel@cginternals.com>  Tue, 09 May 2017 10:35:00 +0200
