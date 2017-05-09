@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uiconcept/Main.qml"));
 
     // Run application
-    int res = app.exec();
+    const auto res = app.exec();
 
     // Stop application
     return res;

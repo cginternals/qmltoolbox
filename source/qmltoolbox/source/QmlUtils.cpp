@@ -19,7 +19,7 @@ QmlUtils::~QmlUtils()
 {
 }
 
-QString QmlUtils::urlToLocaFile(const QUrl & url) const
+QString QmlUtils::urlToLocalFile(const QUrl & url) const
 {
     if (url.isLocalFile())
     {

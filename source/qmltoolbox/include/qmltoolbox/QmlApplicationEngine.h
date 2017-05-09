@@ -41,7 +41,7 @@ public:
     *  @return
     *    Path to qmltoolbox module
     */
-    QString qmlToolboxModulePath() const;
+    const QString & qmlToolboxModulePath() const;
 
 
 protected:

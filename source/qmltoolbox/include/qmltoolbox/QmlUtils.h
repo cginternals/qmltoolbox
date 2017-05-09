@@ -52,7 +52,7 @@ public:
     *  @return
     *    Local file path (if url points to a local file), else URL string representation
     */
-    Q_INVOKABLE QString urlToLocaFile(const QUrl & url) const;
+    Q_INVOKABLE QString urlToLocalFile(const QUrl & url) const;
 };
 
 

@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
 #ifdef QMLTOOLBOX_QT57
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
+
     QGuiApplication app(argc, argv);
 
     // Create QtQuick engine
@@ -18,7 +19,7 @@ int main(int argc, char *argv[])
     engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uitest/Main.qml"));
 
     // Run application
-    int res = app.exec();
+    const auto res = app.exec();
 
     // Stop application
     return res;

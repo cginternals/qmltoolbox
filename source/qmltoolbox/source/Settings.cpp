@@ -27,10 +27,10 @@ void Settings::load()
 
     // Load properties
     QSettings settings;
-    for (QString name : m_properties)
+    for (const auto & name : m_properties)
     {
         // Load value
-        QVariant value = settings.value(name);
+        const auto value = settings.value(name);
 
         // Set value
         this->setProperty(name.toStdString().c_str(), value);
@@ -49,10 +49,10 @@ void Settings::save()
 
     // Save properties
     QSettings settings;
-    for (QString name : m_properties)
+    for (const auto & name : m_properties)
     {
         // Get value
-        QVariant value = this->property(name.toStdString().c_str());
+        const auto value = this->property(name.toStdString().c_str());
 
         // Save value
         settings.setValue(name, value);
@@ -73,8 +73,8 @@ void Settings::initialize()
     for (int i = 0; i < meta->propertyCount(); i++)
     {
         // Get property
-        QMetaProperty property = meta->property(i);
-        QString name = property.name();
+        const auto property = meta->property(i);
+        const auto name = QString(property.name());
 
         // Ignore 'objectName'
         if (name == "objectName")
@@ -88,7 +88,9 @@ void Settings::initialize()
         // Connect to property change event
         if (property.hasNotifySignal())
         {
+            // Invariant: the metaobject of this is immutable
             static const int propertyChangedIndex = meta->indexOfSlot("onQmlPropertyChanged()");
+
             QMetaObject::connect(this, property.notifySignalIndex(), this, propertyChangedIndex);
         }
     }

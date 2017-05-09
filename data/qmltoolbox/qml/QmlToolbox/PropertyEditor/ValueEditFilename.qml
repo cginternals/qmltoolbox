@@ -62,7 +62,7 @@ Item
 
         onAccepted:
         {
-            var path = QmlUtils.urlToLocaFile(fileUrl);
+            var path = QmlUtils.urlToLocalFile(fileUrl);
 
             input.text = path;
 

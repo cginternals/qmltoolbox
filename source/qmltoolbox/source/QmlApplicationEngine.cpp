@@ -42,7 +42,7 @@ QmlApplicationEngine::~QmlApplicationEngine()
 {
 }
 
-QString QmlApplicationEngine::qmlToolboxModulePath() const
+const QString & QmlApplicationEngine::qmlToolboxModulePath() const
 {
     return m_qmlToolboxPath;
 }
