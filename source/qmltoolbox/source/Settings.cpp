@@ -33,7 +33,10 @@ void Settings::load()
         const auto value = settings.value(name);
 
         // Set value
-        this->setProperty(name.toStdString().c_str(), value);
+        if (value.isValid())
+        {
+            this->setProperty(name.toStdString().c_str(), value);
+        }
     }
 
     // Object has been initialized
