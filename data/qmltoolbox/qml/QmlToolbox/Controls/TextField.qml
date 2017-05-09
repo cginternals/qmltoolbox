@@ -1,21 +1,21 @@
 
-import QtQuick 2.0
-import QtQuick.Controls 1.0 as Controls
+import QtQuick.Controls 2.0
 
 import QmlToolbox.Base 1.0
 
 
 /**
-*  LineEdit
+*  TextField
 *
-*  Single-line editable text
+*  Text input field
+*
+*  Default implementation of TextField using Controls 2.0
 */
-Controls.TextField
+TextField 
 {
-    font.pixelSize: Ui.style.fontSizeMedium
+    selectByMouse: true
 
-    BaseItem
+    DebugItem
     {
-        anchors.fill: parent
     }
 }

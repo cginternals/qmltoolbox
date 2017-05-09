@@ -5,4 +5,5 @@ if(NOT OPTION_BUILD_EXAMPLES)
 endif()
 
 # Example applications
-add_subdirectory(qmltoolbox-demo)
+add_subdirectory(uiconcept)
+add_subdirectory(uitest)

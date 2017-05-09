@@ -1,0 +1,8 @@
+
+module Components
+
+CommandLine    1.0 CommandLine.qml
+ConsoleLog     1.0 ConsoleLog.qml
+ConsolePrompt  1.0 ConsolePrompt.qml
+ScriptConsole  1.0 ScriptConsole.qml
+SelectionPopup 1.0 SelectionPopup.qml

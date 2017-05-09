@@ -1,31 +1,19 @@
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1 as Controls
-import QtQuick.Controls.Styles 1.1
+import QtQuick.Controls 2.0
 
 import QmlToolbox.Base 1.0
-import QmlToolbox.Controls 1.0
 
 
 /**
 *  RadioButton
 *
-*  Styled radio button
+*  Option button for a group of choices
+*
+*  Default implementation of RadioButton using Controls 2.0
 */
-Controls.RadioButton
+RadioButton 
 {
-    id: rb
-
-    style: RadioButtonStyle
+    DebugItem
     {
-        label: Label
-        {
-            text: rb.text
-        }
-    }
-
-    BaseItem
-    {
-        anchors.fill: parent
     }
 }

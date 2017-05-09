@@ -3,9 +3,6 @@
 # Configuration for all sub-projects
 # 
 
-# External packages
-find_package(cpplocate REQUIRED)
-
 # Generate version-header
 configure_file(version.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/${META_PROJECT_NAME}/${META_PROJECT_NAME}-version.h)
 

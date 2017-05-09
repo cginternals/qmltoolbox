@@ -1,64 +1,40 @@
 
-import QtQuick 2.0
-import QtQuick.Layouts 1.0
+import QtQuick 2.4
+import QtQuick.Layouts 1.1
 
-import QmlToolbox.Base 1.0
-import QmlToolbox.Controls 1.0
-import QmlToolbox.PipelineEditor 1.0
+import QmlToolbox.Controls 1.0 as Controls
 
 
-BaseItem
+Controls.Pane
 {
     id: item
 
     property var    pipelineInterface: null ///< Interface for communicating with the actual pipeline
     property string path:              ''   ///< Path to pipeline or stage (e.g., 'pipeline')
+    
+    property var properties: []
 
-    implicitWidth:  grid.implicitWidth
-    implicitHeight: grid.implicitHeight
-
-    property int numProperties: 10
-    property var properties:    []
-
-    GridLayout
+    ColumnLayout 
     {
-        id: grid
+        anchors.fill: parent
 
-        //width: parent.width
+        spacing: 20
 
-        rows: numProperties
-        flow: GridLayout.TopToBottom
-
-        rowSpacing:    Ui.style.spacingMedium
-        columnSpacing: Ui.style.spacingLarge
-
-        Repeater
+        Repeater 
         {
-            model: item.numProperties
+            model: item.properties
 
-            delegate: Label
-            {
-                text: item.properties[index] || ''
-            }
-        }
-
-        Repeater
-        {
-            id: repeater
-
-            model: item.numProperties
-
-            delegate: ValueEdit
+            delegate: ValueEdit 
             {
                 pipelineInterface: item.pipelineInterface
-                path:              item.path + '.' + item.properties[index]
+                path: item.path + '.' + modelData
 
                 onPathChanged: update();
             }
         }
     }
 
-    function update()
+    function update() 
     {
         // Get stage info
         var stage = pipelineInterface.getStage(path);
@@ -67,12 +43,9 @@ BaseItem
 
         var names = [];
 
-        for (var i=0; i<num; i++)
-        {
+        for (var i=0; i<num; i++) 
             names.push(stage.inputs[i]);
-        }
 
-        item.numProperties = num;
-        item.properties    = names;
+        item.properties = names;
     }
 }

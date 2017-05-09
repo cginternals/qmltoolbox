@@ -13,3 +13,11 @@
 
 #define ${META_PROJECT_ID}_VERSION             "@META_VERSION@"
 #define ${META_PROJECT_ID}_NAME_VERSION        "@META_NAME_VERSION@"
+
+#if (QT_VERSION < QT_VERSION_CHECK(5, 7, 0))
+    #define QMLTOOLBOX_QT54 "qt54"
+#endif
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0))
+    #define QMLTOOLBOX_QT57
+#endif

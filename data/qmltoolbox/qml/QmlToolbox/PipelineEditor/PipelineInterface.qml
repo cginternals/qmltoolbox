@@ -16,7 +16,6 @@ Item
     /**
     *  Get list of available stage types
     *
-    *
     *  @return
     *    [ 'StageType1', 'StageType2', ... ]
     */

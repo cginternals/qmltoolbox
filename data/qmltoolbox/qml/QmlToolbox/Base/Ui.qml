@@ -10,7 +10,7 @@ import QmlToolbox.Base 1.0
 /**
 *  Ui
 *
-*  Global options for the UI
+*  Global options for the UI, e.g., debug mode
 */
 Item
 {
@@ -19,53 +19,7 @@ Item
     // Debug mode
     property bool debugMode: false
 
-    // Available styles
-    readonly property var styles: [
-        'Light', 'Dark'
-    ]
-
-    // Style selection
-    property string styleName: 'Dark';
-
-    readonly property Item style: getStyle(styleName)
-
-    function getStyle(name)
+    property QtObject style: StyleDefault
     {
-        if (name == 'Light') return styleLight;
-        else                 return styleDark;
-    }
-
-    function setStyle(name)
-    {
-        styleName = name;
-
-        // Update config
-        if (typeof(config) !== 'undefined')
-        {
-            config.style = name;
-        }
-    }
-
-    // Styles
-    StyleLight
-    {
-        id: styleLight
-    }
-
-    StyleDark
-    {
-        id: styleDark
-    }
-
-    // Initialize from config
-    Component.onCompleted:
-    {
-        if (typeof(config) !== 'undefined')
-        {
-            if (config.style)
-            {
-                item.styleName = config.style;
-            }
-        }
     }
 }

@@ -1,6 +1,5 @@
 
-import QtQuick 2.0
-import QtQuick.Controls 1.0 as Controls
+import QtQuick.Controls 2.0
 
 import QmlToolbox.Base 1.0
 
@@ -8,12 +7,13 @@ import QmlToolbox.Base 1.0
 /**
 *  Slider
 *
-*  Slider control
+*  Horizontal slider for selecting a number
+*
+*  Default implementation of Slider using Controls 2.0
 */
-Controls.Slider
+Slider 
 {
-    BaseItem
+    DebugItem
     {
-        anchors.fill: parent
     }
 }

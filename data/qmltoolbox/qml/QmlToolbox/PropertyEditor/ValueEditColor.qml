@@ -1,5 +1,5 @@
 
-import QtQuick 2.0
+import QtQuick 2.4
 import QtQuick.Dialogs 1.0
 
 import QmlToolbox.Base 1.0
@@ -7,7 +7,7 @@ import QmlToolbox.Controls 1.0
 import QmlToolbox.PipelineEditor 1.0
 
 
-BaseItem
+Item
 {
     id: item
 

@@ -1,31 +1,19 @@
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1 as Controls
-import QtQuick.Controls.Styles 1.1
+import QtQuick.Controls 2.0
 
 import QmlToolbox.Base 1.0
-import QmlToolbox.Controls 1.0
 
 
 /**
 *  CheckBox
 *
-*  Styled check box
+*  An option button that can be toggled on and off
+*
+*  Default implementation of CheckBox using Controls 2.0
 */
-Controls.CheckBox
+CheckBox 
 {
-    id: cb
-
-    style: CheckBoxStyle
+    DebugItem
     {
-        label: Label
-        {
-            text: cb.text
-        }
-    }
-
-    BaseItem
-    {
-        anchors.fill: parent
     }
 }

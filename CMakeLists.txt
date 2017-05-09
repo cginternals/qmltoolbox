@@ -6,12 +6,23 @@
 # CMake version
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 
-# Include cmake modules
+#
+# Configure CMake environment
+#
 
+# Register general cmake commands
+include(cmake/Custom.cmake)
+
+# Set policies
+set_policy(CMP0028 NEW) # ENABLE CMP0028: Double colon in target name means ALIAS or IMPORTED target.
+set_policy(CMP0054 NEW) # ENABLE CMP0054: Only interpret if() arguments as variables or keywords when unquoted.
+set_policy(CMP0042 NEW) # ENABLE CMP0042: MACOSX_RPATH is enabled by default.
+set_policy(CMP0063 NEW) # ENABLE CMP0063: Honor visibility properties for all target types.
+
+# Include cmake modules
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(GenerateExportHeader)
-include(ExternalProject)
 
 set(WriterCompilerDetectionHeaderFound NOTFOUND)
 # This module is only available with CMake >=3.1, so check whether it could be found
@@ -20,14 +31,10 @@ if (${CMAKE_VERSION} VERSION_GREATER "3.2")
     include(WriteCompilerDetectionHeader OPTIONAL RESULT_VARIABLE WriterCompilerDetectionHeaderFound)
 endif()
 
+# Include custom cmake modules
 include(cmake/GetGitRevisionDescription.cmake)
-include(cmake/Custom.cmake)
-
-# Set policies
-set_policy(CMP0028 NEW) # ENABLE CMP0028: Double colon in target name means ALIAS or IMPORTED target.
-set_policy(CMP0054 NEW) # ENABLE CMP0054: Only interpret if() arguments as variables or keywords when unquoted.
-set_policy(CMP0042 NEW) # ENABLE CMP0042: MACOSX_RPATH is enabled by default.
-set_policy(CMP0063 NEW) # ENABLE CMP0063: Honor visibility properties for all target types.
+include(cmake/HealthCheck.cmake)
+include(cmake/GenerateTemplateExportHeader.cmake)
 
 
 # 
@@ -37,6 +44,9 @@ set_policy(CMP0063 NEW) # ENABLE CMP0063: Honor visibility properties for all ta
 # Get git revision
 get_git_head_revision(GIT_REFSPEC GIT_SHA1)
 string(SUBSTRING "${GIT_SHA1}" 0 12 GIT_REV)
+if(NOT GIT_SHA1)
+    set(GIT_REV "0")
+endif()
 
 # Meta information about the project
 set(META_PROJECT_NAME        "qmltoolbox")
@@ -45,11 +55,12 @@ set(META_AUTHOR_ORGANIZATION "CG Internals GmbH")
 set(META_AUTHOR_DOMAIN       "https://github.com/cginternals/qmltoolbox/")
 set(META_AUTHOR_MAINTAINER   "opensource@cginternals.com")
 set(META_VERSION_MAJOR       "1")
-set(META_VERSION_MINOR       "0")
+set(META_VERSION_MINOR       "1")
 set(META_VERSION_PATCH       "0")
 set(META_VERSION_REVISION    "${GIT_REV}")
 set(META_VERSION             "${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH}")
 set(META_NAME_VERSION        "${META_PROJECT_NAME} v${META_VERSION} (${META_VERSION_REVISION})")
+set(META_CMAKE_INIT_SHA      "6a6f30b38a1cee31ccac3f091816f28e0f6bce4b")
 
 string(MAKE_C_IDENTIFIER ${META_PROJECT_NAME} META_PROJECT_ID)
 string(TOUPPER ${META_PROJECT_ID} META_PROJECT_ID)
@@ -92,6 +103,18 @@ file(WRITE "${PROJECT_BINARY_DIR}/VERSION" "${META_NAME_VERSION}")
 # 
 
 include(cmake/CompileOptions.cmake)
+
+
+#
+# Project Health Check Setup
+#
+
+# Add cmake-init template check cmake targets
+add_check_template_target(${META_CMAKE_INIT_SHA})
+
+# Configure health check tools
+enable_cppcheck(On)
+enable_clang_tidy(On)
 
 
 # 
@@ -178,4 +201,6 @@ install(FILES LICENSE   DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
 install(FILES README.md DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
 
 # Install runtime data
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/data DESTINATION ${INSTALL_DATA} COMPONENT runtime)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/qmltoolbox/icons DESTINATION ${INSTALL_DATA}/qmltoolbox/icons COMPONENT runtime)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/qmltoolbox/qml/QmlToolbox DESTINATION ${INSTALL_DATA}/qmltoolbox/qml/QmlToolbox COMPONENT runtime)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/qmltoolbox/qml/examples DESTINATION ${INSTALL_DATA}/qmltoolbox/qml/examples COMPONENT examples)

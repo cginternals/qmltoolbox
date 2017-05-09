@@ -73,7 +73,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
         /wd4251       # -> disable warning: 'identifier': class 'type' needs to have dll-interface to be used by clients of class 'type2'
         /wd4592       # -> disable warning: 'identifier': symbol will be dynamically initialized (implementation limitation)
         # /wd4201     # -> disable warning: nonstandard extension used: nameless struct/union (caused by GLM)
-        # /wd4127     # -> disable warning: conditional expression is constant (caused by Qt)
+        /wd4127     # -> disable warning: conditional expression is constant (caused by Qt)
         
         #$<$<CONFIG:Debug>:
         #/RTCc         # -> value is assigned to a smaller data type and results in a data loss
@@ -109,6 +109,8 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_CXX_COMPILER_ID}" MATCH
         $<$<CXX_COMPILER_ID:GNU>:
             -Wmaybe-uninitialized
             
+            -Wno-unknown-pragmas
+            
             $<$<VERSION_GREATER:$<CXX_COMPILER_VERSION>,4.8>:
                 -Wpedantic
                 
@@ -119,7 +121,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_CXX_COMPILER_ID}" MATCH
         $<$<CXX_COMPILER_ID:Clang>:
             -Wpedantic
             
-            -Wreturn-stack-address
+            # -Wreturn-stack-address # gives false positives
         >
         
         $<$<PLATFORM_ID:Darwin>:
