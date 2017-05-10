@@ -13,10 +13,10 @@ Item
     // General
     //
 
-    property real  tinyPadding:          2         // Tiny padding (e.g., inside controls)
-    property real  smallPadding:         4         // Small padding
-    property real  mediumPadding:        8         // Default padding
-    property real  largePadding:         12        // Large padding
+    property real  paddingTiny:          2         // Tiny padding (e.g., inside controls)
+    property real  paddingSmall:         4         // Small padding
+    property real  paddingMedium:        8         // Default padding
+    property real  paddingLarge:         12        // Large padding
 
     property int   fontSizeSmall:        12        // Small text size
     property int   fontSizeMedium:       16        // Default text size
@@ -72,7 +72,7 @@ Item
     property color pipelineSlotColorIn:          '#ffffff' // Color of input slots
     property color pipelineSlotColorOut:         '#cafd00' // Color of output slots
 
-    property color pipelineLineColorDefault:     '#ffffff' // Color of connections
+    property color pipelineLineColorDefault:     '#000000' // Color of connections
     property color pipelineLineColorHighlighted: '#6688c8' // Color of connections when highlighted
     property color pipelineLineColorSelected:    '#c83366' // Color of connections when selected
 }

@@ -1,6 +1,5 @@
 
 import QtQuick 2.0
-import QtQuick.Controls 1.0
 
 import QmlToolbox.Base 1.0
 import QmlToolbox.Controls 1.0
@@ -11,7 +10,7 @@ import QmlToolbox.Controls 1.0
 *
 *  Representation of a pipeline
 */
-BaseItem
+Item
 {
     id: pipeline
 

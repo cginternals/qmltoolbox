@@ -134,7 +134,10 @@ ApplicationWindow
                 onClicked: mainMenu.open()
             }
 
-            Item { Layout.fillWidth: true }
+            Item
+            {
+                Layout.fillWidth: true
+            }
 
             ToolButton
             {
@@ -145,7 +148,16 @@ ApplicationWindow
                     id: pipelineMenu
                     y: toolBar.height
 
-                    MenuItem { text: qsTr("Edit Pipeline") }
+                    MenuItem
+                    {
+                        text: qsTr("Edit Pipeline")
+
+                        onTriggered:
+                        {
+                            pipelineView.visible = true;
+                            mainView.visible     = false;
+                        }
+                    }
                 }
             }
 
@@ -159,8 +171,15 @@ ApplicationWindow
                     id: toolsMenu
                     y: toolBar.height
 
-                    MenuItem { text: qsTr("Take Screenshot") }
-                    MenuItem { text: qsTr("Record Video") }
+                    MenuItem
+                    {
+                        text: qsTr("Take Screenshot")
+                    }
+
+                    MenuItem
+                    {
+                        text: qsTr("Record Video")
+                    }
                 }
             }
 
@@ -215,7 +234,7 @@ ApplicationWindow
         settingsObj: settings
     }
 
-    // Wrapper containing main page and side panel
+    // Container for the main view(s)
     Item
     {
         anchors.left:   parent.left
@@ -223,52 +242,73 @@ ApplicationWindow
         anchors.top:    parent.top
         anchors.bottom: bottomPanel.top
 
-        // Main page
-        Rectangle
+        // Main view
+        Item
         {
-            anchors.left:   sidePanel.position == 'left' ? sidePanel.right : parent.left
-            anchors.right:  sidePanel.position == 'left' ? parent.right : sidePanel.left
-            anchors.top:    parent.top
-            anchors.bottom: parent.bottom
+            id: mainView
 
-            color: Ui.style.backgroundColor
-        }
+            anchors.fill: parent
 
-        // Side Panel
-        Panel
-        {
-            id: sidePanel
+            visible: true
 
-            position:    settings.panelPosition
-            minimumSize: 240
-
-            ScrollArea
+            Rectangle
             {
-                anchors.fill: parent
+                anchors.left:   sidePanel.position == 'left' ? sidePanel.right : parent.left
+                anchors.right:  sidePanel.position == 'left' ? parent.right : sidePanel.left
+                anchors.top:    parent.top
+                anchors.bottom: parent.bottom
 
-                contentHeight: propertyEditor.height
-                contentWidth:  propertyEditor.width
+                color: Ui.style.backgroundColor
+            }
 
-                flickableDirection: Flickable.VerticalFlick
-                boundsBehavior: Flickable.StopAtBounds
+            // Side Panel
+            Panel
+            {
+                id: sidePanel
 
-                PropertyEditor
+                position:    settings.panelPosition
+                minimumSize: 240
+
+                ScrollArea
                 {
-                    id: propertyEditor
+                    anchors.fill: parent
 
-                    pipelineInterface: propertyInterface
-                    path:              'root'
+                    contentHeight: propertyEditor.height
+                    contentWidth:  propertyEditor.width
 
-                    Component.onCompleted:
+                    flickableDirection: Flickable.VerticalFlick
+                    boundsBehavior: Flickable.StopAtBounds
+
+                    PropertyEditor
                     {
-                        propertyEditor.update()
+                        id: propertyEditor
+
+                        pipelineInterface: properties
+                        path:              'root'
+
+                        Component.onCompleted:
+                        {
+                            propertyEditor.update()
+                        }
                     }
                 }
             }
+        }
 
-            DemoPropertyInterface
+        // Pipeline view
+        PipelineView
+        {
+            id: pipelineView
+
+            anchors.fill: parent
+            visible:      false
+
+            pipelineInterface: pipeline
+
+            onClosed:
             {
-                id: propertyInterface
+                mainView.visible     = true;
+                pipelineView.visible = false;
             }
         }
     }
@@ -303,6 +343,7 @@ ApplicationWindow
         }
     }
 
+    // Output capturing
     MessageForwarder
     {
         id: message_forwarder
@@ -324,6 +365,19 @@ ApplicationWindow
         }
     }
 
+    // Connection to properties
+    DemoPropertyInterface
+    {
+        id: properties
+    }
+
+    // Connection to pipeline
+    DemoPipelineInterface
+    {
+        id: pipeline
+    }
+
+    // Application settings
     Settings
     {
         id: settings

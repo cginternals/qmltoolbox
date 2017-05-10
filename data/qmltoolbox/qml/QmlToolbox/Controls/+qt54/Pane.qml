@@ -15,7 +15,7 @@ Control
 {
     id: item
 
-    padding: Ui.style.largePadding
+    padding: Ui.style.paddingLarge
 
     property real contentWidth:  contentItem.childWidth
     property real contentHeight: contentItem.childHeight

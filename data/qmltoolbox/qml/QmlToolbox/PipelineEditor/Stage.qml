@@ -1,11 +1,8 @@
 
 import QtQuick 2.0
-import QtQuick.Layouts 1.0
-import QtQuick.Controls 1.0
 
 import QmlToolbox.Base 1.0
 import QmlToolbox.Controls 1.0
-import QmlToolbox.Ui 1.0
 
 
 /**
@@ -13,7 +10,7 @@ import QmlToolbox.Ui 1.0
 *
 *  Representation of a stage in a pipeline
 */
-BaseItem
+Item
 {
     id: stage
 
@@ -33,7 +30,7 @@ BaseItem
     property color  color:             Ui.style.pipelineTitleColor
 
     // Internals
-    property var  slotItems: null ///< Item cache
+    property var slotItems: null ///< Item cache
 
     implicitWidth:  Math.max(connectors.implicitWidth, body.implicitWidth + radius)
     implicitHeight: connectors.implicitHeight + title.implicitHeight + Ui.style.paddingLarge
@@ -155,7 +152,7 @@ BaseItem
             }
 
             // Close-button
-            IconButton
+            Item
             {
                 id: icon
 
@@ -163,6 +160,7 @@ BaseItem
                 anchors.right:          parent.right
                 anchors.margins:        Ui.style.paddingMedium
 
+                /*
                 icon:       '0272-cross.png'
                 iconWidth:  12
                 iconHeight: 12
@@ -174,6 +172,7 @@ BaseItem
                 {
                     stage.closed();
                 }
+                */
             }
         }
     }

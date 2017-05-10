@@ -30,7 +30,7 @@ Item
         anchors.right:   parent.right
         anchors.top:     parent.top
         anchors.bottom:  parent.bottom
-        anchors.margins: Ui.style.tinyPadding
+        anchors.margins: Ui.style.paddingTiny
         width:           Ui.style.scrollBarSize
 
         visible: flickable.contentHeight > flickable.height
@@ -44,7 +44,7 @@ Item
 
             anchors.left:    parent.left
             anchors.right:   parent.right
-            anchors.margins: Ui.style.tinyPadding
+            anchors.margins: Ui.style.paddingTiny
             height:          Math.max(30, Math.min(flickable.height / flickable.contentHeight, 1.0) * scrollBar.height)
 
             y: mouseArea.drag.active ? 0 : (flickable.contentY / (flickable.contentHeight - flickable.height)) * (scrollBar.height - handle.height)

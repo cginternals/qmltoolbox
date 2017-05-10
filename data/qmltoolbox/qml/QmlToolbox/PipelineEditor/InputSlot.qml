@@ -11,7 +11,7 @@ import QmlToolbox.PropertyEditor 1.0
 *
 *  Representation of an input slot
 */
-BaseItem
+Item
 {
     id: slot
 
