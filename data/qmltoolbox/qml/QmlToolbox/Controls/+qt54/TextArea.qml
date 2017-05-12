@@ -24,7 +24,6 @@ Rectangle
     property alias canPaste:                     edit.canPaste
     property alias canRedo:                      edit.canRedo
     property alias canUndo:                      edit.canUndo
-    property alias color:                        edit.color
     property alias contentHeight:                edit.contentHeight
     property alias contentWidth:                 edit.contentWidth
     property alias cursorDelegate:               edit.cursorDelegate
