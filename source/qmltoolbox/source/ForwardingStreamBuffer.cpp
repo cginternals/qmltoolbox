@@ -31,22 +31,23 @@ std::streambuf * ForwardingStreamBuffer::redirected() const
 
 ForwardingStreamBuffer::int_type ForwardingStreamBuffer::overflow(int_type value)
 {
-    // temporary fix: std::endl doesn't lead to xsputn being called.
-    // TODO: find real fix
-    static const auto linebreak = "\n";
-    xsputn(linebreak, strlen(linebreak));
+    // We have no buffer, so just output each character directly
+    const char buf = value;
+    xsputn(&buf, 1);
+
     return value;
 }
 
 std::streamsize ForwardingStreamBuffer::xsputn(const char * buffer, std::streamsize size)
 {
-    m_handler.handleMessage(m_msgType, QMessageLogContext(), qPrintable(QString(buffer)));
+    m_handler.handleOutput(m_msgType, QMessageLogContext(), qPrintable(QString(buffer)));
     return size;
 }
 
 int ForwardingStreamBuffer::sync()
 {
-    return m_prevBuffer->pubsync();
+    // Nothing to sync, we have no buffer
+    return 0;
 }
 
 

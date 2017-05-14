@@ -104,7 +104,7 @@ public:
 
     /**
     *  @brief
-    *    Handle message by forwarding it to the registered message receivers
+    *    Handle output by forwarding it to the registered message receivers
     *
     *  @param[in] type
     *    Message type
@@ -112,8 +112,13 @@ public:
     *    Message context
     *  @param[in] message
     *    Message string
+    *
+    *  @remarks
+    *    It is not guaranteed that message contains a full line of text, it may also
+    *    be only a portion of it or several lines at once. So, do not automatically
+    *    append newline characters, just pass it on unchanged.
     */
-    void handleMessage(QtMsgType type, const QMessageLogContext & context, const QString & message);
+    void handleOutput(QtMsgType type, const QMessageLogContext & context, const QString & message);
 
 
 private:

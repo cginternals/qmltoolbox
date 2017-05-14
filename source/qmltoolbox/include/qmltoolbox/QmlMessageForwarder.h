@@ -14,7 +14,7 @@ namespace qmltoolbox
 
 /**
 *  @brief
-*    Message receiver implementation for QML
+*    Message receiver to forward output messages to a QML item
 */
 class QMLTOOLBOX_API QmlMessageForwarder : public QObject, public AbstractMessageReceiver
 {

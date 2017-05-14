@@ -22,7 +22,8 @@ MessageHandler & MessageHandler::instance()
 
 void MessageHandler::qtMessageHandler(QtMsgType type, const QMessageLogContext & context, const QString & message)
 {
-    MessageHandler::instance().handleMessage(type, context, message);
+    // Qt messages are always entire lines, but do not contain a newline, so add one
+    MessageHandler::instance().handleOutput(type, context, message + "\n");
 }
 
 MessageHandler::MessageHandler()
@@ -62,32 +63,35 @@ void MessageHandler::detach(AbstractMessageReceiver & receiver)
     m_receivers.erase(&receiver);
 }
 
-void MessageHandler::handleMessage(QtMsgType type, const QMessageLogContext & context, const QString & message)
+void MessageHandler::handleOutput(QtMsgType type, const QMessageLogContext & context, const QString & message)
 {
     // Get current time
     const auto timestamp = QDateTime::currentDateTime();
 
+    // Process message
+    QString msg = message;
+
     // Forward message to all receivers
     for (auto receiver : m_receivers) {
-        receiver->print(type, context, timestamp, message + "\n");
+        receiver->print(type, context, timestamp, msg);
     }
 
     // Output message also to standard streams
+    std::string stdMsg = msg.toStdString();
+
     switch (type)
     {
         case QtWarningMsg:
         case QtCriticalMsg:
         case QtFatalMsg:
         {
-            std::string msg = message.toStdString();
-            m_cerr->redirected()->sputn(msg.c_str(), msg.size());
+            m_cerr->redirected()->sputn(stdMsg.c_str(), stdMsg.size());
             break;
         }
 
         default:
         {
-            std::string msg = message.toStdString();
-            m_cout->redirected()->sputn(msg.c_str(), msg.size());
+            m_cout->redirected()->sputn(stdMsg.c_str(), stdMsg.size());
             break;
         }
     }
