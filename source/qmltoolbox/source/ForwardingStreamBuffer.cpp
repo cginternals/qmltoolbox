@@ -1,6 +1,7 @@
 
 #include <qmltoolbox/ForwardingStreamBuffer.h>
 
+#include <QByteArray>
 #include <QString>
 
 #include <qmltoolbox/MessageHandler.h>
@@ -40,7 +41,9 @@ ForwardingStreamBuffer::int_type ForwardingStreamBuffer::overflow(int_type value
 
 std::streamsize ForwardingStreamBuffer::xsputn(const char * buffer, std::streamsize size)
 {
-    m_handler.handleOutput(m_msgType, "", qPrintable(QString(buffer)));
+    QString str(QByteArray(buffer, size));
+
+    m_handler.handleOutput(m_msgType, "", qPrintable(str));
     return size;
 }
 
