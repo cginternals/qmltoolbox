@@ -10,8 +10,6 @@ namespace qmltoolbox
 
 QmlMessageForwarder::QmlMessageForwarder()
 {
-    qRegisterMetaType<qmltoolbox::QmlMessageForwarder::MessageType>();
-
     attach();
 }
 
@@ -30,14 +28,9 @@ void QmlMessageForwarder::detach()
     MessageHandler::instance().detach(*this);
 }
 
-void QmlMessageForwarder::print(
-    QtMsgType type,
-    const QMessageLogContext &,
-    const QDateTime & timestamp,
-    const QString & message)
+void QmlMessageForwarder::print(MessageHandler::MessageType type, const QDateTime & timestamp, const QString & context, const QString & message)
 {
-    const auto messageType = static_cast<MessageType>(type);
-    emit messageReceived(messageType, timestamp, message);
+    emit messageReceived(static_cast<int>(type), timestamp, context, message);
 }
 
 

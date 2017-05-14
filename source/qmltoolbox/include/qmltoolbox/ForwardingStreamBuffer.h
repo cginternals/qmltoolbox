@@ -7,7 +7,7 @@
 
 #include <QtCore/qglobal.h>
 
-#include <qmltoolbox/qmltoolbox_api.h>
+#include <qmltoolbox/MessageHandler.h>
 
 
 namespace qmltoolbox
@@ -35,7 +35,7 @@ public:
     *  @param[in] msgType
     *    Message type
     */
-    ForwardingStreamBuffer(std::ostream & stream, qmltoolbox::MessageHandler & handler, QtMsgType msgType);
+    ForwardingStreamBuffer(std::ostream & stream, MessageHandler & handler, MessageHandler::MessageType msgType);
 
     /**
     *  @brief
@@ -61,10 +61,10 @@ protected:
 
 
 private:
-    qmltoolbox::MessageHandler & m_handler;    ///< Message handler to which the messages are forwarded
-    QtMsgType                    m_msgType;    ///< Message type
-    std::ostream               & m_stream;     ///< Standard stream that is redirected
-    std::streambuf             * m_prevBuffer; ///< Stream buffer of the stream that has been replaced
+    qmltoolbox::MessageHandler  & m_handler;    ///< Message handler to which the messages are forwarded
+    MessageHandler::MessageType   m_msgType;    ///< Message type
+    std::ostream                & m_stream;     ///< Standard stream that is redirected
+    std::streambuf              * m_prevBuffer; ///< Stream buffer of the stream that has been replaced
 };
 
 

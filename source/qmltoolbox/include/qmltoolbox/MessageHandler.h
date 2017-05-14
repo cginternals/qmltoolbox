@@ -27,6 +27,20 @@ class QMLTOOLBOX_API MessageHandler
 public:
     /**
     *  @brief
+    *    Message type
+    */
+    enum MessageType
+    {
+        Critical ///< Cricical errors
+      , Error    ///< Errors
+      , Warning  ///< Warnings
+      , Info     ///< Info messages
+    };
+
+
+public:
+    /**
+    *  @brief
     *    Get singleton instance
     *
     *  @return
@@ -118,7 +132,7 @@ public:
     *    be only a portion of it or several lines at once. So, do not automatically
     *    append newline characters, just pass it on unchanged.
     */
-    void handleOutput(QtMsgType type, const QMessageLogContext & context, const QString & message);
+    void handleOutput(MessageType type, const QString & context, const QString & message);
 
 
 private:

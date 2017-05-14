@@ -10,7 +10,7 @@ namespace qmltoolbox
 {
 
 
-ForwardingStreamBuffer::ForwardingStreamBuffer(std::ostream & stream, qmltoolbox::MessageHandler & handler, QtMsgType msgType)
+ForwardingStreamBuffer::ForwardingStreamBuffer(std::ostream & stream, MessageHandler & handler, MessageHandler::MessageType msgType)
 : m_handler(handler)
 , m_msgType(msgType)
 , m_stream(stream)
@@ -40,7 +40,7 @@ ForwardingStreamBuffer::int_type ForwardingStreamBuffer::overflow(int_type value
 
 std::streamsize ForwardingStreamBuffer::xsputn(const char * buffer, std::streamsize size)
 {
-    m_handler.handleOutput(m_msgType, QMessageLogContext(), qPrintable(QString(buffer)));
+    m_handler.handleOutput(m_msgType, "", qPrintable(QString(buffer)));
     return size;
 }
 

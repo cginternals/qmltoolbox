@@ -21,26 +21,6 @@ class QMLTOOLBOX_API QmlMessageForwarder : public QObject, public AbstractMessag
     Q_OBJECT
 
 
-public:
-    /**
-    *  @brief
-    *    Message type
-    */
-    enum MessageType 
-    {
-        Debug,
-        Warning,
-        Critical,
-        Fatal
-    };
-
-#if (QT_VERSION < QT_VERSION_CHECK(5, 5, 0))
-    Q_ENUMS(MessageType)
-#else
-    Q_ENUM(MessageType)
-#endif
-
-
 signals:
     /**
     *  @brief
@@ -53,7 +33,7 @@ signals:
     *  @param[in] message
     *    Message string
     */
-    void messageReceived(qmltoolbox::QmlMessageForwarder::MessageType type, const QDateTime & timestamp, const QString & message);
+    void messageReceived(int type, const QDateTime & timestamp, const QString & context, const QString & message);
 
 
 public:
@@ -82,7 +62,7 @@ public:
     Q_INVOKABLE void detach();
 
     // Virtual AbstractMessageReceiver interface
-    virtual void print(QtMsgType type, const QMessageLogContext & context, const QDateTime & timestamp, const QString & message) override;
+    virtual void print(MessageHandler::MessageType type, const QDateTime & timestamp, const QString & context, const QString & message) override;
 };
 
 

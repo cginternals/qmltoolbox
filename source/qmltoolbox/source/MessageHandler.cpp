@@ -20,10 +20,19 @@ MessageHandler & MessageHandler::instance()
     return instance;
 }
 
-void MessageHandler::qtMessageHandler(QtMsgType type, const QMessageLogContext & context, const QString & message)
+void MessageHandler::qtMessageHandler(QtMsgType msgType, const QMessageLogContext & context, const QString & message)
 {
+    // Convert message type
+    MessageType type = Info;
+         if (msgType == QtWarningMsg)  type = Warning;
+    else if (msgType == QtCriticalMsg) type = Error;
+    else if (msgType == QtFatalMsg)    type = Critical;
+
+    // Get context
+    QString contextCategory = context.category;
+
     // Qt messages are always entire lines, but do not contain a newline, so add one
-    MessageHandler::instance().handleOutput(type, context, message + "\n");
+    MessageHandler::instance().handleOutput(type, contextCategory, message + "\n");
 }
 
 MessageHandler::MessageHandler()
@@ -37,8 +46,8 @@ MessageHandler::~MessageHandler()
 void MessageHandler::installMessageHandlers()
 {
     // Redirect std streams to MessageHandler
-    m_cout.reset(new ForwardingStreamBuffer(std::cout, *this, QtDebugMsg));
-    m_cerr.reset(new ForwardingStreamBuffer(std::cerr, *this, QtFatalMsg));
+    m_cout.reset(new ForwardingStreamBuffer(std::cout, *this, Info));
+    m_cerr.reset(new ForwardingStreamBuffer(std::cerr, *this, Error));
 
     // Redirect Qt messages to MessageHandler
     qInstallMessageHandler(MessageHandler::qtMessageHandler);
@@ -63,7 +72,7 @@ void MessageHandler::detach(AbstractMessageReceiver & receiver)
     m_receivers.erase(&receiver);
 }
 
-void MessageHandler::handleOutput(QtMsgType type, const QMessageLogContext & context, const QString & message)
+void MessageHandler::handleOutput(MessageType type, const QString & context, const QString & message)
 {
     // Get current time
     const auto timestamp = QDateTime::currentDateTime();
@@ -73,7 +82,7 @@ void MessageHandler::handleOutput(QtMsgType type, const QMessageLogContext & con
 
     // Forward message to all receivers
     for (auto receiver : m_receivers) {
-        receiver->print(type, context, timestamp, msg);
+        receiver->print(type, timestamp, context, msg);
     }
 
     // Output message also to standard streams
@@ -81,9 +90,9 @@ void MessageHandler::handleOutput(QtMsgType type, const QMessageLogContext & con
 
     switch (type)
     {
-        case QtWarningMsg:
-        case QtCriticalMsg:
-        case QtFatalMsg:
+        case Critical:
+        case Error:
+        case Warning:
         {
             m_cerr->redirected()->sputn(stdMsg.c_str(), stdMsg.size());
             break;

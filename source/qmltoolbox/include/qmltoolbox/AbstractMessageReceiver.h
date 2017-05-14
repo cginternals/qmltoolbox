@@ -4,7 +4,7 @@
 
 #include <QtCore/qglobal.h>
 
-#include <qmltoolbox/qmltoolbox_api.h>
+#include <qmltoolbox/MessageHandler.h>
 
 
 class QDateTime;
@@ -41,14 +41,14 @@ public:
     *
     *  @param[in] type
     *    Message type
-    *  @param[in] context
-    *    Message context
     *  @param[in] timestamp
     *    Timestamp when the message was received
+    *  @param[in] context
+    *    Message context
     *  @param[in] message
     *    Message string
     */
-    virtual void print(QtMsgType type, const QMessageLogContext & context, const QDateTime & timestamp, const QString & message) = 0;
+    virtual void print(MessageHandler::MessageType type, const QDateTime & timestamp, const QString & context, const QString & message) = 0;
 };
 
 
