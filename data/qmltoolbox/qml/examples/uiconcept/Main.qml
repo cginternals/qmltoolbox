@@ -331,7 +331,7 @@ ApplicationWindow
 
             onSubmitted:
             {
-                scriptConsole.output("> " + command + "\n", "Command");
+                scriptConsole.output("> " + command + "\n");
                 var res = eval(command);
 
                 if (res != undefined)
@@ -349,18 +349,8 @@ ApplicationWindow
 
         onMessageReceived:
         {
-            var stringType;
-
-            if (type == MessageForwarder.Debug)
-                stringType = "Debug";
-            else if (type == MessageForwarder.Warning)
-                stringType = "Warning";
-            else if (type == MessageForwarder.Critical)
-                stringType = "Critical";
-            else if (type == MessageForwarder.Fatal)
-                stringType = "Fatal";
-
-            scriptConsole.output(message, stringType);
+            // Put message on console log
+            scriptConsole.output(message, type);
         }
     }
 

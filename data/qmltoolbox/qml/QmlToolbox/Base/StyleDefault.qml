@@ -46,11 +46,9 @@ Item
     property color  consoleBackgroundColor:   '#1d1f21' // Background color
     property color  consoleTextColor:         '#c5c8c6' // Default text color
     property color  consoleSelectionColor:    '#3f4042' // Color of selected text
-    property color  consoleTextColorFatal:    '#ff5e58' // Text color for fatal errors
     property color  consoleTextColorCritical: '#ff5e58' // Text color for critical errors
+    property color  consoleTextColorError:    '#ff5e58' // Text color for errors
     property color  consoleTextColorWarning:  '#ecc674' // Text color for warnings
-    property color  consoleTextColorDebug:    '#c5c8c6' // Text color for debug messages
-    property color  consoleTextColorCommand:  '#c5c8c6' // Text color for commans
 
 
     //

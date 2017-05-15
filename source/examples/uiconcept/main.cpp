@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[])
 {
-    // Initialize QmlToolbox
+    // Initialize qmltoolbox
     qmltoolbox::Application::initialize();
 
     // Create application

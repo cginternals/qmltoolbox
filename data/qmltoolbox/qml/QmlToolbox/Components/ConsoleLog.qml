@@ -93,11 +93,9 @@ Pane
 
     function colorForType(type)
     {
-        if (type === 'Fatal')    return Ui.style.consoleTextColorFatal;
-        if (type === 'Critical') return Ui.style.consoleTextColorCritical;
-        if (type === 'Warning')  return Ui.style.consoleTextColorWarning;
-        if (type === 'Debug')    return Ui.style.consoleTextColorDebug;
-        if (type === 'Command')  return Ui.style.consoleTextColorCommand;
+        if (type == 0) return Ui.style.consoleTextColorCritical;
+        if (type == 1) return Ui.style.consoleTextColorError;
+        if (type == 2) return Ui.style.consoleTextColorWarning;
 
         return Ui.style.consoleTextColor;
     }
