@@ -1,26 +1,22 @@
 
-#include <QGuiApplication>
-
-#include <qmltoolbox/QmlApplicationEngine.h>
+#include <qmltoolbox/Application.h>
+#include <qmltoolbox/qmltoolbox-version.h>
 
 
 int main(int argc, char *argv[])
 {
-#ifdef QMLTOOLBOX_QT57
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
+    // Initialize QmlToolbox
+    qmltoolbox::Application::initialize();
 
-    QGuiApplication app(argc, argv);
-
-    // Create QtQuick engine
-    qmltoolbox::QmlApplicationEngine engine;
+    // Create application
+    qmltoolbox::Application app(argc, argv);
+    app.setOrganizationName(QMLTOOLBOX_AUTHOR_ORGANIZATION);
+    app.setOrganizationDomain("cginternals.com");
+    app.setApplicationName(QString(QMLTOOLBOX_PROJECT_NAME) + "_uiconcept");
 
     // Load and show QML
-    engine.load(QUrl::fromLocalFile(engine.qmlToolboxModulePath() + "/examples/uitest/Main.qml"));
+    app.loadQml(app.qmlEngine().qmlToolboxModulePath() + "/examples/uitest/Main.qml");
 
     // Run application
-    const auto res = app.exec();
-
-    // Stop application
-    return res;
+    return app.exec();
 }
