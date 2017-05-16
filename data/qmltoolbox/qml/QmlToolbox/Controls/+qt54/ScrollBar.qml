@@ -78,10 +78,10 @@ Item
 
     MouseArea
     {
-        anchors.left:   parent.left
-        anchors.right:  parent.right
-        anchors.top:    parent.top
-        anchors.bottom: handle.top
+        anchors.left:   item.vertical ? parent.left  : parent.left
+        anchors.right:  item.vertical ? parent.right : handle.left
+        anchors.top:    item.vertical ? parent.top   : parent.top
+        anchors.bottom: item.vertical ? handle.top   : parent.bottom
 
         onClicked:
         {
@@ -91,10 +91,10 @@ Item
 
     MouseArea
     {
-        anchors.left:   parent.left
-        anchors.right:  parent.right
-        anchors.top:    handle.bottom
-        anchors.bottom: parent.bottom
+        anchors.left:   item.vertical ? parent.left   : handle.right
+        anchors.right:  item.vertical ? parent.right  : parent.right
+        anchors.top:    item.vertical ? handle.bottom : parent.top
+        anchors.bottom: item.vertical ? parent.bottom : parent.bottom
 
         onClicked:
         {
