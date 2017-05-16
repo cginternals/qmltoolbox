@@ -23,81 +23,45 @@ Item
     property alias flickableDirection: flickable.flickableDirection
     property alias boundsBehavior:     flickable.boundsBehavior
 
-    Item
+    ScrollBar
     {
-        id: scrollBar
+        id: verticalScrollBar
 
         anchors.right:   parent.right
         anchors.top:     parent.top
-        anchors.bottom:  parent.bottom
+        anchors.bottom:  horizontalScrollBar.top
         anchors.margins: Ui.style.paddingTiny
         width:           Ui.style.scrollBarSize
 
-        visible: flickable.contentHeight > flickable.height
+        vertical: true
+        position: flickable.contentY
+        size:     flickable.height
+        maxValue: flickable.contentHeight
 
-        readonly property bool hovered: mouseArea.containsMouse
-        readonly property bool pressed: typeof(mouseArea.containsPress) != 'undefined' ? mouseArea.containsPress : false
-
-        Rectangle
+        onScrolled:
         {
-            id: handle
-
-            anchors.left:    parent.left
-            anchors.right:   parent.right
-            anchors.margins: Ui.style.paddingTiny
-            height:          Math.max(30, Math.min(flickable.height / flickable.contentHeight, 1.0) * scrollBar.height)
-
-            y: mouseArea.drag.active ? 0 : (flickable.contentY / (flickable.contentHeight - flickable.height)) * (scrollBar.height - handle.height)
-
-            color:  scrollBar.hovered ? Ui.style.controlColorHovered : Ui.style.controlColor
-            radius: Ui.style.scrollBarRadius
-
-            MouseArea
-            {
-                id: mouseArea
-
-                anchors.fill: parent
-
-                drag.target:   handle
-                drag.minimumY: 0
-                drag.maximumY: scrollBar.height - handle.height
-
-                hoverEnabled: true
-            }
-
-            onYChanged:
-            {
-                if (mouseArea.drag.active)
-                {
-                    flickable.contentY = Math.max(0, (y / (scrollBar.height - handle.height)) * (flickable.contentHeight - flickable.height));
-                }
-            }
+            flickable.contentY = value;
         }
+    }
 
-        MouseArea
+    ScrollBar
+    {
+        id: horizontalScrollBar
+
+        anchors.bottom:  parent.bottom
+        anchors.left:    parent.left
+        anchors.right:   verticalScrollBar.left
+        anchors.margins: Ui.style.paddingTiny
+        height:          Ui.style.scrollBarSize
+
+        vertical: false
+        position: flickable.contentX
+        size:     flickable.width
+        maxValue: flickable.contentWidth
+
+        onScrolled:
         {
-            anchors.left:   parent.left
-            anchors.right:  parent.right
-            anchors.top:    parent.top
-            anchors.bottom: handle.top
-
-            onClicked:
-            {
-                flickable.contentY = Math.max(0, flickable.contentY - flickable.height);
-            }
-        }
-
-        MouseArea
-        {
-            anchors.left:   parent.left
-            anchors.right:  parent.right
-            anchors.top:    handle.bottom
-            anchors.bottom: parent.bottom
-
-            onClicked:
-            {
-                flickable.contentY = Math.min(flickable.contentHeight - flickable.height, flickable.contentY + flickable.height);
-            }
+            flickable.contentX = value;
         }
     }
 
@@ -106,9 +70,9 @@ Item
         id: flickable
 
         anchors.left:    parent.left
-        anchors.right:   scrollBar.left
+        anchors.right:   verticalScrollBar.visible ? verticalScrollBar.left : parent.right
         anchors.top:     parent.top
-        anchors.bottom:  parent.bottom
+        anchors.bottom:  horizontalScrollBar.visible ? horizontalScrollBar.top : parent.bottom
 
         contentHeight: item.contentHeight + 2 * anchors.margins
         clip:          true

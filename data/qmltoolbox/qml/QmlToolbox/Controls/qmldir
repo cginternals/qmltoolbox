@@ -16,6 +16,7 @@ Panel             1.0 Panel.qml
 Popup             1.0 Popup.qml
 RadioButton       1.0 RadioButton.qml
 ScrollArea        1.0 ScrollArea.qml
+ScrollBar         1.0 ScrollBar.qml
 Shortcut          1.0 Shortcut.qml
 Slider            1.0 Slider.qml
 StatusBar         1.0 StatusBar.qml
