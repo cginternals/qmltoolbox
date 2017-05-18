@@ -77,16 +77,13 @@ void MessageHandler::handleOutput(MessageType type, const QString & context, con
     // Get current time
     const auto timestamp = QDateTime::currentDateTime();
 
-    // Process message
-    QString msg = message;
-
     // Forward message to all receivers
     for (auto receiver : m_receivers) {
-        receiver->print(type, timestamp, context, msg);
+        receiver->print(type, timestamp, context, message);
     }
 
     // Output message also to standard streams
-    std::string stdMsg = msg.toStdString();
+    std::string stdMsg = message.toStdString();
 
     switch (type)
     {
