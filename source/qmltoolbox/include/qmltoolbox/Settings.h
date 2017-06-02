@@ -47,6 +47,12 @@ public:
     */
     Q_INVOKABLE void save();
 
+    /**
+    *  @brief
+    *    Initialize and save settings
+    */
+    Q_INVOKABLE void forceSave();
+
 
 protected:
     /**
