@@ -62,6 +62,13 @@ void Settings::save()
     }
 }
 
+void Settings::forceSave()
+{
+    initialize();
+    m_initialized = true;
+    save();
+}
+
 void Settings::initialize()
 {
     // Abort if already initialized
