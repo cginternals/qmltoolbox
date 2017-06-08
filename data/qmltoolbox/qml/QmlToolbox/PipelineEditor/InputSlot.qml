@@ -25,18 +25,18 @@ Item
     signal pressed()
 
     // Options
-    property var    pipelineInterface: null       ///< Interface for accessing the pipeline
-    property string path:              ''         ///< Path in the pipeline hierarchy (e.g., 'pipeline.stage1.input1')
-    property string slot:              ''         ///< Name of the slot
-    property alias  status:            editor.status
-    property bool   showEditors:       false      ///< Display properties editors?
-    property bool   hovered:           false      ///< Is the slot currently hovered?
-    property bool   selected:          false      ///< Is the slot currently selected?
-    property bool   connectable:       true       ///< Enable interaction for connecting to another slot?
-    property int    radius:            Ui.style.pipelineSlotSize
-    property color  color:             Ui.style.pipelineSlotColorIn
-    property color  borderColor:       Ui.style.pipelineBorderColor
-    property int    borderWidth:       Ui.style.pipelineBorderWidth
+    property var    properties:  null       ///< Interface for accessing the pipeline
+    property string path:        ''         ///< Path in the pipeline hierarchy (e.g., 'pipeline.stage1.input1')
+    property string slot:        ''         ///< Name of the slot
+    property alias  status:      editor.status
+    property bool   showEditors: false      ///< Display properties editors?
+    property bool   hovered:     false      ///< Is the slot currently hovered?
+    property bool   selected:    false      ///< Is the slot currently selected?
+    property bool   connectable: true       ///< Enable interaction for connecting to another slot?
+    property int    radius:      Ui.style.pipelineSlotSize
+    property color  color:       Ui.style.pipelineSlotColorIn
+    property color  borderColor: Ui.style.pipelineBorderColor
+    property int    borderWidth: Ui.style.pipelineBorderWidth
 
     implicitWidth:  row.implicitWidth  + 2 * row.anchors.margins
     implicitHeight: row.implicitHeight + 2 * row.anchors.margins
@@ -94,7 +94,7 @@ Item
             id: editor
 
             visible:    item.showEditors
-            properties: item.pipelineInterface
+            properties: item.properties
             path:       item.path
             slot:       item.slot
         }
@@ -102,7 +102,7 @@ Item
 
     Connections
     {
-        target: item.pipelineInterface
+        target: item.properties
 
         onSlotChanged: // (string path, string slot, var status)
         {

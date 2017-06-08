@@ -15,10 +15,10 @@ Item
     id: connectors
 
     // Options
-    property var    pipelineInterface: null ///< Interface for accessing the pipeline
-    property Item   pipeline:          null ///< Pointer to pipeline item
-    property string path:              ''   ///< Path in the pipeline hierarchy (e.g., 'pipeline')
-    property int    arrowSize:         Ui.style.pipelineSlotSize / 3.0
+    property var    properties: null ///< Interface for accessing the pipeline
+    property Item   pipeline:   null ///< Pointer to pipeline item
+    property string path:       ''   ///< Path in the pipeline hierarchy (e.g., 'pipeline')
+    property int    arrowSize:  Ui.style.pipelineSlotSize / 3.0
 
     // 2D canvas for drawing
     Canvas
@@ -57,7 +57,7 @@ Item
 
             stages.push(path);
 
-            var pipeline = pipelineInterface.getStage(path);
+            var pipeline = properties.getStage(path);
 
             for (var i in pipeline.stages)
             {
@@ -71,7 +71,7 @@ Item
                 var stage = stages[i];
 
                 // Get connections of the stage
-                var connections = pipelineInterface.getConnections(stage);
+                var connections = properties.getConnections(stage);
                 for (var j in connections)
                 {
                     // Get connection

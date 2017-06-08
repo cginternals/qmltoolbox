@@ -23,7 +23,7 @@ Item
 
         anchors.fill: parent
 
-        pipelineInterface: page.properties
+        properties: page.properties
 
         Button
         {
