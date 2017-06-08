@@ -31,5 +31,6 @@ Editor
     onStatusChanged:
     {
         input.model = status.choices;
+        input.currentIndex = status.choices.indexOf(status.value);
     }
 }

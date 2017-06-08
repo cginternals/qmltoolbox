@@ -12,6 +12,16 @@ Pane
     property var    properties: null ///< Interface for communicating with the actual pipeline
     property string path:       ''   ///< Path to pipeline or stage (e.g., 'pipeline')
 
+    Connections
+    {
+        target: item.properties
+
+        onSlotChanged: // (string path, string slot, var status)
+        {
+            item.updateEditor(slot, status);
+        }
+    }
+
     GridLayout
     {
         id: layout
@@ -38,6 +48,24 @@ Pane
 
             // Create editor item
             createEditor(path, name, slot);
+        }
+    }
+
+    function updateEditor(slot, status)
+    {
+        // Find editor
+        for (var i = 0; i < layout.children.length; i++)
+        {
+            var it = layout.children[i];
+
+            if (it.hasOwnProperty('slot'))
+            {
+                if (it.slot === slot)
+                {
+                    // console.log('SET ' + item.path + '.' + slot + ': ' + JSON.stringify(status));
+                    it.status = status;
+                }
+            }
         }
     }
 

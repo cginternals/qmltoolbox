@@ -6,6 +6,123 @@ QtObject
 {
     id: propertyInterface
 
+    signal slotChanged(string path, string slot, var status)
+
+    function getStage(path)
+    {
+        var obj = {
+            name: propertyInterface.stage.name
+          , inputs: []
+          , outputs: []
+        };
+
+        for (var i=0; i<propertyInterface.stage.inputs.length; i++)
+        {
+            obj.inputs.push(propertyInterface.stage.inputs[i].name);
+        }
+
+        for (var i=0; i<propertyInterface.stage.outputs.length; i++)
+        {
+            obj.outputs.push(propertyInterface.stage.outputs[i].name);
+        }
+
+        return obj;
+    }
+
+    function getSlot(path, slot)
+    {
+        // Get slot
+        var slotInfo = getSlotInfo(path, slot);
+        return slotInfo;
+    }
+
+    function getValue(path, slot)
+    {
+        // Get slot
+        var slotInfo = getSlotInfo(path, slot);
+        return slotInfo.value;
+    }
+
+    function setValue(path, slot, value)
+    {
+        // Get slot
+        var slotInfo = getSlotInfo(path, slot);
+        slotInfo.value = value;
+
+        if (path == 'root' && slot == 'Boolean')
+        {
+            if (value) timer.start();
+            else       timer.stop();
+        }
+
+        if (path == 'root' && slot == 'Number')
+        {
+            var inputs = stage.inputs;
+
+            var val = Math.floor(value);
+
+            var red = Math.floor(value * 2.55);
+            var color = red.toString(16);
+            while (color.length < 2) color = '0' + color;
+            color = '#0000' + color;
+
+            var text = '' + val;
+
+            var choices = [ 'Zero', 'One', 'Two', 'Three', 'Four' ];
+            if (val >= 50) choices = [ '50', '60', '70', '80', '90' ]
+
+            var mode = 'Zero';
+            if (val >= 10) mode = 'One';
+            if (val >= 20) mode = 'Two';
+            if (val >= 30) mode = 'Three';
+            if (val >= 40) mode = 'Four';
+            if (val >= 50) mode = '50';
+            if (val >= 60) mode = '60';
+            if (val >= 70) mode = '70';
+            if (val >= 80) mode = '80';
+            if (val >= 90) mode = '90';
+
+            inputs[0].choices = choices;
+            inputs[0].value   = mode;
+            inputs[1].value   = text;
+            inputs[2].value   = val;
+            inputs[4].value   = color;
+            inputs[5].value   = text;
+
+            stage.inputs = inputs;
+
+            propertyInterface.slotChanged('root', 'Mode',   inputs[0]);
+            propertyInterface.slotChanged('root', 'Text',   inputs[1]);
+            propertyInterface.slotChanged('root', 'Number', inputs[2]);
+            propertyInterface.slotChanged('root', 'Color' , inputs[4]);
+            propertyInterface.slotChanged('root', 'Filename', inputs[5]);
+        }
+    }
+
+    // Internals
+    function getSlotInfo(path, slot)
+    {
+        for (var i=0; i<propertyInterface.stage.inputs.length; i++)
+        {
+            if (propertyInterface.stage.inputs[i].name == slot)
+            {
+                return propertyInterface.stage.inputs[i];
+            }
+        }
+
+        for (var i=0; i<propertyInterface.stage.outputs.length; i++)
+        {
+            if (propertyInterface.stage.outputs[i].name == slot)
+            {
+                return propertyInterface.stage.outputs[i];
+            }
+        }
+
+        return null;
+    }
+
+    // Data
+
     property QtObject stage: QtObject
     {
         id: stage
@@ -17,7 +134,7 @@ QtObject
                 category: 'General Settings',
                 name: 'Mode',
                 type: 'string',
-                choices: [ 'One', 'Two', 'Three' ],
+                choices: [ 'Zero', 'One', 'Two', 'Three', 'Four' ],
                 advanced: false,
                 value: 'One'
             },
@@ -69,78 +186,22 @@ QtObject
         ]
     }
 
-    function getStage(path)
+    property QtObject asd: Timer
     {
-        var obj = {
-            name: propertyInterface.stage.name
-          , inputs: []
-          , outputs: []
-        };
+        id: timer
 
-        for (var i=0; i<propertyInterface.stage.inputs.length; i++)
+        interval: 100
+        repeat:   true
+
+        triggeredOnStart: false
+
+        onTriggered:
         {
-            obj.inputs.push(propertyInterface.stage.inputs[i].name);
+            var inputs = stage.inputs;
+
+            var value = (inputs[2].value + 1) % 100;
+            propertyInterface.setValue('root', 'Number', value);
         }
-
-        for (var i=0; i<propertyInterface.stage.outputs.length; i++)
-        {
-            obj.outputs.push(propertyInterface.stage.outputs[i].name);
-        }
-
-        return obj;
-    }
-
-    function getSlot(path, slot)
-    {
-        // Get slot
-        var slotInfo = getSlotInfo(path, slot);
-        return slotInfo;
-    }
-
-    function getValue(path, slot)
-    {
-        // Get slot
-        var slotInfo = getSlotInfo(path, slot);
-        return slotInfo.value;
-    }
-
-    function setValue(path, slot, value)
-    {
-        // Get slot
-        var slotInfo = getSlotInfo(path, slot);
-        slotInfo.value = value;
-    }
-
-    // Internals
-    function getSlotInfo(path, slot)
-    {
-        for (var i=0; i<propertyInterface.stage.inputs.length; i++)
-        {
-            if (propertyInterface.stage.inputs[i].name == slot)
-            {
-                return propertyInterface.stage.inputs[i];
-            }
-        }
-
-        for (var i=0; i<propertyInterface.stage.outputs.length; i++)
-        {
-            if (propertyInterface.stage.outputs[i].name == slot)
-            {
-                return propertyInterface.stage.outputs[i];
-            }
-        }
-
-        return null;
-    }
-
-    function printAll()
-    {
-        var obj = {};
-        obj.name    = stage.name;
-        obj.inputs  = stage.inputs;
-        obj.outputs = stage.outputs;
-
-        console.log(JSON.stringify(obj) + '\n');
     }
 }
 
