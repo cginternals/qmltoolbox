@@ -30,7 +30,12 @@ Editor
 
     onStatusChanged:
     {
-        input.model = status.choices;
-        input.currentIndex = status.choices.indexOf(status.value);
+        if (status.hasOwnProperty('choices')) {
+            input.model = status.choices;
+            input.currentIndex = status.choices.indexOf(status.value);
+        } else {
+            input.model = null;
+            input.currentIndex = -1;
+        }
     }
 }
