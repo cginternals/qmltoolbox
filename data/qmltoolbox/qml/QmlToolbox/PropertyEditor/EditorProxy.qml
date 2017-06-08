@@ -4,6 +4,11 @@ import QtQuick 2.0
 import QmlToolbox.PropertyEditor 1.0
 
 
+/**
+*  EditorProxy
+*
+*  Editor item that chooses the right type automatically
+*/
 Editor
 {
     id: item

@@ -18,12 +18,12 @@ QtObject
         return [ 'string', 'int' ];
     }
 
-    function createStage(path, slot, type)
+    function createStage(path, stage, type)
     {
         return '';
     }
 
-    function removeStage(path, slot)
+    function removeStage(path, stage)
     {
     }
 

@@ -5,6 +5,11 @@ import QtQuick.Layouts 1.1
 import QmlToolbox.Controls 1.0
 
 
+/**
+*  PropertyEditor
+*
+*  Displays a list of editors for property values
+*/
 Pane
 {
     id: item
