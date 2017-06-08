@@ -38,8 +38,28 @@ Pane
         columnSpacing: 16
     }
 
+    function clear()
+    {
+        // Clear editors
+        var editors = [];
+
+        for (var i=0; i<layout.children.length; i++)
+        {
+            editors.push(layout.children[i]);
+
+        }
+
+        for (var i=0; i<editors.length; i++)
+        {
+            editors[i].destroy();
+        }
+    }
+
     function update()
     {
+        // Destroy old editors
+        clear();
+
         // Get stage info
         var stage = item.properties.getStage(path);
 
@@ -53,23 +73,6 @@ Pane
 
             // Create editor item
             createEditor(path, name, slot);
-        }
-    }
-
-    function updateEditor(slot, status)
-    {
-        // Find editor
-        for (var i = 0; i < layout.children.length; i++)
-        {
-            var it = layout.children[i];
-
-            if (it.hasOwnProperty('slot'))
-            {
-                if (it.slot === slot)
-                {
-                    it.status = status;
-                }
-            }
         }
     }
 
@@ -87,6 +90,23 @@ Pane
             slot: slot,
             status: status
         } );
+    }
+
+    function updateEditor(slot, status)
+    {
+        // Find editor
+        for (var i = 0; i < layout.children.length; i++)
+        {
+            var it = layout.children[i];
+
+            if (it.hasOwnProperty('slot'))
+            {
+                if (it.slot === slot)
+                {
+                    it.status = status;
+                }
+            }
+        }
     }
 
     Component
