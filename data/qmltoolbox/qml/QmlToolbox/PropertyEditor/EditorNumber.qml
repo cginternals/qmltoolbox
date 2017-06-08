@@ -35,11 +35,13 @@ Editor
     {
         internal.noUpdate = true;
 
-        if (status.hasOwnProperty('minimumValue'))
+        if (status.hasOwnProperty('minimumValue')) {
             input.from = status.minimumValue;
+        }
 
-        if (status.hasOwnProperty('maximumValue'))
+        if (status.hasOwnProperty('maximumValue')) {
             input.to = status.maximumValue;
+        }
 
         input.value = status.value;
 

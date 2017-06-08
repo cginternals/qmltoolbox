@@ -68,16 +68,23 @@ Pane
         for (var i = 0; i < num; i++)
         {
             // Get input slot
-            var name = stage.inputs[i];
-            var slot = item.properties.getSlot(path, name);
+            var slot   = stage.inputs[i];
+            var status = item.properties.getSlot(path, slot);
 
             // Create editor item
-            createEditor(path, name, slot);
+            createEditor(path, slot, status);
         }
     }
 
     function createEditor(path, slot, status)
     {
+        // Abort if slot is hidden
+        if (status.hasOwnProperty('hidden')) {
+            if (status.hidden == true) {
+                return;
+            }
+        }
+
         // Create caption
         var caption = editorCaption.createObject(layout, {
             text: slot
