@@ -2,50 +2,148 @@
 import QtQuick 2.4
 import QtQuick.Layouts 1.1
 
-import QmlToolbox.Controls 1.0 as Controls
+import QmlToolbox.Controls 1.0
 
 
-Controls.Pane
+Pane
 {
     id: item
 
-    property var    pipelineInterface: null ///< Interface for communicating with the actual pipeline
-    property string path:              ''   ///< Path to pipeline or stage (e.g., 'pipeline')
-    
-    property var properties: []
+    property var    properties: null ///< Interface for communicating with the actual pipeline
+    property string path:       ''   ///< Path to pipeline or stage (e.g., 'pipeline')
 
-    ColumnLayout 
+    GridLayout
     {
-        anchors.fill: parent
+        id: layout
 
-        spacing: 20
+        width: parent.width
 
-        Repeater 
+        columns:        2
+        rowSpacing:    12
+        columnSpacing: 16
+    }
+
+    function update()
+    {
+        // Get stage info
+        var stage = item.properties.getStage(path);
+
+        // Process input slots
+        var num = stage.inputs.length || 0;
+        for (var i = 0; i < num; i++)
         {
-            model: item.properties
+            // Get input slot
+            var name = stage.inputs[i];
+            var slot = item.properties.getSlot(path, name);
 
-            delegate: ValueEdit 
-            {
-                pipelineInterface: item.pipelineInterface
-                path: item.path + '.' + modelData
-
-                onPathChanged: update();
-            }
+            // Create editor item
+            createEditor(path, name, slot);
         }
     }
 
-    function update() 
+    function createEditor(path, slot, status)
     {
-        // Get stage info
-        var stage = pipelineInterface.getStage(path);
+        // Create caption
+        var caption = editorCaption.createObject(layout, {
+            text: slot
+        } );
 
-        var num = stage.inputs.length || 0;
+        // Choose editor
+        var editorType = editorNone;
+             if (status.type === 'string' && status.hasOwnProperty('choices')) editorType = editorEnum;
+        else if (status.type === 'string')                                     editorType = editorString;
+        else if (status.type === 'filename')                                   editorType = editorFilename;
+        else if (status.type === 'bool')                                       editorType = editorBool;
+        else if (status.type === 'int' || status.type === 'float')             editorType = editorNumber;
+        else if (status.type === 'color')                                      editorType = editorColor;
+        else if (status.type === 'enum')                                       editorType = editorEnum;
+        if (!editorType) return;
 
-        var names = [];
+        // Create editor
+        var editor = editorType.createObject(layout, {
+            properties: item.properties,
+            path: path,
+            slot: slot,
+            status: status
+        } );
+    }
 
-        for (var i=0; i<num; i++) 
-            names.push(stage.inputs[i]);
+    Component
+    {
+        id: editorCaption
 
-        item.properties = names;
+        Label
+        {
+        }
+    }
+
+    Component
+    {
+        id: editorString
+
+        EditorString
+        {
+            Layout.fillWidth: true
+        }
+    }
+
+    Component
+    {
+        id: editorFilename
+
+        EditorFilename
+        {
+            Layout.fillWidth: true
+        }
+    }
+
+    Component
+    {
+        id: editorBool
+
+        EditorBool
+        {
+            Layout.fillWidth: true
+        }
+    }
+
+    Component
+    {
+        id: editorNumber
+
+        EditorNumber
+        {
+            Layout.fillWidth: true
+        }
+    }
+
+    Component
+    {
+        id: editorColor
+
+        EditorColor
+        {
+            Layout.fillWidth: true
+        }
+    }
+
+    Component
+    {
+        id: editorEnum
+
+        EditorEnum
+        {
+            Layout.fillWidth: true
+        }
+    }
+
+    Component
+    {
+        id: editorNone
+
+        Editor
+        {
+            Layout.fillWidth: true
+        }
     }
 }

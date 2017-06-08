@@ -270,20 +270,23 @@ ApplicationWindow
 
                 ScrollArea
                 {
+                    id: scrollArea
+
                     anchors.fill: parent
 
                     contentHeight: propertyEditor.height
-                    contentWidth:  propertyEditor.width
 
                     flickableDirection: Flickable.VerticalFlick
-                    boundsBehavior: Flickable.StopAtBounds
+                    boundsBehavior:     Flickable.StopAtBounds
 
                     PropertyEditor
                     {
                         id: propertyEditor
 
-                        pipelineInterface: properties
-                        path:              'root'
+                        width: scrollArea.width
+
+                        properties: demoProperties
+                        path:       'root'
 
                         Component.onCompleted:
                         {
@@ -357,7 +360,7 @@ ApplicationWindow
     // Connection to properties
     DemoPropertyInterface
     {
-        id: properties
+        id: demoProperties
     }
 
     // Connection to pipeline
