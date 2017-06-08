@@ -55,7 +55,7 @@ Rectangle
         if (!loaded)
         {
             // Set pipeline root
-            pipeline.path = root || 'pipeline';
+            pipeline.path = root || 'root';
 
             // Done
             loaded = true;

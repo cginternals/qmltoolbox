@@ -8,22 +8,82 @@ QtObject
 
     signal slotChanged(string path, string slot, var status)
 
+    function getStageTypes()
+    {
+        return [ 'Stage1', 'Stage2', 'Stage3' ];
+    }
+
+    function getSlotTypes(path)
+    {
+        return [ 'string', 'int' ];
+    }
+
+    function createStage(path, slot, type)
+    {
+        return '';
+    }
+
+    function removeStage(path, slot)
+    {
+    }
+
+    function createSlot(path, slot, slotType, type)
+    {
+    }
+
+    function getConnections(path)
+    {
+        return [
+            { from: 'root.Text',   to: 'root.Stage1.Text' },
+            { from: 'root.Number', to: 'root.Stage1.Number' },
+            { from: 'root.Color' , to: 'root.Stage1.Color' },
+            { from: 'root.Number', to: 'root.Stage2.Number' },
+            { from: 'root.Stage1.Ok', to: 'root.Stage3.Ok1' },
+            { from: 'root.Stage2.Ok', to: 'root.Stage3.Ok2' },
+            { from: 'root.Stage3.Ok', to: 'root.Ok' }
+        ];
+    }
+
+    function createConnection(sourcePath, sourceSlot, destPath, destSlot)
+    {
+    }
+
+    function removeConnection(path, slot)
+    {
+    }
+
     function getStage(path)
     {
         var obj = {
             name: propertyInterface.stage.name
           , inputs: []
           , outputs: []
+          , stages: []
         };
 
-        for (var i=0; i<propertyInterface.stage.inputs.length; i++)
-        {
-            obj.inputs.push(propertyInterface.stage.inputs[i].name);
+        var stage = null;
+        if (path == 'root')        stage = propertyInterface.stage;
+        if (path == 'root.Stage1') stage = propertyInterface.stage1;
+        if (path == 'root.Stage2') stage = propertyInterface.stage2;
+        if (path == 'root.Stage3') stage = propertyInterface.stage3;
+
+        if (!stage) {
+            return obj;
         }
 
-        for (var i=0; i<propertyInterface.stage.outputs.length; i++)
+        for (var i=0; i<stage.inputs.length; i++)
         {
-            obj.outputs.push(propertyInterface.stage.outputs[i].name);
+            obj.inputs.push(stage.inputs[i].name);
+        }
+
+        for (var i=0; i<stage.outputs.length; i++)
+        {
+            obj.outputs.push(stage.outputs[i].name);
+        }
+
+        for (var i=0; i<stage.stages.length; i++)
+        {
+            obj.stages.push(stage.stages[i]);
         }
 
         return obj;
@@ -125,68 +185,155 @@ QtObject
 
     property QtObject stage: QtObject
     {
-        id: stage
-
         property string name: 'DemoStage'
 
         property var inputs: [
             {
-                category: 'General Settings',
                 name: 'Mode',
                 type: 'string',
                 choices: [ 'Zero', 'One', 'Two', 'Three', 'Four' ],
-                advanced: false,
                 value: 'One'
             },
 
             {
-                category: 'General Settings',
                 name: 'Text',
                 type: 'string',
-                advanced: false,
                 value: ''
             },
 
             {
-                category: 'General Settings',
                 name: 'Number',
                 type: 'int',
                 minimumValue: 0,
                 maximumValue: 100,
-                advanced: false,
                 value: 20
             },
 
             {
-                category: 'General Settings',
                 name: 'Boolean',
                 type: 'bool',
-                advanced: false,
                 value: false
             },
 
             {
-                category: 'General Settings',
                 name: 'Color',
                 type: 'color',
-                advanced: false,
                 value: '#0000ff'
             },
 
             {
-                category: 'General Settings',
                 name: 'Filename',
                 type: 'filename',
-                advanced: false,
                 value: 'test.txt'
             }
         ]
 
         property var outputs: [
+            {
+                name: 'Ok',
+                type: 'bool',
+                value: true
+            }
+        ]
+
+        property var stages: [
+            'Stage1', 'Stage2', 'Stage3'
         ]
     }
 
-    property QtObject asd: Timer
+    property QtObject stage1: QtObject
+    {
+        property string name: 'Stage1'
+
+        property var inputs: [
+            {
+                name: 'Text',
+                type: 'string',
+                value: ''
+            },
+
+            {
+                name: 'Number',
+                type: 'int',
+                minimumValue: 0,
+                maximumValue: 100,
+                value: 0
+            },
+
+            {
+                name: 'Color',
+                type: 'color',
+                value: '#00ff00'
+            },
+        ]
+
+        property var outputs: [
+            {
+                name: 'Ok',
+                type: 'bool',
+                value: true
+            }
+        ]
+
+        property var stages: [
+        ]
+    }
+
+    property QtObject stage2: QtObject
+    {
+        property string name: 'Stage2'
+
+        property var inputs: [
+            {
+                name: 'Number',
+                type: 'int',
+                value: 0
+            }
+        ]
+
+        property var outputs: [
+            {
+                name: 'Ok',
+                type: 'bool',
+                value: true
+            }
+        ]
+
+        property var stages: [
+        ]
+    }
+
+    property QtObject stage3: QtObject
+    {
+        property string name: 'Stage3'
+
+        property var inputs: [
+            {
+                name: 'Ok1',
+                type: 'bool',
+                value: true
+            },
+
+            {
+                name: 'Ok2',
+                type: 'bool',
+                value: true
+            }
+        ]
+
+        property var outputs: [
+            {
+                name: 'Ok',
+                type: 'bool',
+                value: true
+            }
+        ]
+
+        property var stages: [
+        ]
+    }
+
+    property QtObject timerObject: Timer
     {
         id: timer
 
@@ -204,114 +351,3 @@ QtObject
         }
     }
 }
-
-/*
-QtObject
-{
-    id: propertyInterface
-
-    property string name: "PipelineDummy"
-
-    property QtObject stage: QtObject
-    {
-        id: stage
-
-        property var inputs:
-        [
-            qsTr("Name of pony"),
-            qsTr("Activate magic abilities"),
-            qsTr("Length of pony"),
-            qsTr("Color of pony"),
-            qsTr("Name of its left toe")
-        ]
-
-        property var slots:
-        [
-            {
-                name:    qsTr('Name of pony'),
-                type:    'string',
-                value:   'Erhardt',
-                options: {}
-            },
-
-            {
-                name:    qsTr('Activate magic abilities'),
-                type:    'bool',
-                value:   true,
-                options: {}
-            },
-
-            {
-                name:    qsTr('Length of pony'),
-                type:    'float',
-                value:   1.3,
-                options: {}
-            },
-
-            {
-                name:    qsTr('Color of pony'),
-                type:    'color',
-                value:   '#000000',
-                options: {}
-            },
-
-            {
-                name:    qsTr('Name of its left toe'),
-                type:    'string',
-                value:   'Kurt',
-                options: {}
-            },
-        ]
-
-        function getSlot(slotName)
-        {
-            for (var i = 0; i < stage.slots.length; i++)
-            {
-                var slot = stage.slots[i];
-
-                if (slot.name == slotName)
-                {
-                    return slot;
-                }
-            }
-
-            return {
-                name: '',
-                type: '',
-                value: null,
-                options: {}
-            };
-        }
-
-        function setSlotValue(slotName, value)
-        {
-            var slot = getSlot(slotName);
-
-            slot.value = value;
-        }
-    }
-
-    function getStage(path)
-    {
-        return propertyInterface.stage;
-    }
-
-    function getSlot(path)
-    {
-        var stage = propertyInterface.stage;
-        var names = path.split('.');
-        var slotName = names[names.length - 1];
-
-        return stage.getSlot(slotName);
-    }
-
-    function setSlotValue(path, value)
-    {
-        var stage = propertyInterface.stage;
-        var names = path.split('.');
-        var slotName = names[names.length - 1];
-
-        stage.setSlotValue(slotName, value);
-    }
-}
-*/

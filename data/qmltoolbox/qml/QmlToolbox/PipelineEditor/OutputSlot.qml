@@ -13,7 +13,7 @@ import QmlToolbox.PropertyEditor 1.0
 */
 Item
 {
-    id: slot
+    id: item
 
     // Called when mouse cursor has entered the slot
     signal entered()
@@ -27,7 +27,8 @@ Item
     // Options
     property var    pipelineInterface: null       ///< Interface for accessing the pipeline
     property string path:              ''         ///< Path in the pipeline hierarchy (e.g., 'pipeline.stage1.output1')
-    property alias  name:              label.text ///< Name of the slot
+    property string slot:              ''         ///< Name of the slot
+    property alias  status:            editor.status
     property bool   showEditors:       false      ///< Display properties editors?
     property bool   hovered:           false      ///< Is the slot currently hovered?
     property bool   selected:          false      ///< Is the slot currently selected?
@@ -50,13 +51,14 @@ Item
         spacing:      Ui.style.paddingSmall
 
         // Property editor
-        ValueEdit
+        EditorProxy
         {
-            visible:           slot.showEditors
-            pipelineInterface: slot.pipelineInterface
-            path:              slot.path
+            id: editor
 
-            onPathChanged: update();
+            visible:    item.showEditors
+            properties: item.pipelineInterface
+            path:       item.path
+            slot:       item.slot
         }
 
         // Name of slot
@@ -66,7 +68,7 @@ Item
 
             anchors.verticalCenter: parent.verticalCenter
 
-            text:  'Value'
+            text:  item.slot
             color: Ui.style.pipelineStageTextColor
         }
 
@@ -76,13 +78,13 @@ Item
             id: connector
 
             anchors.verticalCenter: parent.verticalCenter
-            width:                  slot.radius
-            height:                 slot.radius
+            width:                  item.radius
+            height:                 item.radius
 
             radius:       width / 2.0
-            color:        slot.selected ? Ui.style.pipelineLineColorSelected : (slot.hovered ? Ui.style.pipelineLineColorHighlighted : slot.color)
-            border.color: slot.borderColor
-            border.width: slot.borderWidth
+            color:        item.selected ? Ui.style.pipelineLineColorSelected : (item.hovered ? Ui.style.pipelineLineColorHighlighted : item.color)
+            border.color: item.borderColor
+            border.width: item.borderWidth
 
             // Mouse area for selection
             MouseArea
@@ -91,9 +93,22 @@ Item
 
                 hoverEnabled: true
 
-                onEntered: slot.entered();
-                onExited:  slot.exited();
-                onPressed: slot.pressed();
+                onEntered: item.entered();
+                onExited:  item.exited();
+                onPressed: item.pressed();
+            }
+        }
+    }
+
+    Connections
+    {
+        target: item.pipelineInterface
+
+        onSlotChanged: // (string path, string slot, var status)
+        {
+            if (item.path == path && item.slot == slot)
+            {
+                editor.status = status;
             }
         }
     }

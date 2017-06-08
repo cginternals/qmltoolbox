@@ -305,7 +305,7 @@ ApplicationWindow
             anchors.fill: parent
             visible:      false
 
-            pipelineInterface: pipeline
+            properties: demoProperties
 
             onClosed:
             {
@@ -361,12 +361,6 @@ ApplicationWindow
     DemoPropertyInterface
     {
         id: demoProperties
-    }
-
-    // Connection to pipeline
-    DemoPipelineInterface
-    {
-        id: pipeline
     }
 
     // Application settings

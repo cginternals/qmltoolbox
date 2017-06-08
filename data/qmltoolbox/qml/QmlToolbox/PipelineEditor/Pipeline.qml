@@ -163,7 +163,7 @@ Item
         var pipelineDesc = pipelineInterface.getStage(pipeline.path);
 
         // Add stages
-        var x = 200;
+        var x = 250;
         var y = 150;
 
         for (var i in pipelineDesc.stages)
@@ -172,12 +172,12 @@ Item
 
             var stage = addStageItem(pipeline.path + '.' + name, name, x, y);
 
-            x += stage.width + 20;
+            x += stage.width + 250;
         }
 
         // Add pseudo stages for inputs and outputs of the pipeline itself
         addInputStageItem (pipeline.path, 'Inputs',    20, 150);
-        addOutputStageItem(pipeline.path, 'Outputs', 1600, 150);
+        addOutputStageItem(pipeline.path, 'Outputs', 1200, 150);
 
         // Do the layout
         computeLayout();
@@ -306,7 +306,7 @@ Item
                 pipelineInterface: pipelineInterface,
                 pipeline:          pipeline,
                 x:                 x || 100,
-                y:                 y  || 100,
+                y:                 y || 100,
                 name:              name,
                 color:             Ui.style.pipelineTitleColor2,
                 includeInputs:     false,

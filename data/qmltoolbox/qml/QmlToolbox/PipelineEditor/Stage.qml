@@ -310,9 +310,12 @@ Item
             {
                 var inputName = stageDesc.inputs[i];
 
+                var slotStatus = pipelineInterface.getSlot(path, inputName);
+
                 var slotItem = component.createObject(parentItem, {
-                    path: path + '.' + inputName,
-                    name: inputName
+                    path: path,
+                    slot: inputName,
+                    status: slotStatus
                 } );
 
                 slotItems[inputName] = { type: inverse ? 'output' : 'input', item: slotItem };
@@ -328,9 +331,12 @@ Item
             {
                 var outputName = stageDesc.outputs[i];
 
+                var slotStatus = pipelineInterface.getSlot(path, outputName);
+
                 var slotItem = component.createObject(parentItem, {
-                    path: path + '.' + outputName,
-                    name: outputName
+                    path: path,
+                    slot: outputName,
+                    status: slotStatus
                 } );
 
                 slotItems[outputName] = { type: inverse ? 'input' : 'output', item: slotItem };

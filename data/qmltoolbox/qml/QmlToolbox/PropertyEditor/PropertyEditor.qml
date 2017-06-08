@@ -62,7 +62,6 @@ Pane
             {
                 if (it.slot === slot)
                 {
-                    // console.log('SET ' + item.path + '.' + slot + ': ' + JSON.stringify(status));
                     it.status = status;
                 }
             }
@@ -76,19 +75,8 @@ Pane
             text: slot
         } );
 
-        // Choose editor
-        var editorType = editorNone;
-             if (status.type === 'string' && status.hasOwnProperty('choices')) editorType = editorEnum;
-        else if (status.type === 'string')                                     editorType = editorString;
-        else if (status.type === 'filename')                                   editorType = editorFilename;
-        else if (status.type === 'bool')                                       editorType = editorBool;
-        else if (status.type === 'int' || status.type === 'float')             editorType = editorNumber;
-        else if (status.type === 'color')                                      editorType = editorColor;
-        else if (status.type === 'enum')                                       editorType = editorEnum;
-        if (!editorType) return;
-
         // Create editor
-        var editor = editorType.createObject(layout, {
+        var editor = editorProxy.createObject(layout, {
             properties: item.properties,
             path: path,
             slot: slot,
@@ -107,69 +95,9 @@ Pane
 
     Component
     {
-        id: editorString
+        id: editorProxy
 
-        EditorString
-        {
-            Layout.fillWidth: true
-        }
-    }
-
-    Component
-    {
-        id: editorFilename
-
-        EditorFilename
-        {
-            Layout.fillWidth: true
-        }
-    }
-
-    Component
-    {
-        id: editorBool
-
-        EditorBool
-        {
-            Layout.fillWidth: true
-        }
-    }
-
-    Component
-    {
-        id: editorNumber
-
-        EditorNumber
-        {
-            Layout.fillWidth: true
-        }
-    }
-
-    Component
-    {
-        id: editorColor
-
-        EditorColor
-        {
-            Layout.fillWidth: true
-        }
-    }
-
-    Component
-    {
-        id: editorEnum
-
-        EditorEnum
-        {
-            Layout.fillWidth: true
-        }
-    }
-
-    Component
-    {
-        id: editorNone
-
-        Editor
+        EditorProxy
         {
             Layout.fillWidth: true
         }
