@@ -4,32 +4,33 @@ import QtQuick.Dialogs 1.0
 
 import QmlToolbox.Base 1.0
 import QmlToolbox.Controls 1.0
-import QmlToolbox.PipelineEditor 1.0
 
 
-Item
+/**
+*  EditorFilename
+*
+*  Editor for properties of type 'filename'
+*/
+Editor
 {
     id: item
 
-    property var    pipelineInterface: null ///< Interface for communicating with the actual pipeline
-    property string path:              ''   ///< Path to pipeline slot (e.g., 'pipeline.Stage1.in1')
-
-    implicitWidth:  input.implicitWidth + button.implicitWidth + input.anchors.rightMargin
+    implicitWidth:  input.implicitWidth
     implicitHeight: input.implicitHeight
 
     TextField
     {
         id: input
 
-        anchors.top:    parent.top
-        anchors.bottom: parent.bottom
-        anchors.left:   parent.left
-        anchors.right:  button.left
+        anchors.top:         parent.top
+        anchors.bottom:      parent.bottom
+        anchors.left:        parent.left
+        anchors.right:       button.left
         anchors.rightMargin: Ui.style.paddingMedium
 
         onEditingFinished:
         {
-            pipelineInterface.setSlotValue(path, text);
+            item.properties.setValue(item.path, item.slot, text);
         }
     }
 
@@ -46,11 +47,10 @@ Item
 
         onClicked:
         {
-//          fileDialog.open();
+            fileDialog.open();
         }
     }
 
-    /*
     FileDialog
     {
         id: fileDialog
@@ -65,15 +65,12 @@ Item
             var path = QmlUtils.urlToLocalFile(fileUrl);
 
             input.text = path;
-
-            pipelineInterface.setSlotValue(path, path);
+            item.properties.setValue(item.path, item.slot, path);
         }
     }
-    */
 
-    function update()
+    onStatusChanged:
     {
-        var slotInfo = pipelineInterface.getSlot(path);
-        input.text = slotInfo.value;
+        input.text = status.value;
     }
 }

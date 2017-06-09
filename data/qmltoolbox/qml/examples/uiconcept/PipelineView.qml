@@ -3,7 +3,7 @@ import QtQuick 2.0
 
 import QmlToolbox.Base 1.0
 import QmlToolbox.Controls 1.0
-import QmlToolbox.PipelineEditor 1.0 as Editor
+import QmlToolbox.PipelineEditor 1.0
 
 
 Item
@@ -12,18 +12,18 @@ Item
 
     signal closed()
 
-    property var pipelineInterface: null ///< Interface for communicating with the actual pipeline
+    property var properties: null ///< Interface for communicating with the actual properties
 
     implicitWidth:  pipelineEditor.implicitWidth
     implicitHeight: pipelineEditor.implicitHeight
 
-    Editor.PipelineEditor
+    PipelineEditor
     {
         id: pipelineEditor
 
         anchors.fill: parent
 
-        pipelineInterface: page.pipelineInterface
+        properties: page.properties
 
         Button
         {

@@ -13,7 +13,7 @@ import QmlToolbox.PropertyEditor 1.0
 */
 Item
 {
-    id: slot
+    id: item
 
     // Called when mouse cursor has entered the slot
     signal entered()
@@ -25,17 +25,18 @@ Item
     signal pressed()
 
     // Options
-    property var    pipelineInterface: null       ///< Interface for accessing the pipeline
-    property string path:              ''         ///< Path in the pipeline hierarchy (e.g., 'pipeline.stage1.input1')
-    property alias  name:              label.text ///< Name of the slot
-    property bool   showEditors:       false      ///< Display properties editors?
-    property bool   hovered:           false      ///< Is the slot currently hovered?
-    property bool   selected:          false      ///< Is the slot currently selected?
-    property bool   connectable:       true       ///< Enable interaction for connecting to another slot?
-    property int    radius:            Ui.style.pipelineSlotSize
-    property color  color:             Ui.style.pipelineSlotColorIn
-    property color  borderColor:       Ui.style.pipelineBorderColor
-    property int    borderWidth:       Ui.style.pipelineBorderWidth
+    property var    properties:  null       ///< Interface for accessing the pipeline
+    property string path:        ''         ///< Path in the pipeline hierarchy (e.g., 'pipeline.stage1.input1')
+    property string slot:        ''         ///< Name of the slot
+    property alias  status:      editor.status
+    property bool   showEditors: false      ///< Display properties editors?
+    property bool   hovered:     false      ///< Is the slot currently hovered?
+    property bool   selected:    false      ///< Is the slot currently selected?
+    property bool   connectable: true       ///< Enable interaction for connecting to another slot?
+    property int    radius:      Ui.style.pipelineSlotSize
+    property color  color:       Ui.style.pipelineSlotColorIn
+    property color  borderColor: Ui.style.pipelineBorderColor
+    property int    borderWidth: Ui.style.pipelineBorderWidth
 
     implicitWidth:  row.implicitWidth  + 2 * row.anchors.margins
     implicitHeight: row.implicitHeight + 2 * row.anchors.margins
@@ -55,13 +56,13 @@ Item
             id: connector
 
             anchors.verticalCenter: parent.verticalCenter
-            width:                  slot.radius
-            height:                 slot.radius
+            width:                  item.radius
+            height:                 item.radius
 
             radius:       width / 2.0
-            color:        slot.selected ? Ui.style.pipelineLineColorSelected : (slot.hovered ? Ui.style.pipelineLineColorHighlighted : slot.color)
-            border.color: slot.borderColor
-            border.width: slot.borderWidth
+            color:        item.selected ? Ui.style.pipelineLineColorSelected : (item.hovered ? Ui.style.pipelineLineColorHighlighted : item.color)
+            border.color: item.borderColor
+            border.width: item.borderWidth
 
             // Mouse area for selection
             MouseArea
@@ -70,9 +71,9 @@ Item
 
                 hoverEnabled: true
 
-                onEntered: slot.entered();
-                onExited:  slot.exited();
-                onPressed: slot.pressed();
+                onEntered: item.entered();
+                onExited:  item.exited();
+                onPressed: item.pressed();
             }
         }
 
@@ -83,18 +84,32 @@ Item
 
             anchors.verticalCenter: parent.verticalCenter
 
-            text:  'Value'
+            text:  item.slot
             color: Ui.style.pipelineStageTextColor
         }
 
         // Property editor
-        ValueEdit
+        EditorProxy
         {
-            visible:           slot.showEditors
-            pipelineInterface: slot.pipelineInterface
-            path:              slot.path
+            id: editor
 
-            onPathChanged: update();
+            visible:    item.showEditors
+            properties: item.properties
+            path:       item.path
+            slot:       item.slot
+        }
+    }
+
+    Connections
+    {
+        target: item.properties
+
+        onSlotChanged: // (string path, string slot, var status)
+        {
+            if (item.path === path && item.slot === slot)
+            {
+                editor.status = status;
+            }
         }
     }
 }

@@ -15,8 +15,8 @@ Item
     id: pipeline
 
     // Options
-    property var    pipelineInterface: null ///< Interface for accessing the pipeline
-    property string path:              ''   ///< Path in the pipeline hierarchy (e.g., 'pipeline')
+    property var    properties: null ///< Interface for accessing the actual properties
+    property string path:       ''   ///< Path in the pipeline hierarchy (e.g., 'pipeline')
 
     // Internals
     property var    stageItems:     null ///< Item cache
@@ -48,9 +48,9 @@ Item
         width:  stages.width
         height: stages.height
 
-        pipelineInterface: pipeline.pipelineInterface
-        path:              pipeline.path
-        pipeline:          pipeline
+        properties: pipeline.properties
+        path:       pipeline.path
+        pipeline:   pipeline
     }
 
     // Main menu
@@ -71,7 +71,7 @@ Item
 
             var menu = addMenu('Add Stage');
 
-            var types = pipelineInterface.getStageTypes();
+            var types = properties.getStageTypes();
             for (var i in types)
             {
                 var type = types[i];
@@ -160,10 +160,10 @@ Item
         }
 
         // Get pipeline
-        var pipelineDesc = pipelineInterface.getStage(pipeline.path);
+        var pipelineDesc = properties.getStage(pipeline.path);
 
         // Add stages
-        var x = 200;
+        var x = 250;
         var y = 150;
 
         for (var i in pipelineDesc.stages)
@@ -172,12 +172,12 @@ Item
 
             var stage = addStageItem(pipeline.path + '.' + name, name, x, y);
 
-            x += stage.width + 20;
+            x += stage.width + 250;
         }
 
         // Add pseudo stages for inputs and outputs of the pipeline itself
         addInputStageItem (pipeline.path, 'Inputs',    20, 150);
-        addOutputStageItem(pipeline.path, 'Outputs', 1600, 150);
+        addOutputStageItem(pipeline.path, 'Outputs', 1200, 150);
 
         // Do the layout
         computeLayout();
@@ -220,11 +220,11 @@ Item
         var stage = stageComponent.createObject(
             stages,
             {
-                pipelineInterface: pipelineInterface,
-                pipeline:          pipeline,
-                x:                 x || 100,
-                y:                 y || 100,
-                name:              name || 'Stage'
+                properties: properties,
+                pipeline:   pipeline,
+                x:          x || 100,
+                y:          y || 100,
+                name:       name || 'Stage'
             }
         );
 
@@ -262,16 +262,16 @@ Item
         var stage = stageComponent.createObject(
             stages,
             {
-                pipelineInterface: pipelineInterface,
-                pipeline:          pipeline,
-                x:                 x || 100,
-                y:                 y || 100,
-                name:              name,
-                color:             Ui.style.pipelineTitleColor2,
-                includeInputs:     true,
-                includeOutputs:    false,
-                inverse:           true,
-                allowClose:        false
+                properties:     properties,
+                pipeline:       pipeline,
+                x:              x || 100,
+                y:              y || 100,
+                name:           name,
+                color:          Ui.style.pipelineTitleColor2,
+                includeInputs:  true,
+                includeOutputs: false,
+                inverse:        true,
+                allowClose:     false
             }
         );
 
@@ -303,16 +303,16 @@ Item
         var stage = stageComponent.createObject(
             stages,
             {
-                pipelineInterface: pipelineInterface,
-                pipeline:          pipeline,
-                x:                 x || 100,
-                y:                 y  || 100,
-                name:              name,
-                color:             Ui.style.pipelineTitleColor2,
-                includeInputs:     false,
-                includeOutputs:    true,
-                inverse:           true,
-                allowClose:        false
+                properties:     properties,
+                pipeline:       pipeline,
+                x:              x || 100,
+                y:              y || 100,
+                name:           name,
+                color:          Ui.style.pipelineTitleColor2,
+                includeInputs:  false,
+                includeOutputs: true,
+                inverse:        true,
+                allowClose:     false
             }
         );
 
@@ -339,7 +339,7 @@ Item
     function createStage(className, name)
     {
         // Create stage
-        var realName =  pipelineInterface.createStage(pipeline.path, className, name);
+        var realName = properties.createStage(pipeline.path, className, name);
 
         // Create stage item
         addStageItem(pipeline.path + '.' + realName, realName, 100, 100);
@@ -360,7 +360,7 @@ Item
         delete stageItems[name];
 
         // Destroy stage
-        pipelineInterface.removeStage(pipeline.path, name);
+        properties.removeStage(pipeline.path, name);
 
         // Redraw connections
         connectors.requestPaint();
@@ -475,13 +475,13 @@ Item
     function onInputSelected(path)
     {
         // If input slot is already connected, remove connection
-        pipelineInterface.removeConnection(path);
+        properties.removeConnection(path);
 
         // Connection created
         if (path != '' && selectedOutput != '')
         {
             // Create connection
-            pipelineInterface.createConnection(selectedOutput, path);
+            properties.createConnection(selectedOutput, path);
 
             // Reset selection
             selectedInput  = '';
@@ -512,7 +512,7 @@ Item
         if (path != '' && selectedInput != '')
         {
             // Create connection
-            pipelineInterface.createConnection(path, selectedInput);
+            properties.createConnection(path, selectedInput);
 
             // Reset selection
             selectedInput  = '';

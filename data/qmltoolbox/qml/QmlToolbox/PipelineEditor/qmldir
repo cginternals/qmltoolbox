@@ -2,7 +2,7 @@
 module QmlToolbox.PipelineEditor
 
 PipelineEditor    1.0 PipelineEditor.qml
-PipelineInterface 1.0 PipelineInterface.qml
+PropertyInterface 1.0 PropertyInterface.qml
 Pipeline          1.0 Pipeline.qml
 Connectors        1.0 Connectors.qml
 InputSlot         1.0 InputSlot.qml

@@ -18,16 +18,16 @@ Item
     signal closed()
 
     // Options
-    property var    pipelineInterface: null    ///< Interface for accessing the pipeline
-    property Item   pipeline:          null    ///< Pointer to pipeline item
-    property string path:              ''      ///< Path in the pipeline hierarchy (e.g., 'pipeline.stage1')
-    property string name:              'Stage' ///< Name of the stage
-    property bool   includeInputs:     true    ///< Display input slots on the stage?
-    property bool   includeOutputs:    true    ///< Display output slots on the stage?
-    property bool   inverse:           false   ///< Reverse input and output slot positions?
-    property bool   allowClose:        true    ///< Enable close-button on the stage?
-    property int    radius:            Ui.style.pipelineSlotSize
-    property color  color:             Ui.style.pipelineTitleColor
+    property var    properties:     null    ///< Interface for accessing the pipeline
+    property Item   pipeline:       null    ///< Pointer to pipeline item
+    property string path:           ''      ///< Path in the pipeline hierarchy (e.g., 'pipeline.stage1')
+    property string name:           'Stage' ///< Name of the stage
+    property bool   includeInputs:  true    ///< Display input slots on the stage?
+    property bool   includeOutputs: true    ///< Display output slots on the stage?
+    property bool   inverse:        false   ///< Reverse input and output slot positions?
+    property bool   allowClose:     true    ///< Enable close-button on the stage?
+    property int    radius:         Ui.style.pipelineSlotSize
+    property color  color:          Ui.style.pipelineTitleColor
 
     // Internals
     property var slotItems: null ///< Item cache
@@ -43,7 +43,7 @@ Item
 
         onCreateSlot:
         {
-            pipelineInterface.createSlot(stage.path, slotType, type, name);
+            properties.createSlot(stage.path, slotType, type, name);
             stage.update();
         }
     }
@@ -62,7 +62,7 @@ Item
             onTriggered:
             {
                 dialog.slotType = 'Input';
-                dialog.setChoices( pipelineInterface.getSlotTypes(stage.path) );
+                dialog.setChoices( properties.getSlotTypes(stage.path) );
                 dialog.open();
             }
         }
@@ -212,8 +212,8 @@ Item
     */
     property Component inputSlotComponent : InputSlot
     {
-        pipelineInterface: stage.pipelineInterface
-        showEditors:       !stage.inverse
+        properties:  stage.properties
+        showEditors: !stage.inverse
 
         hovered:  (pipeline != null && pipeline.hoveredElement  == path)
         selected: (pipeline != null && pipeline.selectedElement == path)
@@ -242,8 +242,8 @@ Item
     */
     property Component outputSlotComponent: OutputSlot
     {
-        pipelineInterface: stage.pipelineInterface
-        showEditors:       stage.inverse
+        properties:  stage.properties
+        showEditors: stage.inverse
 
         hovered:  (pipeline != null && pipeline.hoveredElement  == path)
         selected: (pipeline != null && pipeline.selectedElement == path)
@@ -299,7 +299,7 @@ Item
         }
 
         // Get stage
-        var stageDesc = pipelineInterface.getStage(path);
+        var stageDesc = properties.getStage(path);
 
         if (includeInputs)
         {
@@ -310,9 +310,12 @@ Item
             {
                 var inputName = stageDesc.inputs[i];
 
+                var slotStatus = properties.getSlot(path, inputName);
+
                 var slotItem = component.createObject(parentItem, {
-                    path: path + '.' + inputName,
-                    name: inputName
+                    path: path,
+                    slot: inputName,
+                    status: slotStatus
                 } );
 
                 slotItems[inputName] = { type: inverse ? 'output' : 'input', item: slotItem };
@@ -328,9 +331,12 @@ Item
             {
                 var outputName = stageDesc.outputs[i];
 
+                var slotStatus = properties.getSlot(path, outputName);
+
                 var slotItem = component.createObject(parentItem, {
-                    path: path + '.' + outputName,
-                    name: outputName
+                    path: path,
+                    slot: outputName,
+                    status: slotStatus
                 } );
 
                 slotItems[outputName] = { type: inverse ? 'input' : 'output', item: slotItem };

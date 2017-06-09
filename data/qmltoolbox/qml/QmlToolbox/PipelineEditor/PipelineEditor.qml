@@ -15,7 +15,7 @@ Rectangle
     id: panel
 
     // Options
-    property var pipelineInterface: null ///< Interface for communicating with the actual pipeline
+    property var properties: null ///< Interface for communicating with the actual properties
 
     // Internals
     property bool loaded: false
@@ -39,7 +39,7 @@ Rectangle
             anchors.top:  parent.top
             anchors.left: parent.left
 
-            pipelineInterface: panel.pipelineInterface
+            properties: panel.properties
         }
     }
 
@@ -55,7 +55,7 @@ Rectangle
         if (!loaded)
         {
             // Set pipeline root
-            pipeline.path = root || 'pipeline';
+            pipeline.path = root || 'root';
 
             // Done
             loaded = true;
