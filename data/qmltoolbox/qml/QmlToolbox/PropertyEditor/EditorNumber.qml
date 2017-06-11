@@ -43,6 +43,10 @@ Editor
             input.to = status.maximumValue;
         }
 
+        if (status.hasOwnProperty('updateOnDrag')) {
+            input.updateValueWhileDragging = status.updateOnDrag;
+        }
+
         input.value = status.value;
 
         internal.noUpdate = false;
