@@ -28,6 +28,8 @@ Editor
         anchors.right:       button.left
         anchors.rightMargin: Ui.style.paddingMedium
 
+        readOnly: true
+
         onEditingFinished:
         {
             item.properties.setValue(item.path, item.slot, text);
