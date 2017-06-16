@@ -14,8 +14,11 @@ Pane
 {
     id: item
 
-    property var    properties: null ///< Interface for communicating with the actual pipeline
-    property string path:       ''   ///< Path to pipeline or stage (e.g., 'pipeline')
+    property var    properties:     null ///< Interface for communicating with the actual pipeline
+    property string path:           ''   ///< Path to pipeline or stage (e.g., 'pipeline')
+    property string categoryFilter: ''   ///< If set, only properties in the given category are displayed
+    property bool   compact:        true ///< If 'true', caption and control are put on one line, otherwise on two
+    property int    spacing:        12   ///< Spacing between lines
 
     Connections
     {
@@ -33,8 +36,8 @@ Pane
 
         width: parent.width
 
-        columns:        2
-        rowSpacing:    12
+        columns:       item.compact ? 2 : 1
+        rowSpacing:    item.spacing
         columnSpacing: 16
     }
 
@@ -79,10 +82,18 @@ Pane
     function createEditor(path, slot, status)
     {
         // Abort if slot is hidden
-        if (status.hasOwnProperty('hidden')) {
-            if (status.hidden == true) {
+        if (status.hasOwnProperty('hidden'))
+        {
+            if (status.hidden == true)
                 return;
-            }
+        }
+
+        if (item.categoryFilter !== '')
+        {
+            var category = status.hasOwnProperty('category') ? status.category : '';
+
+            if (category !== item.categoryFilter)
+                return;
         }
 
         // Create caption
