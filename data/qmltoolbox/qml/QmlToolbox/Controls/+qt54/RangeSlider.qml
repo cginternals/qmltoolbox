@@ -10,7 +10,7 @@ import QmlToolbox.Base 1.0
 *
 *  Horizontal slider for selecting a minimum and a maximum number
 *
-*  Default implementation of RangeSlider using Controls 2.0
+*  Fallback implementation of RangeSlider for Qt < 5.7
 */
 Item
 {
