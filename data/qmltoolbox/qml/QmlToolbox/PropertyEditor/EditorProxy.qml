@@ -40,6 +40,7 @@ Editor
         else if (status.type === 'int' || status.type === 'float')             editorType = editorNumber;
         else if (status.type === 'color')                                      editorType = editorColor;
         else if (status.type === 'enum')                                       editorType = editorEnum;
+        else if (status.type === 'range')                                      editorType = editorRange;
         if (!editorType) return;
 
         // Create editor
@@ -52,5 +53,6 @@ Editor
     Component { id: editorNumber;   EditorNumber   { anchors.fill: parent; properties: item.properties; path: item.path; slot: item.slot; status: item.status } }
     Component { id: editorColor;    EditorColor    { anchors.fill: parent; properties: item.properties; path: item.path; slot: item.slot; status: item.status } }
     Component { id: editorEnum;     EditorEnum     { anchors.fill: parent; properties: item.properties; path: item.path; slot: item.slot; status: item.status } }
+    Component { id: editorRange;    EditorRange    { anchors.fill: parent; properties: item.properties; path: item.path; slot: item.slot; status: item.status } }
     Component { id: editorNone;     Editor         { anchors.fill: parent; properties: item.properties; path: item.path; slot: item.slot; status: item.status } }
 }

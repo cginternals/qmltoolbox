@@ -11,3 +11,4 @@ EditorBool     1.0 EditorBool.qml
 EditorNumber   1.0 EditorNumber.qml
 EditorColor    1.0 EditorColor.qml
 EditorEnum     1.0 EditorEnum.qml
+EditorRange    1.0 EditorRange.qml
