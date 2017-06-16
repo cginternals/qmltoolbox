@@ -13,7 +13,9 @@ import QmlToolbox.Base 1.0
 */
 Slider 
 {
-    updateValueWhileDragging: false
+    id: slider
+
+    property bool live: false
 
     DebugItem
     {

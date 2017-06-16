@@ -206,7 +206,8 @@ QtObject
                 type: 'int',
                 minimumValue: 0,
                 maximumValue: 100,
-                value: 20
+                value: 20,
+                updateOnDrag: true
             },
 
             {

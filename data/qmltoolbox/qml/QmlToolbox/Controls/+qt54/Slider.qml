@@ -15,10 +15,10 @@ Slider
 {
     id: slider
 
+    property alias live: slider.updateValueWhileDragging
+
     property alias from: slider.minimumValue
     property alias to:   slider.maximumValue
-
-    updateValueWhileDragging: false
 
     DebugItem
     {

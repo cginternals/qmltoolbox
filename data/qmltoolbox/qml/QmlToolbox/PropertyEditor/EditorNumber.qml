@@ -44,7 +44,7 @@ Editor
         }
 
         if (status.hasOwnProperty('updateOnDrag')) {
-            input.updateValueWhileDragging = status.updateOnDrag;
+            input.live = status.updateOnDrag;
         }
 
         input.value = status.value;
