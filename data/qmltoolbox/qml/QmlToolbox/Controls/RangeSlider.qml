@@ -67,7 +67,7 @@ Item
                 item.firstValue = first.value;
                 internal.noInternalUpdate = false;
 
-                item.valueChanged(first.value, second.value);
+                item.valuesChanged(first.value, second.value);
             }
         }
 
@@ -79,7 +79,7 @@ Item
                 item.secondValue = second.value;
                 internal.noInternalUpdate = false;
 
-                item.valueChanged(first.value, second.value);
+                item.valuesChanged(first.value, second.value);
             }
         }
     }

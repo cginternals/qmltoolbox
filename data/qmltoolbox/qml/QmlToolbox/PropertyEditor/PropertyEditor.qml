@@ -18,7 +18,7 @@ Pane
     property string path:           ''   ///< Path to pipeline or stage (e.g., 'pipeline')
     property string categoryFilter: ''   ///< If set, only properties in the given category are displayed
     property bool   compact:        true ///< If 'true', caption and control are put on one line, otherwise on two
-    property int    spacing:        12   ///< Spacing between lines
+    property int    lineSpacing:    12   ///< Spacing between lines
 
     Connections
     {
@@ -37,7 +37,7 @@ Pane
         width: parent.width
 
         columns:       item.compact ? 2 : 1
-        rowSpacing:    item.spacing
+        rowSpacing:    item.lineSpacing
         columnSpacing: 16
     }
 
