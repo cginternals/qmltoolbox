@@ -150,7 +150,7 @@ else()
     set(INSTALL_ROOT      ".")                      # ./
     set(INSTALL_CMAKE     "cmake")                  # ./cmake
     set(INSTALL_EXAMPLES  ".")                      # ./
-    set(INSTALL_DATA      ".")                      # ./
+    set(INSTALL_DATA      "data")                   # ./
     set(INSTALL_BIN       ".")                      # ./
     set(INSTALL_SHARED    "lib")                    # ./lib
     set(INSTALL_LIB       "lib")                    # ./lib
@@ -201,6 +201,6 @@ install(FILES LICENSE   DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
 install(FILES README.md DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
 
 # Install runtime data
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/qmltoolbox/icons DESTINATION ${INSTALL_DATA}/qmltoolbox/icons COMPONENT runtime)
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/qmltoolbox/qml/QmlToolbox DESTINATION ${INSTALL_DATA}/qmltoolbox/qml/QmlToolbox COMPONENT runtime)
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/qmltoolbox/qml/examples DESTINATION ${INSTALL_DATA}/qmltoolbox/qml/examples COMPONENT examples)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/qmltoolbox/icons DESTINATION ${INSTALL_DATA}/qmltoolbox COMPONENT runtime)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/qmltoolbox/qml/QmlToolbox DESTINATION ${INSTALL_DATA}/qmltoolbox/qml COMPONENT runtime)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/qmltoolbox/qml/examples DESTINATION ${INSTALL_DATA}/qmltoolbox/qml COMPONENT examples)
