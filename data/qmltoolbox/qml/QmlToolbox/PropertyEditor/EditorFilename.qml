@@ -74,5 +74,9 @@ Editor
     onStatusChanged:
     {
         input.text = status.value;
+
+        if (status.hasOwnProperty('folder')) {
+            fileDialog.folder = status.folder;
+        }
     }
 }
