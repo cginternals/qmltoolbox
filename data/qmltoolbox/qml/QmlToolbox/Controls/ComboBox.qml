@@ -45,10 +45,7 @@ ComboBox
     Component {
         id: contentItem;
         Image {
-            width: item.width
-            height: item.height
             source: item.pixmaps[item.currentIndex]
         }
     }
-
 }

@@ -45,6 +45,8 @@ ComboBox
 
                 itemDelegate.label: Image {
                     id: image
+                    width: input.width
+                    height: input.height
                     source: input.pixmaps[styleData.index]
                 }
             }
