@@ -14,15 +14,15 @@ import QmlToolbox.Base 1.0
 */
 ComboBox 
 {
-    id: comboBox
+    id: item
 
-    property bool isImagedDisplayed: false;
+    property var pixmaps: null;
 
-    function displayImage()
+    function displayPixmaps(pixmapList)
     {
-        comboBox.delegate = delegate;
-        comboBox.contentItem = contentItem.createObject(comboBox, {});
-        comboBox.isImagedDisplayed = true;
+        item.pixmaps = pixmapList;
+        item.delegate = delegate;
+        item.contentItem = contentItem.createObject(item, {});
     }
 
     DebugItem
@@ -32,22 +32,22 @@ ComboBox
     Component {
         id: delegate;
         ItemDelegate {
-            width: input.width
+            width: item.width
             contentItem: Image {
-                width: input.width
-                height: input.height
-                source: modelData.image
+                width: item.width
+                height: item.height
+                source: item.pixmaps[index]
             }
-            highlighted: input.highlightedIndex === input.index
+            highlighted: item.highlightedIndex === item.index
         }
     }
 
     Component {
         id: contentItem;
         Image {
-            width: input.width
-            height: input.height
-            source: input.model[input.currentIndex].image
+            width: item.width
+            height: item.height
+            source: item.pixmaps[item.currentIndex]
         }
     }
 
