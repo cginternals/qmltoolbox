@@ -33,13 +33,13 @@ Editor
         if (!status.hasOwnProperty('choices')) {
             input.model = null;
             input.currentIndex = -1;
-             return;
-         }
+            return;
+        }
  
-         input.model = status.choices;
-         input.currentIndex = status.choices.indexOf(status.value);
+        input.model = status.choices;
+        input.currentIndex = status.choices.indexOf(status.value);
 
-         if (!status.hasOwnProperty('pixmaps')) {
+        if (!status.hasOwnProperty('pixmaps')) {
             input.model = status.choices;
             return;
         }
