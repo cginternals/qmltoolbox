@@ -24,18 +24,36 @@ Editor
 
         onActivated:
         {
-            item.properties.setValue(item.path, item.slot, input.model[index]);
+            item.properties.setValue(item.path, item.slot, input.isImagedDisplayed ? input.model[index].text : input.model[index]);
         }
     }
 
     onStatusChanged:
     {
-        if (status.hasOwnProperty('choices')) {
-            input.model = status.choices;
-            input.currentIndex = status.choices.indexOf(status.value);
-        } else {
+        if (!status.hasOwnProperty('choices')) {
             input.model = null;
             input.currentIndex = -1;
+             return;
+         }
+ 
+         input.model = status.choices;
+         input.currentIndex = status.choices.indexOf(status.value);
+
+         if (!status.hasOwnProperty('pixmaps')) {
+            input.model = status.choices;
+            return;
         }
+
+        var model = []
+        for (var i = 0; i < status.choices.length; i++)
+        {
+            var element = {}
+            element.text = status.choices[i];
+            element.image = status.pixmaps[i];
+            model.push(element);
+        }
+
+        input.model = model;
+        input.displayImage();
     }
 }

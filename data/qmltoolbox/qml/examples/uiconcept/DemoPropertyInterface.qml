@@ -115,6 +115,30 @@ QtObject
             else       timer.stop();
         }
 
+        if (path == 'root' && slot == 'Style')
+        {
+            var inputs = stage.inputs;
+
+            var mapping = {'red': '#FF0000', 'yellow': '#FFFF00', 'green' : '#00FF00'};
+
+            stage.inputs[4].value = mapping[value];
+
+            stage.inputs = inputs;
+
+            propertyInterface.slotChanged('root', 'Color' , inputs[4]);
+        }
+
+        if (path == 'root' && slot == 'Mode')
+        {
+            var inputs = stage.inputs;
+
+            inputs[1].value = value;
+
+            stage.inputs = inputs;
+
+            propertyInterface.slotChanged('root', 'Text' , inputs[1]);
+        }
+
         if (path == 'root' && slot == 'Number')
         {
             var inputs = stage.inputs;
@@ -193,6 +217,18 @@ QtObject
                 type: 'string',
                 choices: [ 'Zero', 'One', 'Two', 'Three', 'Four' ],
                 value: 'One'
+            },
+
+            {
+                name: 'Style',
+                type: 'string',
+                choices: [ 'yellow', 'red', 'green' ],
+                pixmaps: [
+                    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAUCAIAAACVui2AAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAiElEQVRYhe2Pyw0DQQhD12YrS60pJG0NGkMOsx+t0gHhHZCx4PDw/rwAIww0wgDjHfbnauuSNGC/Xq7+WLeNmchgJjMYyTPf5XMigz/36xhSuDQUPsMVQ3LFuPKMoXDFmPIVFD51lvfvalzc/owWrk4LV6eFq9PC1Wnh6rRwdVq4Oi1cnRauzhckb4MeLdt9QAAAAABJRU5ErkJggg==',
+                    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAUCAIAAACVui2AAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAQklEQVRYhe3PsQ0AIAzEQGD/RTNEXrS0VEjG10XKF55V1d05XJ23/2/nSdb4jMF0BtMZTGcwncF0BtMZTGcwncF0GwrH7dwizJCHAAAAAElFTkSuQmCC',
+                    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAUCAIAAACVui2AAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAaUlEQVRYhe2PywnAMAxDLZMs1lk7SOeKoeklPwqFnFU9TJAgCB7O6wCSt8tf2ZFa9SXjnXtdsuc+koCZ7bYapUbUEi2Mt8SotvFnZ6evhdvPkDA7EmZHwuxImB0JsyNhdiTMjoTZkTA7Dw+7dR47RyiWAAAAAElFTkSuQmCC'
+                ],
+                value: 'yellow'
             },
 
             {
