@@ -4,10 +4,6 @@
 #include <qmltoolbox/Application.h>
 #include <qmltoolbox/qmltoolbox-version.h>
 
-#include <QPainter>
-#include <QPixmap>
-#include <QImage>
-
 
 int main(int argc, char *argv[])
 {
