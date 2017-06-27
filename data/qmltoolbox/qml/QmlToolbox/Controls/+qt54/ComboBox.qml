@@ -16,14 +16,14 @@ import QmlToolbox.Base 1.0
 */
 ComboBox 
 {
-    id: comboBox
+    id: input
 
-    property bool isImagedDisplayed: false;
+    property var pixmaps: null;
 
-    function displayImage()
+    function displayPixmaps(pixmapList)
     {
-        comboBox.style = comboBoxStyle;
-        comboBox.isImagedDisplayed = true;
+        input.pixmaps = pixmapList;
+        input.style = comboBoxStyle;
     }
 
     DebugItem
@@ -35,7 +35,7 @@ ComboBox
         ComboBoxStyle {
             label: Image {
                 id: image
-                source: comboBox.model[comboBox.currentIndex].image
+                source: input.pixmaps[input.currentIndex]
             }
 
             // drop-down customization
@@ -45,7 +45,7 @@ ComboBox
 
                 itemDelegate.label: Image {
                     id: image
-                    source: comboBox.model[styleData.index].image
+                    source: input.pixmaps[styleData.index]
                 }
             }
         }
