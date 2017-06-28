@@ -8,7 +8,7 @@ import QmlToolbox.Base 1.0
 /**
 *  ComboBox
 *
-*  Text input with optional dropdown menu
+*  Text input with optional dropdown menu, can also display a list of images
 *
 *  Default implementation of ComboBox using Controls 2.0
 */
@@ -16,7 +16,7 @@ ComboBox
 {
     id: item
 
-    property var pixmaps: null
+    property var pixmaps: null ///< List of image URLs for each element (must match the length of model)
 
     contentItem: pixmaps !== null ? pixmapContent  : defaultContent
     delegate:    pixmaps !== null ? pixmapDelegate : defaultDelegate
