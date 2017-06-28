@@ -16,36 +16,65 @@ ComboBox
 {
     id: item
 
-    property var pixmaps: null;
+    property var pixmaps: null
 
-    function displayPixmaps(pixmapList)
-    {
-        item.pixmaps = pixmapList;
-        item.delegate = delegate;
-        item.contentItem = contentItem.createObject(item, {});
-    }
+    contentItem: pixmaps !== null ? pixmapContent  : defaultContent
+    delegate:    pixmaps !== null ? pixmapDelegate : defaultDelegate
 
     DebugItem
     {
     }
 
-    Component {
-        id: delegate;
-        ItemDelegate {
+    property Item pixmapContent: Image
+    {
+        source: item.pixmaps !== null ? item.pixmaps[item.currentIndex] : ''
+    }
+
+    property Item defaultContent: Text
+    {
+        text:                item.displayText
+        font:                item.font
+        horizontalAlignment: Text.AlignLeft
+        verticalAlignment:   Text.AlignVCenter
+        elide:               Text.ElideRight
+    }
+
+    Component
+    {
+        id: pixmapDelegate
+
+        ItemDelegate
+        {
             width: item.width
-            contentItem: Image {
-                width: item.width
+
+            contentItem: Image
+            {
+                width:  item.width
                 height: item.height
                 source: item.pixmaps[index]
             }
+
             highlighted: item.highlightedIndex === item.index
         }
     }
 
-    Component {
-        id: contentItem;
-        Image {
-            source: item.pixmaps[item.currentIndex]
+    Component
+    {
+        id: defaultDelegate
+
+        ItemDelegate
+        {
+            width: item.width
+
+            contentItem: Text
+            {
+                text: modelData
+                font: item.font
+                elide: Text.ElideRight
+                verticalAlignment: Text.AlignVCenter
+            }
+
+            highlighted: item.highlightedIndex === index
         }
     }
 }

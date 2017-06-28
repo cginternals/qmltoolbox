@@ -39,7 +39,7 @@ Editor
         }
 
         if (status.hasOwnProperty('pixmaps')) {
-            input.displayPixmaps(status.pixmaps);
+            input.pixmaps = status.pixmaps;
         }
     }
 }

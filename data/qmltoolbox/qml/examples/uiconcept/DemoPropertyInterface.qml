@@ -115,19 +115,6 @@ QtObject
             else       timer.stop();
         }
 
-        if (path == 'root' && slot == 'Style')
-        {
-            var inputs = stage.inputs;
-
-            var mapping = {'red': '#FF0000', 'yellow': '#FFFF00', 'green' : '#00FF00'};
-
-            stage.inputs[4].value = mapping[value];
-
-            stage.inputs = inputs;
-
-            propertyInterface.slotChanged('root', 'Color' , inputs[4]);
-        }
-
         if (path == 'root' && slot == 'Mode')
         {
             var inputs = stage.inputs;
@@ -137,6 +124,19 @@ QtObject
             stage.inputs = inputs;
 
             propertyInterface.slotChanged('root', 'Text' , inputs[1]);
+        }
+
+        if (path == 'root' && slot == 'Style')
+        {
+            var inputs = stage.inputs;
+
+            var mapping = {'red': '#FF0000', 'yellow': '#FFFF00', 'green' : '#00FF00'};
+
+            inputs[5].value = mapping[value];
+
+            stage.inputs = inputs;
+
+            propertyInterface.slotChanged('root', 'Color' , inputs[5]);
         }
 
         if (path == 'root' && slot == 'Number')
