@@ -37,5 +37,9 @@ Editor
             input.model = null;
             input.currentIndex = -1;
         }
+
+        if (status.hasOwnProperty('pixmaps')) {
+            input.pixmaps = status.pixmaps;
+        }
     }
 }
