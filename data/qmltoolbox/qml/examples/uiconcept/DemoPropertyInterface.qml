@@ -181,6 +181,19 @@ QtObject
             propertyInterface.slotChanged('root', 'Color' , inputs[4]);
             propertyInterface.slotChanged('root', 'Filename', inputs[5]);
         }
+
+        if (path == 'root' && slot == 'Number2')
+        {
+            var inputs = stage.inputs;
+
+            var text = '' + value;
+
+            inputs[1].value = text;
+
+            stage.inputs = inputs;
+
+            propertyInterface.slotChanged('root', 'Text', inputs[1]);
+        }
     }
 
     // Internals
@@ -244,6 +257,17 @@ QtObject
                 maximumValue: 100,
                 value: 20,
                 updateOnDrag: true
+            },
+
+            {
+                name: 'Number2',
+                type: 'float',
+                minimumValue: 0.0,
+                maximumValue: 5.0,
+                decimals: 2,
+                value: 1.0,
+                asSpinBox: true,
+                stepSize: 0.1
             },
 
             {

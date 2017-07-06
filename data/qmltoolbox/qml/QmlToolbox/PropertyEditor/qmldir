@@ -9,6 +9,7 @@ EditorString   1.0 EditorString.qml
 EditorFilename 1.0 EditorFilename.qml
 EditorBool     1.0 EditorBool.qml
 EditorNumber   1.0 EditorNumber.qml
+EditorSpinbox  1.0 EditorSpinbox.qml
 EditorColor    1.0 EditorColor.qml
 EditorEnum     1.0 EditorEnum.qml
 EditorRange    1.0 EditorRange.qml
