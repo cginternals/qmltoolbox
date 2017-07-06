@@ -33,6 +33,9 @@ Editor
         if (status.hasOwnProperty('choices')) {
             input.model = status.choices;
             input.currentIndex = status.choices.indexOf(status.value);
+            if (input.currentIndex < 0) {
+                input.currentIndex = 0;
+            }
         } else {
             input.model = null;
             input.currentIndex = -1;
