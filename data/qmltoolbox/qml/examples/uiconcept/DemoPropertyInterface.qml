@@ -119,11 +119,11 @@ QtObject
         {
             var inputs = stage.inputs;
 
-            inputs[1].value = value;
+            inputs[2].value = value;
 
             stage.inputs = inputs;
 
-            propertyInterface.slotChanged('root', 'Text' , inputs[1]);
+            propertyInterface.slotChanged('root', 'Text' , inputs[2]);
         }
 
         if (path == 'root' && slot == 'Style')
@@ -132,11 +132,11 @@ QtObject
 
             var mapping = {'red': '#FF0000', 'yellow': '#FFFF00', 'green' : '#00FF00'};
 
-            inputs[5].value = mapping[value];
+            inputs[6].value = mapping[value];
 
             stage.inputs = inputs;
 
-            propertyInterface.slotChanged('root', 'Color' , inputs[5]);
+            propertyInterface.slotChanged('root', 'Color' , inputs[6]);
         }
 
         if (path == 'root' && slot == 'Number')
@@ -168,18 +168,18 @@ QtObject
 
             inputs[0].choices = choices;
             inputs[0].value   = mode;
-            inputs[1].value   = text;
-            inputs[2].value   = val;
-            inputs[4].value   = color;
-            inputs[5].value   = text;
+            inputs[2].value   = text;
+            inputs[3].value   = val;
+            inputs[6].value   = color;
+            inputs[7].value   = text;
 
             stage.inputs = inputs;
 
             propertyInterface.slotChanged('root', 'Mode',   inputs[0]);
-            propertyInterface.slotChanged('root', 'Text',   inputs[1]);
-            propertyInterface.slotChanged('root', 'Number', inputs[2]);
-            propertyInterface.slotChanged('root', 'Color' , inputs[4]);
-            propertyInterface.slotChanged('root', 'Filename', inputs[5]);
+            propertyInterface.slotChanged('root', 'Text',   inputs[2]);
+            propertyInterface.slotChanged('root', 'Number', inputs[3]);
+            propertyInterface.slotChanged('root', 'Color' , inputs[6]);
+            propertyInterface.slotChanged('root', 'Filename', inputs[7]);
         }
 
         if (path == 'root' && slot == 'Number2')
@@ -188,11 +188,11 @@ QtObject
 
             var text = '' + value;
 
-            inputs[1].value = text;
+            inputs[2].value = text;
 
             stage.inputs = inputs;
 
-            propertyInterface.slotChanged('root', 'Text', inputs[1]);
+            propertyInterface.slotChanged('root', 'Text', inputs[2]);
         }
     }
 
@@ -407,7 +407,7 @@ QtObject
         {
             var inputs = stage.inputs;
 
-            var value = (inputs[2].value + 1) % 100;
+            var value = (inputs[3].value + 1) % 100;
             propertyInterface.setValue('root', 'Number', value);
         }
     }
