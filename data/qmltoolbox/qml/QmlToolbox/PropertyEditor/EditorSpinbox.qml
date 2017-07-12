@@ -51,7 +51,7 @@ Editor
             input.realTo = status.maximumValue;
         }
 
-        input.value = status.value * input.scaleFactor;
+        input.value = Math.round(status.value * input.scaleFactor);
 
         internal.noUpdate = false;
     }
