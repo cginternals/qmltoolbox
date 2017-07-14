@@ -202,6 +202,26 @@ ApplicationWindow
                 {
                     Layout.alignment: Qt.AlignRight
 
+                    text: "SpinBox"
+                }
+
+                RowLayout
+                {
+                    SpinBox
+                    {
+                        id: spinBox
+                    }
+
+                    Label
+                    {
+                        text: spinBox.value
+                    }
+                }
+
+                Label
+                {
+                    Layout.alignment: Qt.AlignRight
+
                     text: "Switch"
                 }
 
