@@ -24,8 +24,8 @@ SpinBox
 
     property real scaleFactor:  Math.pow(10, spinbox.decimals)
 
-    from: realFrom * scaleFactor
-    to: realTo * scaleFactor
+    from:     realFrom * scaleFactor
+    to:       realTo * scaleFactor
     stepSize: realStepSize * scaleFactor
 
     editable: true
@@ -34,16 +34,19 @@ SpinBox
     {
     }
 
-    validator: DoubleValidator {
+    validator: DoubleValidator
+    {
         bottom: Math.min(spinbox.from, spinbox.to)
-        top:  Math.max(spinbox.from, spinbox.to)
+        top:    Math.max(spinbox.from, spinbox.to)
     }
 
-    textFromValue: function(value, locale) {
-        return Number(value / scaleFactor).toLocaleString(locale, 'f', spinbox.decimals)
+    textFromValue: function(value, locale)
+    {
+        return Number(value / scaleFactor).toLocaleString(locale, 'f', spinbox.decimals);
     }
 
-    valueFromText: function(text, locale) {
-        return Number.fromLocaleString(locale, text) * scaleFactor
+    valueFromText: function(text, locale)
+    {
+        return Number.fromLocaleString(locale, text) * scaleFactor;
     }
 }

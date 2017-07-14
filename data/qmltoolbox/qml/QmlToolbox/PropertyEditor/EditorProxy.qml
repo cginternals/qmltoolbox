@@ -31,6 +31,7 @@ Editor
         // Destroy old editor
         // editor.destroy();
 
+        // Check data type
         var isNumber = status.type === 'int' || status.type === 'float';
         var isEnum = status.type === 'enum' || (status.type === 'string' && status.hasOwnProperty('choices'));
         var useSpinBox = status.hasOwnProperty('asSpinBox') && status.asSpinBox === true;

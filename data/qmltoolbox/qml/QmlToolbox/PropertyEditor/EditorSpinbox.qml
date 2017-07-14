@@ -5,7 +5,7 @@ import QmlToolbox.Controls 1.0
 
 
 /**
-*  EditorNumber
+*  EditorSpinbox
 *
 *  Editor for properties of type 'int', 'float', etc. with a spin box
 */
