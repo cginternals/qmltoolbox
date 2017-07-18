@@ -1,5 +1,6 @@
 
 import QtQuick 2.0
+import QtQuick.Controls 1.1
 
 import QmlToolbox.Base 1.0
 import QmlToolbox.Controls 1.0
@@ -60,7 +61,27 @@ Item
     {
         id: menu
 
-        title: "Pipeline"
+        title: 'Pipeline'
+
+        MenuItem
+        {
+            text: 'Add Stage...'
+
+            onTriggered:
+            {
+                stageAdditionMenu.x = menu.x;
+                stageAdditionMenu.y = menu.y;
+
+                stageAdditionMenu.initialize();
+                stageAdditionMenu.open();
+            }
+        }
+    }
+
+    // Menu for stage addition
+    Menu
+    {
+        id: stageAdditionMenu
 
         property bool initialized: false
 
@@ -71,14 +92,12 @@ Item
                 return;
             }
 
-            var menu = addMenu('Add Stage');
-
             var types = properties.getStageTypes();
             for (var i in types)
             {
                 var type = types[i];
 
-                var item = menu.addItem(type);
+                var item = stageAdditionMenu.addMenuItem(type);
 
                 var callbackFactory = function(type)
                 {
@@ -94,6 +113,7 @@ Item
             initialized = true;
         }
     }
+
 
     /**
     *  Background mouse area
@@ -119,8 +139,9 @@ Item
             // Open context menu
             if (mouse.button == Qt.RightButton)
             {
-                menu.initialize();
-                menu.popup();
+                menu.x = mouse.x;
+                menu.y = mouse.y;
+                menu.open();
             }
         }
 

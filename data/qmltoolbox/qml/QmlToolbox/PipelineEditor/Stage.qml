@@ -146,7 +146,7 @@ Item
                 {
                     if (mouse.button == Qt.RightButton)
                     {
-                        menu.popup();
+                        menu.open();
                     }
                 }
             }
