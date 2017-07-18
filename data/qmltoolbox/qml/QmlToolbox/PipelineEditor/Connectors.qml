@@ -52,6 +52,17 @@ Item
         */
         function drawConnectors(ctx)
         {
+            // Utility functions to get the path and the slot name
+            var getPath = function (path) {
+                var splitPath = path.split('.');
+                splitPath.splice(splitPath.length - 1, 1);
+                return splitPath.join('.');
+            };
+            var getSlot = function (path) {
+                var splitPath = path.split('.');
+                return splitPath[splitPath.length - 1];
+            };
+
             // Get all stages of the pipeline and the pipeline itself
             var stages = [];
 
@@ -80,8 +91,8 @@ Item
                     var to   = connection.to;
 
                     // Draw connection
-                    var p0 = connectors.pipeline.getSlotPos(from);
-                    var p1 = connectors.pipeline.getSlotPos(to);
+                    var p0 = connectors.pipeline.getSlotPos(getPath(from), getSlot(from));
+                    var p1 = connectors.pipeline.getSlotPos(getPath(to), getSlot(to));
 
                     if (p0 != null && p1 != null)
                     {
@@ -96,7 +107,7 @@ Item
             // Draw interactive connector
             if (connectors.pipeline.selectedOutput != '')
             {
-                var p0 = connectors.pipeline.getSlotPos(connectors.pipeline.selectedOutput);
+                var p0 = connectors.pipeline.getSlotPos(connectors.pipeline.selectedPath, connectors.pipeline.selectedOutput);
                 var p1 = { x: connectors.pipeline.mouseX, y: connectors.pipeline.mouseY };
                 drawConnector(ctx, p0, p1, 2);
             }
@@ -104,7 +115,7 @@ Item
             if (connectors.pipeline.selectedInput != '')
             {
                 var p0 = { x: connectors.pipeline.mouseX, y: connectors.pipeline.mouseY };
-                var p1 = connectors.pipeline.getSlotPos(connectors.pipeline.selectedInput);
+                var p1 = connectors.pipeline.getSlotPos(connectors.pipeline.selectedPath, connectors.pipeline.selectedInput);
                 drawConnector(ctx, p0, p1, 2);
             }
         }

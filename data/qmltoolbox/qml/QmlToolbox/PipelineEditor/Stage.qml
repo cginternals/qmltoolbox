@@ -215,24 +215,23 @@ Item
         properties:  stage.properties
         showEditors: !stage.inverse
 
-        hovered:  (pipeline != null && pipeline.hoveredElement  == path)
-        selected: (pipeline != null && pipeline.selectedElement == path)
+        hovered:  (pipeline != null && pipeline.hoveredPath == path && pipeline.hoveredSlot == slot)
 
         onEntered:
         {
-            pipeline.onSlotEntered(path);
+            pipeline.onSlotEntered(path, slot);
         }
 
         onExited:
         {
-            pipeline.onSlotExited(path);
+            pipeline.onSlotExited(path, slot);
         }
 
         onPressed:
         {
             if (connectable)
             {
-                pipeline.onInputSelected(path);
+                pipeline.onInputSelected(path, slot);
             }
         }
     }
@@ -245,22 +244,21 @@ Item
         properties:  stage.properties
         showEditors: stage.inverse
 
-        hovered:  (pipeline != null && pipeline.hoveredElement  == path)
-        selected: (pipeline != null && pipeline.selectedElement == path)
+        hovered:  (pipeline != null && pipeline.hoveredPath == path && pipeline.hoveredSlot == slot)
 
         onEntered:
         {
-            pipeline.onSlotEntered(path);
+            pipeline.onSlotEntered(path, slot);
         }
 
         onExited:
         {
-            pipeline.onSlotExited(path);
+            pipeline.onSlotExited(path, slot);
         }
 
         onPressed:
         {
-            pipeline.onOutputSelected(path);
+            pipeline.onOutputSelected(path, slot);
         }
     }
 

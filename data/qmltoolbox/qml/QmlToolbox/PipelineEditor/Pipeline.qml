@@ -20,9 +20,11 @@ Item
 
     // Internals
     property var    stageItems:     null ///< Item cache
-    property string hoveredElement: ''   ///< Path of element that is currently hovered
-    property string selectedInput:  ''   ///< Path of selected input slot ('' if none)
-    property string selectedOutput: ''   ///< Path of selected output slot ('' if none)
+    property string hoveredPath:    ''   ///< Path of slot that is currently hovered
+    property string hoveredSlot:    ''   ///< Name of slot that is currently hovered
+    property string selectedPath:   ''   ///< Path of selected slot ('' if none)
+    property string selectedInput:  ''   ///< Name of selected input slot ('' if none)
+    property string selectedOutput: ''   ///< Name of selected output slot ('' if none)
     property int    mouseX:         0;   ///< Current mouse position (X component)
     property int    mouseY:         0;   ///< Current mouse position (Y component)
 
@@ -108,6 +110,7 @@ Item
             // Deselect slots
             if (mouse.button == Qt.LeftButton)
             {
+                pipeline.selectedPath   = '';
                 pipeline.selectedInput  = '';
                 pipeline.selectedOutput = '';
                 connectors.requestPaint();
@@ -128,7 +131,7 @@ Item
             pipeline.mouseY = mouse.y;
 
             // Draw new connection
-            if (pipeline.selectedInput != '' || pipeline.selectedOutput != '')
+            if (pipeline.selectedPath != '')
             {
                 connectors.requestPaint();
             }
@@ -378,57 +381,62 @@ Item
     *  Get position of slot in pipeline
     *
     *  @param[in] path
-    *    Path in pipeline hierarchy (e.g., 'pipeline.stage1.input1')
+    *    Path in pipeline hierarchy (e.g., 'pipeline.stage1')
+    *  @param[in] slot
+    *    Name of slot (e.g., 'input1')
     */
-    function getSlotPos(path)
+    function getSlotPos(path, slotName)
     {
         // The path must start with the path to this pipeline, otherwise something is wrong
-        var prefix = pipeline.path + '.';
-        if (path.substr(0, prefix.length) == prefix)
+        var pipelineNames = pipeline.path.split('.');
+        var names = path.split('.');
+        for (var i = 0; i < pipelineNames.length; i++)
         {
-            // Get path relative to the pipeline
-            var subPath = path.substr(prefix.length);
-            var names = subPath.split('.');
-
-            // If subpath has two components, it is a slot on a stage
-            if (names.length == 2)
+            if (names.length < pipelineNames.length || pipelineNames[i] != names[i])
             {
-                var stageName = names[0];
-                var slotName  = names[1];
-
-                // Get stage
-                var stageItem = stageItems[stageName];
-                if (stageItem)
-                {
-                    var pos = stageItem.getSlotPos(slotName);
-                    return stageItem.mapToItem(pipeline, pos.x, pos.y);
-                }
+                // Something is wrong
+                return null;
             }
+        }
 
-            // If subpath has only one component, it is a slot on this pipeline
-            else if (names.length == 1)
+        // Get path relative to the pipeline (remove pipeline path elements)
+        names.splice(0, pipelineNames.length);
+
+        // If subpath has elements left, it is a slot on a stage
+        if (names.length == 1)
+        {
+            var stageName = names[0];
+
+            // Get stage
+            var stageItem = stageItems[stageName];
+            if (stageItem)
             {
-                var slotName = names[0];
+                var pos = stageItem.getSlotPos(slotName);
+                return stageItem.mapToItem(pipeline, pos.x, pos.y);
+            }
+        }
 
-                // Get stage
-                var inputsItem  = stageItems['Inputs'];
-                var outputsItem = stageItems['Outputs'];
+        // If subpath has only one component, it is a slot on this pipeline
+        else if (names.length == 0)
+        {
+            // Get stage
+            var inputsItem  = stageItems['Inputs'];
+            var outputsItem = stageItems['Outputs'];
 
-                if (inputsItem && outputsItem)
+            if (inputsItem && outputsItem)
+            {
+                var pos = inputsItem.getSlotPos(slotName);
+
+                if (pos)
                 {
-                    var pos = inputsItem.getSlotPos(slotName);
+                    return inputsItem.mapToItem(pipeline, pos.x, pos.y);
+                }
 
-                    if (pos)
-                    {
-                        return inputsItem.mapToItem(pipeline, pos.x, pos.y);
-                    }
+                pos = outputsItem.getSlotPos(slotName);
 
-                    pos = outputsItem.getSlotPos(slotName);
-
-                    if (pos)
-                    {
-                        return outputsItem.mapToItem(pipeline, pos.x, pos.y);
-                    }
+                if (pos)
+                {
+                    return outputsItem.mapToItem(pipeline, pos.x, pos.y);
                 }
             }
         }
@@ -441,11 +449,14 @@ Item
     *  Called when mouse has entered a slot
     *
     *  @param[in] path
-    *    Path in pipeline hierarchy (e.g., 'pipeline.stage1.input1')
+    *    Path in pipeline hierarchy (e.g., 'pipeline.stage1')
+    *  @param[in] slot
+    *    Name of slot (e.g., 'input1')
     */
-    function onSlotEntered(path)
+    function onSlotEntered(path, slot)
     {
-        hoveredElement = path;
+        hoveredPath = path;
+        hoveredSlot = slot;
 
         connectors.requestPaint();
     }
@@ -454,13 +465,16 @@ Item
     *  Called when mouse has left a slot
     *
     *  @param[in] path
-    *    Path in pipeline hierarchy (e.g., 'pipeline.stage1.input1')
+    *    Path in pipeline hierarchy (e.g., 'pipeline.stage1')
+    *  @param[in] slot
+    *    Name of slot (e.g., 'input1')
     */
-    function onSlotExited(path)
+    function onSlotExited(path, slot)
     {
-        if (hoveredElement == path)
+        if (hoveredPath == path && hoveredSlot == slot)
         {
-            hoveredElement = '';
+            hoveredPath = '';
+            hoveredSlot = '';
         }
 
         connectors.requestPaint();
@@ -470,20 +484,23 @@ Item
     *  Called when an input slot has been selected
     *
     *  @param[in] path
-    *    Path in pipeline hierarchy (e.g., 'pipeline.stage1.input1')
+    *    Path in pipeline hierarchy (e.g., 'pipeline.stage1')
+    *  @param[in] slot
+    *    Name of slot (e.g., 'input1')
     */
-    function onInputSelected(path)
+    function onInputSelected(path, slot)
     {
         // If input slot is already connected, remove connection
-        properties.removeConnection(path);
+        properties.removeConnection(path, slot);
 
         // Connection created
-        if (path != '' && selectedOutput != '')
+        if (path != '' && slot != '' && selectedOutput != '')
         {
             // Create connection
-            properties.createConnection(selectedOutput, path);
+            properties.createConnection(selectedPath, selectedOutput, path, slot);
 
             // Reset selection
+            selectedPath   = '';
             selectedInput  = '';
             selectedOutput = '';
         }
@@ -492,7 +509,8 @@ Item
         else
         {
             // Select input slot
-            selectedInput  = path;
+            selectedPath   = path;
+            selectedInput  = slot;
             selectedOutput = '';
         }
 
@@ -504,17 +522,20 @@ Item
     *  Called when an output slot has been selected
     *
     *  @param[in] path
-    *    Path in pipeline hierarchy (e.g., 'pipeline.stage1.output1')
+    *    Path in pipeline hierarchy (e.g., 'pipeline.stage1')
+    *  @param[in] slot
+    *    Name of slot (e.g., 'output1')
     */
-    function onOutputSelected(path)
+    function onOutputSelected(path, slot)
     {
         // Connection created
-        if (path != '' && selectedInput != '')
+        if (path != '' && slot != '' && selectedInput != '')
         {
             // Create connection
-            properties.createConnection(path, selectedInput);
+            properties.createConnection(path, slot, selectedPath, selectedInput);
 
             // Reset selection
+            selectedPath   = '';
             selectedInput  = '';
             selectedOutput = '';
         }
@@ -523,8 +544,9 @@ Item
         else
         {
             // Select output slot
+            selectedPath   = path;
             selectedInput  = '';
-            selectedOutput = path;
+            selectedOutput = slot;
         }
 
         // Redraw connections
