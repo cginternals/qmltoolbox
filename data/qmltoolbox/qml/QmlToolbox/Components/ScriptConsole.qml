@@ -54,4 +54,20 @@ ColumnLayout
     {
         log.output(text, type);
     }
+
+    // Transform anything into a nice representation
+    function prettyPrint(something)
+    {
+        if (something === null)
+        {
+            return null;
+        }
+
+        if (typeof something === 'object')
+        {
+            return JSON.stringify(something);
+        }
+
+        return something.toString();
+    }
 }
