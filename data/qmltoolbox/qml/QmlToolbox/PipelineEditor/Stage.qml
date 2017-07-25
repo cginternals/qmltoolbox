@@ -43,7 +43,7 @@ Item
 
         onCreateSlot:
         {
-            properties.createSlot(stage.path, slotType, type, name);
+            properties.createSlot(stage.path, name, slotType, type);
             stage.update();
         }
     }
@@ -62,7 +62,7 @@ Item
             onTriggered:
             {
                 dialog.slotType = 'Input';
-                dialog.setChoices( properties.getSlotTypes(stage.path) );
+                dialog.setChoices(properties.getSlotTypes(stage.path));
                 dialog.open();
             }
         }
@@ -74,6 +74,7 @@ Item
             onTriggered:
             {
                 dialog.slotType = 'Output';
+                dialog.setChoices(properties.getSlotTypes(stage.path));
                 dialog.open();
             }
         }
@@ -356,11 +357,11 @@ Item
         {
             if (slot.type == 'input')
             {
-                return slot.item.mapToItem(stage, -slot.item.radius / 8.0, slot.item.radius / 2.0);
+                return slot.item.mapToItem(stage, 0, slot.item.height / 2.0);
             }
             else if (slot.type == 'output')
             {
-                return slot.item.mapToItem(stage, slot.item.width, slot.item.radius / 2.0);
+                return slot.item.mapToItem(stage, slot.item.width, slot.item.height / 2.0);
             }
         }
 
