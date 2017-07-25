@@ -13,6 +13,8 @@ import QmlToolbox.Base 1.0
 */
 MenuItem 
 {
+    highlighted: down || visualFocus || hovered
+
     DebugItem
     {
     }

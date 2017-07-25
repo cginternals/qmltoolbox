@@ -149,6 +149,20 @@ ApplicationWindow
 
                         MenuItem { text: "item 1" }
                         MenuItem { text: "item 2" }
+                        MenuItem {
+                            text: "submenu..."
+                            onTriggered: subMenu.open()
+                        }
+                    }
+
+                    Menu
+                    {
+                        id: subMenu
+
+                        y: menuButton.height
+
+                        MenuItem { text: "sub item 1" }
+                        MenuItem { text: "sub item 2" }
                     }
                 }
 

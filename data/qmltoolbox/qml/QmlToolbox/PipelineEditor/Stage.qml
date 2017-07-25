@@ -43,7 +43,7 @@ Item
 
         onCreateSlot:
         {
-            properties.createSlot(stage.path, slotType, type, name);
+            properties.createSlot(stage.path, name, slotType, type);
             stage.update();
         }
     }
@@ -62,7 +62,7 @@ Item
             onTriggered:
             {
                 dialog.slotType = 'Input';
-                dialog.setChoices( properties.getSlotTypes(stage.path) );
+                dialog.setChoices(properties.getSlotTypes(stage.path));
                 dialog.open();
             }
         }
@@ -74,6 +74,7 @@ Item
             onTriggered:
             {
                 dialog.slotType = 'Output';
+                dialog.setChoices(properties.getSlotTypes(stage.path));
                 dialog.open();
             }
         }
@@ -146,7 +147,7 @@ Item
                 {
                     if (mouse.button == Qt.RightButton)
                     {
-                        menu.popup();
+                        menu.open();
                     }
                 }
             }
@@ -215,24 +216,23 @@ Item
         properties:  stage.properties
         showEditors: !stage.inverse
 
-        hovered:  (pipeline != null && pipeline.hoveredElement  == path)
-        selected: (pipeline != null && pipeline.selectedElement == path)
+        hovered:  (pipeline != null && pipeline.hoveredPath == path && pipeline.hoveredSlot == slot)
 
         onEntered:
         {
-            pipeline.onSlotEntered(path);
+            pipeline.onSlotEntered(path, slot);
         }
 
         onExited:
         {
-            pipeline.onSlotExited(path);
+            pipeline.onSlotExited(path, slot);
         }
 
         onPressed:
         {
             if (connectable)
             {
-                pipeline.onInputSelected(path);
+                pipeline.onInputSelected(path, slot);
             }
         }
     }
@@ -245,22 +245,21 @@ Item
         properties:  stage.properties
         showEditors: stage.inverse
 
-        hovered:  (pipeline != null && pipeline.hoveredElement  == path)
-        selected: (pipeline != null && pipeline.selectedElement == path)
+        hovered:  (pipeline != null && pipeline.hoveredPath == path && pipeline.hoveredSlot == slot)
 
         onEntered:
         {
-            pipeline.onSlotEntered(path);
+            pipeline.onSlotEntered(path, slot);
         }
 
         onExited:
         {
-            pipeline.onSlotExited(path);
+            pipeline.onSlotExited(path, slot);
         }
 
         onPressed:
         {
-            pipeline.onOutputSelected(path);
+            pipeline.onOutputSelected(path, slot);
         }
     }
 
@@ -358,11 +357,11 @@ Item
         {
             if (slot.type == 'input')
             {
-                return slot.item.mapToItem(stage, -slot.item.radius / 8.0, slot.item.radius / 2.0);
+                return slot.item.mapToItem(stage, 0, slot.item.height / 2.0);
             }
             else if (slot.type == 'output')
             {
-                return slot.item.mapToItem(stage, slot.item.width, slot.item.radius / 2.0);
+                return slot.item.mapToItem(stage, slot.item.width, slot.item.height / 2.0);
             }
         }
 
