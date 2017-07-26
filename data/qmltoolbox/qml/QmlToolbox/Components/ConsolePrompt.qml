@@ -23,7 +23,7 @@ Control
     signal submitted(string command)
 
     // List of auto-completion words (array of strings)
-    property alias keywords: autocomplete.model
+    property alias keywords: filter.model
 
     // Height of the text element
     property real textHeight: input.height
@@ -67,7 +67,11 @@ Control
 
         Keys.onTabPressed:
         {
-            autocomplete.open();
+            filter.update();
+            if (autocomplete.model.length > 0)
+            {
+                autocomplete.open();
+            }
         }
 
         Keys.onEnterPressed:
@@ -154,8 +158,56 @@ Control
 
         onSelected:
         {
-            input.insert(input.length, model[index]);
+            input.remove(filter.startIndex, filter.endIndex);
+            input.insert(filter.startIndex, model[index]);
             input.forceActiveFocus();
+        }
+
+        onClosed:
+        {
+            input.forceActiveFocus();
+        }
+    }
+
+    QtObject
+    {
+        id: filter
+
+        property var model: []
+
+        property int startIndex: 0 ///< save start index of currently typed word
+        property int endIndex:   0 ///< save end index of currently typed word
+
+        onModelChanged:
+        {
+            autocomplete.model = filter.model;
+        }
+
+        function update()
+        {
+            startIndex = input.cursorPosition;
+            while(startIndex > 0 && input.text.charAt(startIndex - 1).match(/\w/))
+            {
+                startIndex -= 1;
+            }
+
+            endIndex = input.cursorPosition;
+            while(endIndex < input.text.length && input.text.charAt(endIndex).match(/\w/))
+            {
+                endIndex += 1;
+            }
+
+            var pattern = input.text.substr(startIndex, endIndex - startIndex);
+
+            var filtered = [];
+            for (var i in filter.model)
+            {
+                if (filter.model[i].indexOf(pattern) > -1)
+                {
+                    filtered.push(filter.model[i]);
+                }
+            }
+            autocomplete.model = filtered;
         }
     }
 }

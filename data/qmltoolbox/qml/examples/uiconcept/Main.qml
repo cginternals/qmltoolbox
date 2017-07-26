@@ -337,9 +337,9 @@ ApplicationWindow
                 scriptConsole.output("> " + command + "\n");
                 var res = eval(command);
 
-                if (res != undefined)
+                if (res !== undefined)
                 {
-                    console.log(res);
+                    console.log(scriptConsole.prettyPrint(res));
                 }
             }
         }
