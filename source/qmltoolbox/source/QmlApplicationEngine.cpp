@@ -36,6 +36,12 @@ QmlApplicationEngine::QmlApplicationEngine()
     if (!fileSelector) fileSelector = new QQmlFileSelector(this);
     fileSelector->setExtraSelectors(QStringList{ QMLTOOLBOX_QT54 });
 #endif
+
+#ifdef QMLTOOLBOX_QT57
+    auto fileSelector = QQmlFileSelector::get(this);
+    if (!fileSelector) fileSelector = new QQmlFileSelector(this);
+    fileSelector->setExtraSelectors(QStringList{ QMLTOOLBOX_QT57 });
+#endif
 }
 
 QmlApplicationEngine::~QmlApplicationEngine()

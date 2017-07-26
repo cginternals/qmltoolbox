@@ -27,20 +27,11 @@ ComboBox
 
     property Item pixmapContent: Image
     {
-        anchors.fill: parent
-        anchors.leftMargin: 15
-        anchors.rightMargin: 40
-        anchors.topMargin: 10
-        anchors.bottomMargin: 10
-
         source: item.pixmaps !== null ? item.pixmaps[item.currentIndex] : ''
     }
 
     property Item defaultContent: Text
     {
-        anchors.fill: parent
-        anchors.leftMargin: 15
-
         text:                item.displayText
         font:                item.font
         horizontalAlignment: Text.AlignLeft
