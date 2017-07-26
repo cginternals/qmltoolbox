@@ -169,7 +169,7 @@ Control
         }
     }
 
-    Item
+    QtObject
     {
         id: filter
 
