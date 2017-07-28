@@ -200,8 +200,8 @@ Item
         }
 
         // Add pseudo stages for inputs and outputs of the pipeline itself
-        addInputStageItem (pipeline.path, 'Inputs',    20, 150);
-        addOutputStageItem(pipeline.path, 'Outputs', 1200, 150);
+        addInputStageItem (pipeline.path, 'Inputs',  20, 150);
+        addOutputStageItem(pipeline.path, 'Outputs', x,  150);
 
         // Do the layout
         computeLayout();
@@ -395,7 +395,33 @@ Item
     */
     function computeLayout()
     {
-        // [TODO]
+        // ToDo: Implment force directed layout instead
+        var startX = 120;
+        var marginX = 250;
+        var topY = 120;
+        var bottomY = 500;
+
+        var stageOrder = [];
+        for (var name in stageItems)
+        {
+            stageOrder.push({name: name, x: stageItems[name].x});
+        }
+        stageOrder.sort(function (a, b) {return a.x - b.x});
+
+        var x = startX;
+        var isTop = true;
+        for (var i in stageOrder)
+        {
+            var stage = stageItems[stageOrder[i].name];
+
+            stage.x = x;
+            stage.y = isTop ? topY : bottomY;
+
+            x += stage.width + marginX;
+            isTop = !isTop;
+        }
+
+        connectors.requestPaint();
     }
 
     /**
