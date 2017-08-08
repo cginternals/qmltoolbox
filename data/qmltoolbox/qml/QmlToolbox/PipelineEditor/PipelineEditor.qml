@@ -61,4 +61,13 @@ Rectangle
             loaded = true;
         }
     }
+
+    /**
+    *  Update pipeline (reload on different model)
+    */
+    function update()
+    {
+        pipeline.path = "";
+        pipeline.path = "root";
+    }
 }
