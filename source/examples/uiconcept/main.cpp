@@ -22,7 +22,8 @@ int main(int argc, char *argv[])
     app.installTranslator(&translator);
 
     // Load and show QML
-    app.loadQml(app.qmlEngine().qmlToolboxModulePath() + "/examples/uiconcept/Main.qml");
+//  app.loadQml(app.qmlEngine().qmlToolboxModulePath() + "/examples/uiconcept/Main.qml");
+    app.loadQml(app.qmlEngine().qmlToolboxModulePath() + "/concept/main.qml");
 
     // Run application
     return app.exec();
