@@ -328,6 +328,9 @@ ApplicationWindow
 
         title: 'Pipeline Editor'
 
+        minimumWidth:  750
+        minimumHeight: 550
+
         PipelineView
         {
             id: externalPipelineView
