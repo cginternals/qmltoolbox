@@ -15,6 +15,16 @@ Slider
 {
     id: slider
 
+    property bool live: false
+
+    onPositionChanged:
+    {
+        if (live)
+        {
+            value = from + position * (to - from)
+        }
+    }
+
     DebugItem
     {
     }

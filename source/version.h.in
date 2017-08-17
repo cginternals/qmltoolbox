@@ -18,6 +18,10 @@
     #define QMLTOOLBOX_QT54 "qt54"
 #endif
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0))
-    #define QMLTOOLBOX_QT57
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0) && QT_VERSION < QT_VERSION_CHECK(5, 9, 0))
+    #define QMLTOOLBOX_QT57 "qt57"
+#endif
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 9, 0))
+    #define QMLTOOLBOX_QT59
 #endif

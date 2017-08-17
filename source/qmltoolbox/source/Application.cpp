@@ -16,7 +16,7 @@ void Application::initialize()
     qmltoolbox::MessageHandler::instance().installMessageHandlers();
 
     // Enable high DPI (if available)
-#ifdef QMLTOOLBOX_QT57
+#if defined(QMLTOOLBOX_QT57) || defined(QMLTOOLBOX_QT59)
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 }
