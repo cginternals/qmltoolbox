@@ -73,4 +73,5 @@ Item
     property color pipelineLineColorDefault:     '#000000' // Color of connections
     property color pipelineLineColorHighlighted: '#6688c8' // Color of connections when highlighted
     property color pipelineLineColorSelected:    '#c83366' // Color of connections when selected
+    property color pipelineLineColorFeedback:    '#afafaf' // Color of feedback connections
 }

@@ -434,9 +434,10 @@ Item
                 var fromPath = getPath(connections[i].from);
                 var toPath = getPath(connections[i].to);
 
-                if (fromPath == "root")
+                if (fromPath == "root" || connections[i].feedback)
                 {
                     // ignore connections from root (inputs will be leftmost)
+                    // and feedback connections
                     // this lets the algorithm start at the output node
                     continue;
                 }
