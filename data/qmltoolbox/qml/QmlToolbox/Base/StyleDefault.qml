@@ -68,7 +68,8 @@ Item
 
     property real  pipelineSlotSize:             20        // Diameter of slots
     property color pipelineSlotColorIn:          '#ffffff' // Color of input slots
-    property color pipelineSlotColorOut:         '#cafd00' // Color of output slots
+    property color pipelineSlotColorOut:         '#ffffff' // Color of output slots
+    property color pipelineSlotColorOutRequired: '#cafd00' // Color of required output slots
 
     property color pipelineLineColorDefault:     '#000000' // Color of connections
     property color pipelineLineColorHighlighted: '#6688c8' // Color of connections when highlighted
