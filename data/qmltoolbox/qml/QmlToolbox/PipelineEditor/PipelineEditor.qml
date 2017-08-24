@@ -15,7 +15,8 @@ Rectangle
     id: panel
 
     // Options
-    property var properties: null ///< Interface for communicating with the actual properties
+    property var properties: null     ///< Interface for communicating with the actual properties
+    property var pipeline:   pipeline ///< Interface for communication from root
 
     // Internals
     property bool loaded: false
