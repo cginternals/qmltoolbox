@@ -379,6 +379,19 @@ Item
     }
 
     /**
+    *  Add custom component to stage body
+    *
+    *  @param[in] component
+    *    The component from which one instance should be added
+    *  @param[in] options
+    *    Options for component creation
+    */
+    function addComponent(component, options)
+    {
+        return component.createObject(inputs, options);
+    }
+
+    /**
     *  Load pipeline
     */
     onPathChanged:
