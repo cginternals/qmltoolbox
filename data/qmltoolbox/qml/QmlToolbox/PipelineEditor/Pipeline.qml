@@ -15,6 +15,8 @@ Item
 {
     id: pipeline
 
+    signal stageCreated(string path) ///< Signals creation of a new stage item after the pipeline was loaded
+
     // Options
     property var    properties: null ///< Interface for accessing the actual properties
     property string path:       ''   ///< Path in the pipeline hierarchy (e.g., 'pipeline')
@@ -103,7 +105,7 @@ Item
                 {
                     return function()
                     {
-                        pipeline.createStage(type, type);
+                        pipeline.createStage(type, type, menu.x, menu.y);
                     };
                 };
 
@@ -372,13 +374,15 @@ Item
     *  @param[in] name
     *    Name of stage
     */
-    function createStage(className, name)
+    function createStage(className, name, x, y)
     {
         // Create stage
         var realName = properties.createStage(pipeline.path, className, name);
 
         // Create stage item
-        addStageItem(pipeline.path + '.' + realName, realName, 100, 100);
+        addStageItem(pipeline.path + '.' + realName, realName, x, y);
+
+        stageCreated(pipeline.path + '.' + realName);
     }
 
     /**
