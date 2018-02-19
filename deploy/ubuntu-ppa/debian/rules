@@ -22,7 +22,7 @@ build-arch:
 # thirdly called by launchpad
 binary: binary-arch
 
-binary-arch: libqmltoolbox libqmltoolbox-dev libqmltoolbox-docs libqmltoolbox-dbg libqmltoolbox-examples libqmltoolbox-all
+binary-arch: libqmltoolbox libqmltoolbox-dev libqmltoolbox-docs libqmltoolbox-dbg libqmltoolbox-all
 
 libqmltoolbox:
 	cd $(BUILDDIR); DESTDIR=../debian/tmp COMPONENT=runtime make component_install
@@ -60,17 +60,10 @@ libqmltoolbox-dbg:
 	dpkg --build debian/tmp ..
 	rm -rf debian/tmp
 
-libqmltoolbox-examples:
-	cd $(BUILDDIR); DESTDIR=../debian/tmp COMPONENT=examples make component_install
-	mkdir -p debian/tmp/DEBIAN
-	dpkg-gencontrol -plibqmltoolbox-examples
-	dpkg --build debian/tmp ..
-	rm -rf debian/tmp
-
 libqmltoolbox-all:
 	mkdir -p debian/tmp/DEBIAN
 	dpkg-gencontrol -plibqmltoolbox-all
 	dpkg --build debian/tmp ..
 	rm -rf debian/tmp
 
-.PHONY: build build-arch binary binary-arch clean libqmltoolbox libqmltoolbox-dev libqmltoolbox-docs libqmltoolbox-dbg libqmltoolbox-examples libqmltoolbox-all
+.PHONY: build build-arch binary binary-arch clean libqmltoolbox libqmltoolbox-dev libqmltoolbox-docs libqmltoolbox-dbg libqmltoolbox-all
