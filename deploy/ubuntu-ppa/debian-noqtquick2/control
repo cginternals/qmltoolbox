@@ -7,7 +7,7 @@ Standards-Version: 3.8.0
 
 Package: libqmltoolbox
 Architecture: any
-Depends: libcpplocate, libqt5core5a, libqt5quick5, libqt5quickwidgets5, libqt5declarative5, qml-module-qtquick-controls, qml-module-qtquick-controls2, qml-module-qtquick-dialogs, qml-module-qtquick-layouts, qml-module-qtquick-templates2
+Depends: libcpplocate, libqt5core5a, libqt5quick5, libqt5quickwidgets5, libqt5declarative5, qml-module-qtquick-controls, qml-module-qtquick-dialogs, qml-module-qtquick-layouts, qml-module-qtquick-templates
 Homepage: https://github.com/cginternals/qmltoolbox
 Description: QML item library for cross-platform graphics applications.
 
