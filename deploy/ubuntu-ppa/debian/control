@@ -2,12 +2,12 @@ Source: libqmltoolbox
 Section: misc
 Priority: optional
 Maintainer: Willy Scheibel <willy.scheibel@cginternals.com>
-Build-Depends: build-essential, cmake, libcpplocate-dev, libcpplocate-dbg, qtbase5-dev, doxygen, graphviz
+Build-Depends: build-essential, cmake, libcpplocate-dev, libcpplocate-dbg, qtbase5-dev, qtquick1-5-dev, doxygen, graphviz
 Standards-Version: 3.8.0
 
 Package: libgloperate
 Architecture: any
-Depends: libcpplocate, libqt5core5a
+Depends: libcpplocate, libqt5core5a, libqt5quick5, libqt5quickwidgets5
 Homepage: https://github.com/cginternals/qmltoolbox
 Description: QML item library for cross-platform graphics applications.
 
