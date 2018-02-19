@@ -13,7 +13,7 @@ build: build-arch
 
 build-arch:
 	mkdir $(BUILDDIR)
-	cd $(BUILDDIR);cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DOPTION_BUILD_TESTS=Off -DOPTION_BUILD_EXAMPLES=On -DOPTION_BUILD_DOCS=On ..
+	cd $(BUILDDIR);cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DOPTION_BUILD_TESTS=Off -DOPTION_BUILD_EXAMPLES=On -DOPTION_BUILD_DOCS=Off ..
 	make -C $(BUILDDIR)
 	mkdir $(BUILDDEBUGDIR)
 	cd $(BUILDDEBUGDIR);cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/usr -DOPTION_BUILD_TESTS=Off -DOPTION_BUILD_EXAMPLES=Off -DOPTION_BUILD_DOCS=Off ..
@@ -22,7 +22,7 @@ build-arch:
 # thirdly called by launchpad
 binary: binary-arch
 
-binary-arch: libqmltoolbox libqmltoolbox-dev libqmltoolbox-docs libqmltoolbox-dbg libqmltoolbox-all
+binary-arch: libqmltoolbox libqmltoolbox-dev libqmltoolbox-dbg libqmltoolbox-all
 
 libqmltoolbox:
 	cd $(BUILDDIR); DESTDIR=../debian/tmp COMPONENT=runtime make component_install
@@ -35,13 +35,6 @@ libqmltoolbox-dev:
 	cd $(BUILDDIR); DESTDIR=../debian/tmp COMPONENT=dev make component_install
 	mkdir -p debian/tmp/DEBIAN
 	dpkg-gencontrol -plibqmltoolbox-dev
-	dpkg --build debian/tmp ..
-	rm -rf debian/tmp
-
-libqmltoolbox-docs:
-	cd $(BUILDDIR); DESTDIR=../debian/tmp COMPONENT=docs make component_install
-	mkdir -p debian/tmp/DEBIAN
-	dpkg-gencontrol -plibqmltoolbox-docs
 	dpkg --build debian/tmp ..
 	rm -rf debian/tmp
 
@@ -66,4 +59,4 @@ libqmltoolbox-all:
 	dpkg --build debian/tmp ..
 	rm -rf debian/tmp
 
-.PHONY: build build-arch binary binary-arch clean libqmltoolbox libqmltoolbox-dev libqmltoolbox-docs libqmltoolbox-dbg libqmltoolbox-all
+.PHONY: build build-arch binary binary-arch clean libqmltoolbox libqmltoolbox-dev libqmltoolbox-dbg libqmltoolbox-all

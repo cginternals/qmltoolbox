@@ -17,11 +17,6 @@ Depends: libqmltoolbox, libcpplocate-dev, qtbase5-dev, qtdeclarative5-dev, qtqui
 Homepage: https://github.com/cginternals/qmltoolbox
 Description: QML item library for cross-platform graphics applications.
 
-Package: libgloperate-docs
-Architecture: any
-Homepage: https://github.com/cginternals/qmltoolbox
-Description: QML item library for cross-platform graphics applications.
-
 Package: libqmltoolbox-dbg
 Architecture: any
 Depends: libqmltoolbox, libqmltoolbox-dev
@@ -30,6 +25,6 @@ Description: QML item library for cross-platform graphics applications.
 
 Package: libqmltoolbox-all
 Architecture: any
-Depends: libqmltoolbox, libqmltoolbox-dev, libqmltoolbox-docs
+Depends: libqmltoolbox, libqmltoolbox-dev
 Homepage: https://github.com/cginternals/qmltoolbox
 Description: QML item library for cross-platform graphics applications.
