@@ -2,12 +2,12 @@ Source: libqmltoolbox
 Section: misc
 Priority: optional
 Maintainer: Willy Scheibel <willy.scheibel@cginternals.com>
-Build-Depends: build-essential, cmake, libcpplocate-dev, libcpplocate-dbg, qtbase5-dev, qtdeclarative5-dev, doxygen, graphviz
+Build-Depends: build-essential, cmake, libcpplocate-dev, libcpplocate-dbg, qtbase5-dev, libqt5qml5, qtdeclarative5-dev, doxygen, graphviz
 Standards-Version: 3.8.0
 
 Package: libqmltoolbox
 Architecture: any
-Depends: libcpplocate, libqt5core5a, libqt5quick5, libqt5quickwidgets5, libqt5declarative5, qml-module-qtquick-controls, qml-module-qtquick-dialogs, qml-module-qtquick-layouts
+Depends: libcpplocate, libqt5core5a, libqt5qml5, libqt5quick5, libqt5quickwidgets5, libqt5declarative5, qml-module-qtquick-controls, qml-module-qtquick-dialogs, qml-module-qtquick-layouts
 Homepage: https://github.com/cginternals/qmltoolbox
 Description: QML item library for cross-platform graphics applications.
 
