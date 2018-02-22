@@ -201,6 +201,6 @@ install(FILES LICENSE   DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
 install(FILES README.md DESTINATION ${INSTALL_ROOT} COMPONENT runtime)
 
 # Install runtime data
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/qmltoolbox/icons DESTINATION ${INSTALL_DATA}/qmltoolbox COMPONENT runtime)
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/qmltoolbox/qml/QmlToolbox DESTINATION ${INSTALL_DATA}/qmltoolbox/qml COMPONENT runtime)
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/qmltoolbox/qml/examples DESTINATION ${INSTALL_DATA}/qmltoolbox/qml COMPONENT examples)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/qmltoolbox/icons DESTINATION ${INSTALL_DATA}/data/qmltoolbox COMPONENT runtime)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/qmltoolbox/qml/QmlToolbox DESTINATION ${INSTALL_DATA}/data/qmltoolbox/qml COMPONENT runtime)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/data/qmltoolbox/qml/examples DESTINATION ${INSTALL_DATA}/data/qmltoolbox/qml COMPONENT examples)
