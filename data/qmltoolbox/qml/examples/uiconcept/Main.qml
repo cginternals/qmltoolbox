@@ -1,6 +1,6 @@
 
 import QtQuick 2.4
-import QtQuick.Layouts 1.1
+import QtQuick.Layouts 1.3
 
 import QmlToolbox.Base           1.0
 import QmlToolbox.Controls       1.0
@@ -17,6 +17,12 @@ ApplicationWindow
     width:   settings.width
     height:  settings.height
     visible: false
+
+    Shortcut
+    {
+        sequence: "ESC"
+        onActivated: mainMenu.open()
+    }
 
     Shortcut
     {
@@ -123,14 +129,75 @@ ApplicationWindow
     {
         id: toolBar
 
+        Rectangle {
+            id: headerBackground
+            anchors.fill: parent
+            color: "#1D1F21"
+        }
+
         RowLayout
         {
             anchors.fill: parent
 
+            spacing: 8
+/*
             ToolButton
             {
                 text: qsTr("Menu")
                 onClicked: mainMenu.open()
+            }
+*/
+
+            Image
+            {
+                id: logo
+                width: parent.height
+                height: parent.height
+                fillMode: Image.PreserveAspectCrop
+                source: "img/logo.svg"
+                sourceSize.width: logo.width
+                sourceSize.height: logo.height
+                smooth: false
+            }
+
+            Label
+            {
+                id: title
+
+                text: demoProperties.stage.name
+                color: "white"
+            }
+
+            Button
+            {
+                id: loadBtn
+                height: 24
+                width: 80
+                text: "Load file"
+                anchors.verticalCenter: parent.verticalCenter
+
+                contentItem: Text {
+                    text: loadBtn.text
+                    opacity: enabled ? 1.0 : 0.3
+                    color: "white"
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.family: "Roboto Medium"
+                    font.letterSpacing: 1.1
+                    font.pixelSize: 11
+                }
+
+                background: Rectangle {
+                    width: parent.width
+                    height: parent.height
+                    opacity: enabled ? 1 : 0.3
+                    border.width: 0
+                    radius: 2
+                    color: "#0EF3F9"
+                }
+
+                // TODO
+                //onClicked: welcomeScreen.visible = true
             }
 
             Item
@@ -138,28 +205,35 @@ ApplicationWindow
                 Layout.fillWidth: true
             }
 
-            ToolButton
+            TabBar
             {
-                text: qsTr("Pipeline")
-                onClicked: pipelineMenu.open()
+                id: tabBar
 
-                Menu {
-                    id: pipelineMenu
-                    y: toolBar.height
+                background: null
+                anchors.bottom: parent.bottom
+                spacing: 8
 
-                    MenuItem
-                    {
-                        text: qsTr("Edit Pipeline")
+                currentIndex: stackLayout.currentIndex
 
-                        onTriggered:
-                        {
-                            pipelineView.visible = true;
-                            mainView.visible     = false;
-                        }
-                    }
+                MyTabButton
+                {
+                    font: Ui.style.mainFont
+                    text: qsTr("Viewer")
+                }
+
+                MyTabButton
+                {
+                    font: Ui.style.mainFont
+                    text: qsTr("Pipeline")
                 }
             }
 
+            Item
+            {
+                Layout.fillWidth: true
+            }
+
+/*
             ToolButton
             {
                 text: qsTr("Tools")
@@ -181,7 +255,8 @@ ApplicationWindow
                     }
                 }
             }
-
+*/
+/*
             ToolButton
             {
                 text: qsTr("View")
@@ -217,10 +292,20 @@ ApplicationWindow
                     }
                 }
             }
+*/
 
             ToolButton
             {
-                text: (fsStateWrapper.state == "windowedMode") ? qsTr("Fullscreen") : qsTr("Windowed")
+                contentItem: Image
+                {
+                    source: "icons/icon_maximize.svg"
+
+                    width: 24
+                    height: 24
+                }
+
+                background.visible: false
+
                 onClicked: window.toggleFullScreenMode()
             }
         }
@@ -241,76 +326,248 @@ ApplicationWindow
         anchors.top:    parent.top
         anchors.bottom: bottomPanel.top
 
-        // Main view
-        Item
+        StackLayout
         {
-            id: mainView
-
+            id: stackLayout
             anchors.fill: parent
+            currentIndex: tabBar.currentIndex
 
-            visible: true
-
-            Rectangle
+            // Main view
+            Item
             {
-                anchors.left:   sidePanel.position == 'left' ? sidePanel.right : parent.left
-                anchors.right:  sidePanel.position == 'left' ? parent.right : sidePanel.left
-                anchors.top:    parent.top
-                anchors.bottom: parent.bottom
+                id: mainView
 
-                color: Ui.style.backgroundColor
-            }
+                anchors.fill: parent
 
-            // Side Panel
-            Panel
-            {
-                id: sidePanel
-
-                position:    settings.panelPosition
-                minimumSize: 240
-
-                ScrollArea
+                Rectangle
                 {
-                    id: scrollArea
+                    anchors.left:   sidePanel.position == 'left' ? sidePanel.right : parent.left
+                    anchors.right:  sidePanel.position == 'left' ? parent.right : sidePanel.left
+                    anchors.top:    parent.top
+                    anchors.bottom: parent.bottom
 
-                    anchors.fill: parent
+                    color: Ui.style.backgroundColor
+                }
 
-                    contentHeight: propertyEditor.height
+                Row
+                {
+                    id: toolButtonRow
 
-                    flickableDirection: Flickable.VerticalFlick
-                    boundsBehavior:     Flickable.StopAtBounds
+                    anchors.top: parent.top
+                    anchors.topMargin: 12
+                    anchors.leftMargin: 16
+                    anchors.rightMargin: 16
 
-                    PropertyEditor
-                    {
-                        id: propertyEditor
+                    spacing: 8
 
-                        width: scrollArea.width
-
-                        properties: demoProperties
-                        path:       'root'
-
-                        Component.onCompleted:
+                    states:
+                    [
+                        State
                         {
-                            propertyEditor.update()
+                            name: "anchoredLeftPanel"
+                            when: sidePanel.isVisible() && sidePanel.position == 'left'
+
+                            AnchorChanges
+                            {
+                                target: toolButtonRow
+                                anchors.right: undefined
+                                anchors.left: sidePanel.right
+                            }
+                        },
+                        State
+                        {
+                            name: "anchoredLeftViewer"
+                            when: !sidePanel.isVisible() && sidePanel.position == 'left'
+
+                            AnchorChanges
+                            {
+                                target: toolButtonRow
+                                anchors.right: undefined
+                                anchors.left: mainView.left
+                            }
+                        },
+                        State
+                        {
+                            name: "anchoredRightPanel"
+                            when: sidePanel.isVisible() && sidePanel.position == 'right'
+
+                            AnchorChanges
+                            {
+                                target: toolButtonRow
+                                anchors.left: undefined
+                                anchors.right: sidePanel.left
+                            }
+                        },
+                        State
+                        {
+                            name: "anchoredrightViewer"
+                            when: !sidePanel.isVisible() && sidePanel.position == 'right'
+
+                            AnchorChanges
+                            {
+                                target: toolButtonRow
+                                anchors.left: undefined
+                                anchors.right: mainView.right
+                            }
+                        }
+                    ]
+
+                    ToolButton
+                    {
+                        text: "Show Side Panel"
+                        visible: !sidePanel.isVisible() && sidePanel.position == 'left'
+
+                        onClicked: sidePanel.setVisible(true)
+                    }
+
+                    ToolButton
+                    {
+                        contentItem: Image
+                        {
+                            source: "icons/ic_photo_camera_black_24px.svg"
+
+                            width: 24
+                            height: 24
+                        }
+
+                        background.visible: false
+                    }
+
+                    ToolButton
+                    {
+                        contentItem: Image
+                        {
+                            source: "icons/ic_videocam_black_24px.svg"
+
+                            width: 24
+                            height: 24
+                        }
+
+                        background.visible: false
+                    }
+
+                    ToolButton
+                    {
+                        text: "Show Side Panel"
+                        visible: !sidePanel.isVisible() && sidePanel.position == 'right'
+
+                        onClicked: sidePanel.setVisible(true)
+                    }
+                }
+
+                ToolButton
+                {
+                    text: "Show Console"
+                    anchors.bottom: parent.bottom
+                    anchors.left: sidePanel.position == 'left' ? sidePanel.right : parent.left
+                    anchors.leftMargin: 8
+                    anchors.bottomMargin: 8
+
+                    visible: !bottomPanel.isVisible()
+
+                    onClicked: bottomPanel.setVisible(true)
+                }
+
+                // Side Panel
+                Panel
+                {
+                    id: sidePanel
+
+                    position:    settings.panelPosition
+                    minimumSize: 240
+
+                    RowLayout
+                    {
+                        id: sideCaption
+
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+
+                        anchors.leftMargin: 8
+                        anchors.rightMargin: 8
+
+                        Label
+                        {
+                            text: "Properties"
+                        }
+
+                        Item
+                        {
+                            Layout.fillWidth: true
+                        }
+
+                        ToolButton
+                        {
+                            contentItem: Image
+                            {
+                                source: "icons/icon_close_sidebar.svg"
+                            }
+
+                            background.visible: hovered
+
+                            onClicked: sidePanel.setVisible(false)
+                        }
+                    }
+
+                    ScrollArea
+                    {
+                        id: scrollArea
+
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.top: sideCaption.bottom
+                        anchors.bottom: parent.bottom
+
+                        contentHeight: propertyEditor.height
+
+                        flickableDirection: Flickable.VerticalFlick
+                        boundsBehavior:     Flickable.StopAtBounds
+
+                        PropertyEditor
+                        {
+                            id: propertyEditor
+
+                            width: scrollArea.width
+
+                            properties: demoProperties
+                            path:       'root'
+
+                            Component.onCompleted:
+                            {
+                                propertyEditor.update()
+                            }
                         }
                     }
                 }
             }
-        }
 
-        // Pipeline view
-        PipelineView
-        {
-            id: pipelineView
-
-            anchors.fill: parent
-            visible:      false
-
-            properties: demoProperties
-
-            onClosed:
+            // Pipeline view
+            PipelineView
             {
-                mainView.visible     = true;
-                pipelineView.visible = false;
+                id: pipelineView
+
+                anchors.fill: parent
+
+                properties: demoProperties
+
+                ToolButton
+                {
+                    text: "Show Console"
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    anchors.leftMargin: 8
+                    anchors.bottomMargin: 8
+
+                    visible: !bottomPanel.isVisible()
+
+                    onClicked: bottomPanel.setVisible(true)
+                }
+
+                onClosed:
+                {
+                    tabBar.currentIndex = 0;
+                }
             }
         }
     }
@@ -342,6 +599,21 @@ ApplicationWindow
                     console.log(scriptConsole.prettyPrint(res));
                 }
             }
+        }
+
+        ToolButton
+        {
+            anchors.right: parent.right
+            anchors.top: parent.top
+
+            contentItem: Image
+            {
+                source: "icons/icon_close_sidebar.svg"
+            }
+
+            background.visible: hovered
+
+            onClicked: bottomPanel.setVisible(false)
         }
     }
 
