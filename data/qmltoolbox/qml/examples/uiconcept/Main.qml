@@ -140,13 +140,6 @@ ApplicationWindow
             anchors.fill: parent
 
             spacing: 8
-/*
-            ToolButton
-            {
-                text: qsTr("Menu")
-                onClicked: mainMenu.open()
-            }
-*/
 
             Image
             {
@@ -197,7 +190,7 @@ ApplicationWindow
                 }
 
                 // TODO
-                //onClicked: welcomeScreen.visible = true
+                onClicked: pipelineSelection.visible = true
             }
 
             Item
@@ -233,66 +226,21 @@ ApplicationWindow
                 Layout.fillWidth: true
             }
 
-/*
             ToolButton
             {
-                text: qsTr("Tools")
-                onClicked: toolsMenu.open()
 
-                Menu
+                contentItem: Image
                 {
-                    id: toolsMenu
-                    y: toolBar.height
+                    source: "icons/ic_settings_white_24px.svg"
 
-                    MenuItem
-                    {
-                        text: qsTr("Take Screenshot")
-                    }
-
-                    MenuItem
-                    {
-                        text: qsTr("Record Video")
-                    }
+                    width: 32
+                    height: 28
                 }
+
+                background.visible: false
+
+                onClicked: settingsDialog.open()
             }
-*/
-/*
-            ToolButton
-            {
-                text: qsTr("View")
-                onClicked: viewMenu.open()
-
-                Menu
-                {
-                    id: viewMenu
-                    y: toolBar.height
-
-                    MenuItem
-                    {
-                        text: sidePanel.isVisible() ? qsTr("Hide Side Panel") : qsTr("Show Side Panel")
-                        onTriggered: sidePanel.toggleVisible()
-                    }
-
-                    MenuItem
-                    {
-                        text: bottomPanel.isVisible() ? qsTr("Hide Console") : qsTr("Show Console")
-                        onTriggered: bottomPanel.toggleVisible()
-                    }
-
-                    MenuItem
-                    {
-                        text: sidePanel.isVisible() ? qsTr("Hide All") : qsTr("Show All")
-
-                        onTriggered:
-                        {
-                            var visible = sidePanel.isVisible();
-                            sidePanel  .setVisible(!visible);
-                            bottomPanel.setVisible(!visible);
-                        }
-                    }
-                }
-            }
-*/
 
             ToolButton
             {
@@ -570,6 +518,18 @@ ApplicationWindow
                 }
             }
         }
+    }
+
+    PipelineSelection
+    {
+        id: pipelineSelection
+        visible: false
+    }
+
+    SettingsDialog
+    {
+        id: settingsDialog
+        settings: settings
     }
 
     // Bottom Panel
