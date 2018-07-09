@@ -13,13 +13,7 @@ Item
         anchors.top:   parent.top
         anchors.left:  parent.left
         anchors.right: parent.right
-/*
-        // already present
-        Label
-        {
-            text: qsTr("Select Pipeline")
-            font.pointSize: Ui.style.fontSizeLarge
-        }
-*/
+
+        // Insert choices here
     }
 }

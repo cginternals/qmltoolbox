@@ -18,10 +18,9 @@ ApplicationWindow
     height:  settings.height
     visible: false
 
-    Shortcut
+    ConceptStyle
     {
-        sequence: "ESC"
-        onActivated: mainMenu.open()
+        id: conceptStyle
     }
 
     Shortcut
@@ -132,7 +131,7 @@ ApplicationWindow
         Rectangle {
             id: headerBackground
             anchors.fill: parent
-            color: "#1D1F21"
+            color: conceptStyle.headlineColor
         }
 
         RowLayout
@@ -141,6 +140,7 @@ ApplicationWindow
 
             spacing: 8
 
+            // left: logo, pipeline title, "load pipeline" button
             Image
             {
                 id: logo
@@ -158,38 +158,34 @@ ApplicationWindow
                 id: title
 
                 text: demoProperties.stage.name
+                font: conceptStyle.mainFont
                 color: "white"
             }
 
             Button
             {
                 id: loadBtn
-                height: 24
-                width: 80
-                text: "Load file"
+                text: "Load pipeline"
                 anchors.verticalCenter: parent.verticalCenter
 
-                contentItem: Text {
+                contentItem: Label {
                     text: loadBtn.text
                     opacity: enabled ? 1.0 : 0.3
                     color: "white"
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    font.family: "Roboto Medium"
-                    font.letterSpacing: 1.1
-                    font.pixelSize: 11
+                    font: conceptStyle.buttonFont
                 }
 
                 background: Rectangle {
                     width: parent.width
                     height: parent.height
-                    opacity: enabled ? 1 : 0.3
+                    opacity: enabled ? 1.0 : 0.3
                     border.width: 0
                     radius: 2
-                    color: "#0EF3F9"
+                    color: conceptStyle.backgroundSignalColor
                 }
 
-                // TODO
                 onClicked: pipelineSelection.visible = true
             }
 
@@ -198,6 +194,7 @@ ApplicationWindow
                 Layout.fillWidth: true
             }
 
+            // center: tabs for different views
             TabBar
             {
                 id: tabBar
@@ -210,13 +207,13 @@ ApplicationWindow
 
                 MyTabButton
                 {
-                    font: Ui.style.mainFont
+                    font: conceptStyle.mainFont
                     text: qsTr("Viewer")
                 }
 
                 MyTabButton
                 {
-                    font: Ui.style.mainFont
+                    font: conceptStyle.mainFont
                     text: qsTr("Pipeline")
                 }
             }
@@ -226,6 +223,7 @@ ApplicationWindow
                 Layout.fillWidth: true
             }
 
+            // right: buttons for settings & fullscreen
             ToolButton
             {
 
@@ -259,13 +257,6 @@ ApplicationWindow
         }
     }
 
-    MainMenu
-    {
-        id: mainMenu
-
-        settingsObj: settings
-    }
-
     // Container for the main view(s)
     Item
     {
@@ -289,6 +280,8 @@ ApplicationWindow
 
                 Rectangle
                 {
+                    id: background
+
                     anchors.left:   sidePanel.position == 'left' ? sidePanel.right : parent.left
                     anchors.right:  sidePanel.position == 'left' ? parent.right : sidePanel.left
                     anchors.top:    parent.top
@@ -297,6 +290,7 @@ ApplicationWindow
                     color: Ui.style.backgroundColor
                 }
 
+                // screenshot & video tool, "show sidebar" button
                 Row
                 {
                     id: toolButtonRow
@@ -308,6 +302,7 @@ ApplicationWindow
 
                     spacing: 8
 
+                    // states with anchor changes to avoid positioning bugs
                     states:
                     [
                         State
@@ -348,7 +343,7 @@ ApplicationWindow
                         },
                         State
                         {
-                            name: "anchoredrightViewer"
+                            name: "anchoredRightViewer"
                             when: !sidePanel.isVisible() && sidePanel.position == 'right'
 
                             AnchorChanges
@@ -360,14 +355,17 @@ ApplicationWindow
                         }
                     ]
 
-                    ToolButton
+                    // left side panel
+                    LabelButton
                     {
                         text: "Show Side Panel"
                         visible: !sidePanel.isVisible() && sidePanel.position == 'left'
+                        anchors.verticalCenter: parent.verticalCenter
 
                         onClicked: sidePanel.setVisible(true)
                     }
 
+                    // screenshot
                     ToolButton
                     {
                         contentItem: Image
@@ -381,6 +379,7 @@ ApplicationWindow
                         background.visible: false
                     }
 
+                    // video
                     ToolButton
                     {
                         contentItem: Image
@@ -394,16 +393,18 @@ ApplicationWindow
                         background.visible: false
                     }
 
-                    ToolButton
+                    // right side panel
+                    LabelButton
                     {
                         text: "Show Side Panel"
                         visible: !sidePanel.isVisible() && sidePanel.position == 'right'
+                        anchors.verticalCenter: parent.verticalCenter
 
                         onClicked: sidePanel.setVisible(true)
                     }
                 }
 
-                ToolButton
+                LabelButton
                 {
                     text: "Show Console"
                     anchors.bottom: parent.bottom
@@ -424,6 +425,7 @@ ApplicationWindow
                     position:    settings.panelPosition
                     minimumSize: 240
 
+                    // caption & close button
                     RowLayout
                     {
                         id: sideCaption
@@ -438,6 +440,8 @@ ApplicationWindow
                         Label
                         {
                             text: "Properties"
+                            font: conceptStyle.mainFont
+                            color: conceptStyle.dimHeadlineColor
                         }
 
                         Item
@@ -458,6 +462,7 @@ ApplicationWindow
                         }
                     }
 
+                    // actual properties
                     ScrollArea
                     {
                         id: scrollArea
@@ -499,7 +504,7 @@ ApplicationWindow
 
                 properties: demoProperties
 
-                ToolButton
+                LabelButton
                 {
                     text: "Show Console"
                     anchors.bottom: parent.bottom

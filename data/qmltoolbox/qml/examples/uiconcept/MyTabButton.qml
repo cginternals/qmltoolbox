@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.1
 
+import QmlToolbox.Base 1.0
+
 TabButton {
 
     id: control
@@ -10,7 +12,7 @@ TabButton {
     contentItem: Text {
         text: control.text
         font: control.font
-        color: control.checked || control.hovered ? "white" : "#BDBDBD"
+        color: control.checked || control.hovered ? Ui.style.itemColor : Ui.style.itemColorHighlighted
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
     }
@@ -20,7 +22,7 @@ TabButton {
        height: 2
        width: control.width
        y: control.height - height
-       color: "#0EF3F9"
+       color: conceptStyle.backgroundSignalColor
        visible: control.checked
    }
 

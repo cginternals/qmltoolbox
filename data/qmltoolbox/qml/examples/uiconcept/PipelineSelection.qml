@@ -19,19 +19,7 @@ Rectangle
         anchors.leftMargin: 48
         anchors.rightMargin: 48
         anchors.bottomMargin: 56
-/*
-        //global styles
-        QtObject
-        {
-            id: style
 
-            property font headlineFont: Qt.font({
-                pixelSize: 24,
-                letterSpacing: 1.2,
-                family: "Montserrat Light"
-            });
-        }
-*/
         ToolButton
         {
             id: backButton
@@ -59,7 +47,7 @@ Rectangle
             anchors.leftMargin: 16
 
             id: headline
-            color: "#1D1F21"
+            color: conceptStyle.headlineColor
             text: "Select Pipeline"
             //font: style.headlineFont
             font.pointSize: Ui.style.fontSizeLarge
