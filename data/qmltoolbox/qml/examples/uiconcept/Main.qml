@@ -120,53 +120,37 @@ ApplicationWindow
     }
 
     // Container for the main view(s)
-    Item
+    StackLayout
     {
+        id: stackLayout
+
         anchors.left:   parent.left
         anchors.right:  parent.right
         anchors.top:    parent.top
         anchors.bottom: bottomPanel.top
 
-        StackLayout
+        currentIndex: header.tabBar.currentIndex
+
+        // Main view
+        MainView
         {
-            id: stackLayout
+            id: mainView
+
             anchors.fill: parent
-            currentIndex: header.tabBar.currentIndex
+        }
 
-            // Main view
-            MainView
+        // Pipeline view
+        PipelineView
+        {
+            id: pipelineView
+
+            anchors.fill: parent
+
+            properties: demoProperties
+
+            onClosed:
             {
-                id: mainView
-
-                anchors.fill: parent
-            }
-
-            // Pipeline view
-            PipelineView
-            {
-                id: pipelineView
-
-                anchors.fill: parent
-
-                properties: demoProperties
-
-                LabelButton
-                {
-                    text: "Show Console"
-                    anchors.bottom: parent.bottom
-                    anchors.left: parent.left
-                    anchors.leftMargin: 8
-                    anchors.bottomMargin: 8
-
-                    visible: !bottomPanel.isVisible()
-
-                    onClicked: bottomPanel.setVisible(true)
-                }
-
-                onClosed:
-                {
-                    header.tabBar.currentIndex = 0;
-                }
+                header.tabBar.currentIndex = 0;
             }
         }
     }

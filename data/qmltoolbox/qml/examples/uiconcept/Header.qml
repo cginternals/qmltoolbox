@@ -57,6 +57,7 @@ ToolBar
 
         Item
         {
+            id: leftSpacer
             Layout.fillWidth: true
         }
 
@@ -86,6 +87,7 @@ ToolBar
 
         Item
         {
+            id: rightSpacer
             Layout.fillWidth: true
         }
 

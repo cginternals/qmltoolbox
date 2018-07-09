@@ -38,6 +38,19 @@ Item
                 page.closed();
             }
         }
+
+        LabelButton
+        {
+            text: "Show Console"
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.leftMargin: 8
+            anchors.bottomMargin: 8
+
+            visible: !bottomPanel.isVisible()
+
+            onClicked: bottomPanel.setVisible(true)
+        }
     }
 
     Component.onCompleted:
