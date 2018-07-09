@@ -22,7 +22,7 @@ TabButton {
        height: 2
        width: control.width
        y: control.height - height
-       color: conceptStyle.backgroundSignalColor
+       color: Ui.style.backgroundSignalColor
        visible: control.checked
    }
 

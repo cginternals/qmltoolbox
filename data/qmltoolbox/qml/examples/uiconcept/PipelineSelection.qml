@@ -25,7 +25,7 @@ Rectangle
             id: backButton
 
             anchors.verticalCenter: headline.verticalCenter
-            
+
             background.visible: false
 
             contentItem: Image
@@ -47,7 +47,7 @@ Rectangle
             anchors.leftMargin: 16
 
             id: headline
-            color: conceptStyle.headlineColor
+            color: Ui.style.headlineColor
             text: "Select Pipeline"
             //font: style.headlineFont
             font.pointSize: Ui.style.fontSizeLarge

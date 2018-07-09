@@ -43,8 +43,8 @@ Popup {
         Label
         {
             text: qsTr('Settings')
-            font: conceptStyle.headlineFont
-            color: conceptStyle.headlineColor
+            font: Ui.style.headlineFont
+            color: Ui.style.headlineColor
 
             Layout.columnSpan: 2
         }
@@ -108,9 +108,9 @@ Popup {
         anchors.rightMargin: -rightPadding
         anchors.bottomMargin: -bottomPadding
 
-        color: conceptStyle.textSignalColor
+        color: Ui.style.textSignalColor
         text: "Done"
-        font: conceptStyle.dialogOptionFont
+        font: Ui.style.dialogOptionFont
     }
 
     MouseArea {

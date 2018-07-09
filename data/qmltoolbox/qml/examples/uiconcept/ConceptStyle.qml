@@ -5,6 +5,10 @@ import QmlToolbox.Base 1.0
 
 StyleDefault
 {
+    // changes to base style
+    controlColor: "#bdbdbd"
+
+    // new properties
     property color headlineColor: '#1d1f21'
     property color dimHeadlineColor: '#c4ccd5'
     property color textSignalColor: '#c0015d'
@@ -29,13 +33,13 @@ StyleDefault
         letterSpacing: 1.2,
         family: "Roboto"
     });
-    
+
     property font buttonFont: Qt.font({
         pixelSize: 11,
         letterSpacing: 1.1,
         family: "Roboto Medium"
     });
-    
+
     property font dialogOptionFont: Qt.font({
         pixelSize: 14,
         capitalization: Font.AllUppercase,

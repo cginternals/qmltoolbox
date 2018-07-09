@@ -25,7 +25,7 @@ Item
 
         properties: page.properties
 
-        Button
+        LabelButton
         {
             text: 'Close'
 

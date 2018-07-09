@@ -18,15 +18,10 @@ ApplicationWindow
     height:  settings.height
     visible: false
 
-    ConceptStyle
-    {
-        id: conceptStyle
-    }
-
     Shortcut
     {
         sequence: "CTRL+F6"
-        onActivated: sidePanel.toggleVisible()
+        onActivated: mainView.sidePanel.toggleVisible()
     }
 
     Shortcut
@@ -65,19 +60,14 @@ ApplicationWindow
             {
                 name: "preview"
 
-                StateChangeScript { script: sidePanel.setVisible(false) }
+                StateChangeScript { script: mainView.hideAllTools() }
                 StateChangeScript { script: bottomPanel.setVisible(false) }
+                StateChangeScript { script: header.tabBar.currentIndex = 0 }
 
                 PropertyChanges
                 {
                     target: window
                     header: null
-                }
-
-                PropertyChanges
-                {
-                    target:  mainMenu
-                    visible: false
                 }
             },
 
@@ -85,7 +75,7 @@ ApplicationWindow
             {
                 name: "normal"
 
-                StateChangeScript { script: sidePanel.setVisible(true) }
+                StateChangeScript { script: mainView.unhideAllTools() }
             }
         ]
     }
@@ -124,137 +114,9 @@ ApplicationWindow
         fsStateWrapper.state = (fsStateWrapper.state == "windowedMode") ? "fullScreenMode" : "windowedMode";
     }
 
-    header: ToolBar
+    header: Header
     {
-        id: toolBar
-
-        Rectangle {
-            id: headerBackground
-            anchors.fill: parent
-            color: conceptStyle.headlineColor
-        }
-
-        RowLayout
-        {
-            anchors.fill: parent
-
-            spacing: 8
-
-            // left: logo, pipeline title, "load pipeline" button
-            Image
-            {
-                id: logo
-                width: parent.height
-                height: parent.height
-                fillMode: Image.PreserveAspectCrop
-                source: "img/logo.svg"
-                sourceSize.width: logo.width
-                sourceSize.height: logo.height
-                smooth: false
-            }
-
-            Label
-            {
-                id: title
-
-                text: demoProperties.stage.name
-                font: conceptStyle.mainFont
-                color: "white"
-            }
-
-            Button
-            {
-                id: loadBtn
-                text: "Load pipeline"
-                anchors.verticalCenter: parent.verticalCenter
-
-                contentItem: Label {
-                    text: loadBtn.text
-                    opacity: enabled ? 1.0 : 0.3
-                    color: "white"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    font: conceptStyle.buttonFont
-                }
-
-                background: Rectangle {
-                    width: parent.width
-                    height: parent.height
-                    opacity: enabled ? 1.0 : 0.3
-                    border.width: 0
-                    radius: 2
-                    color: conceptStyle.backgroundSignalColor
-                }
-
-                onClicked: pipelineSelection.visible = true
-            }
-
-            Item
-            {
-                Layout.fillWidth: true
-            }
-
-            // center: tabs for different views
-            TabBar
-            {
-                id: tabBar
-
-                background: null
-                anchors.bottom: parent.bottom
-                spacing: 8
-
-                currentIndex: stackLayout.currentIndex
-
-                MyTabButton
-                {
-                    font: conceptStyle.mainFont
-                    text: qsTr("Viewer")
-                }
-
-                MyTabButton
-                {
-                    font: conceptStyle.mainFont
-                    text: qsTr("Pipeline")
-                }
-            }
-
-            Item
-            {
-                Layout.fillWidth: true
-            }
-
-            // right: buttons for settings & fullscreen
-            ToolButton
-            {
-
-                contentItem: Image
-                {
-                    source: "icons/ic_settings_white_24px.svg"
-
-                    width: 32
-                    height: 28
-                }
-
-                background.visible: false
-
-                onClicked: settingsDialog.open()
-            }
-
-            ToolButton
-            {
-                contentItem: Image
-                {
-                    source: "icons/icon_maximize.svg"
-
-                    width: 24
-                    height: 24
-                }
-
-                background.visible: false
-
-                onClicked: window.toggleFullScreenMode()
-            }
-        }
+        id: header
     }
 
     // Container for the main view(s)
@@ -269,230 +131,14 @@ ApplicationWindow
         {
             id: stackLayout
             anchors.fill: parent
-            currentIndex: tabBar.currentIndex
+            currentIndex: header.tabBar.currentIndex
 
             // Main view
-            Item
+            MainView
             {
                 id: mainView
 
                 anchors.fill: parent
-
-                Rectangle
-                {
-                    id: background
-
-                    anchors.left:   sidePanel.position == 'left' ? sidePanel.right : parent.left
-                    anchors.right:  sidePanel.position == 'left' ? parent.right : sidePanel.left
-                    anchors.top:    parent.top
-                    anchors.bottom: parent.bottom
-
-                    color: Ui.style.backgroundColor
-                }
-
-                // screenshot & video tool, "show sidebar" button
-                Row
-                {
-                    id: toolButtonRow
-
-                    anchors.top: parent.top
-                    anchors.topMargin: 12
-                    anchors.leftMargin: 16
-                    anchors.rightMargin: 16
-
-                    spacing: 8
-
-                    // states with anchor changes to avoid positioning bugs
-                    states:
-                    [
-                        State
-                        {
-                            name: "anchoredLeftPanel"
-                            when: sidePanel.isVisible() && sidePanel.position == 'left'
-
-                            AnchorChanges
-                            {
-                                target: toolButtonRow
-                                anchors.right: undefined
-                                anchors.left: sidePanel.right
-                            }
-                        },
-                        State
-                        {
-                            name: "anchoredLeftViewer"
-                            when: !sidePanel.isVisible() && sidePanel.position == 'left'
-
-                            AnchorChanges
-                            {
-                                target: toolButtonRow
-                                anchors.right: undefined
-                                anchors.left: mainView.left
-                            }
-                        },
-                        State
-                        {
-                            name: "anchoredRightPanel"
-                            when: sidePanel.isVisible() && sidePanel.position == 'right'
-
-                            AnchorChanges
-                            {
-                                target: toolButtonRow
-                                anchors.left: undefined
-                                anchors.right: sidePanel.left
-                            }
-                        },
-                        State
-                        {
-                            name: "anchoredRightViewer"
-                            when: !sidePanel.isVisible() && sidePanel.position == 'right'
-
-                            AnchorChanges
-                            {
-                                target: toolButtonRow
-                                anchors.left: undefined
-                                anchors.right: mainView.right
-                            }
-                        }
-                    ]
-
-                    // left side panel
-                    LabelButton
-                    {
-                        text: "Show Side Panel"
-                        visible: !sidePanel.isVisible() && sidePanel.position == 'left'
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        onClicked: sidePanel.setVisible(true)
-                    }
-
-                    // screenshot
-                    ToolButton
-                    {
-                        contentItem: Image
-                        {
-                            source: "icons/ic_photo_camera_black_24px.svg"
-
-                            width: 24
-                            height: 24
-                        }
-
-                        background.visible: false
-                    }
-
-                    // video
-                    ToolButton
-                    {
-                        contentItem: Image
-                        {
-                            source: "icons/ic_videocam_black_24px.svg"
-
-                            width: 24
-                            height: 24
-                        }
-
-                        background.visible: false
-                    }
-
-                    // right side panel
-                    LabelButton
-                    {
-                        text: "Show Side Panel"
-                        visible: !sidePanel.isVisible() && sidePanel.position == 'right'
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        onClicked: sidePanel.setVisible(true)
-                    }
-                }
-
-                LabelButton
-                {
-                    text: "Show Console"
-                    anchors.bottom: parent.bottom
-                    anchors.left: sidePanel.position == 'left' ? sidePanel.right : parent.left
-                    anchors.leftMargin: 8
-                    anchors.bottomMargin: 8
-
-                    visible: !bottomPanel.isVisible()
-
-                    onClicked: bottomPanel.setVisible(true)
-                }
-
-                // Side Panel
-                Panel
-                {
-                    id: sidePanel
-
-                    position:    settings.panelPosition
-                    minimumSize: 240
-
-                    // caption & close button
-                    RowLayout
-                    {
-                        id: sideCaption
-
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.top: parent.top
-
-                        anchors.leftMargin: 8
-                        anchors.rightMargin: 8
-
-                        Label
-                        {
-                            text: "Properties"
-                            font: conceptStyle.mainFont
-                            color: conceptStyle.dimHeadlineColor
-                        }
-
-                        Item
-                        {
-                            Layout.fillWidth: true
-                        }
-
-                        ToolButton
-                        {
-                            contentItem: Image
-                            {
-                                source: "icons/icon_close_sidebar.svg"
-                            }
-
-                            background.visible: hovered
-
-                            onClicked: sidePanel.setVisible(false)
-                        }
-                    }
-
-                    // actual properties
-                    ScrollArea
-                    {
-                        id: scrollArea
-
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.top: sideCaption.bottom
-                        anchors.bottom: parent.bottom
-
-                        contentHeight: propertyEditor.height
-
-                        flickableDirection: Flickable.VerticalFlick
-                        boundsBehavior:     Flickable.StopAtBounds
-
-                        PropertyEditor
-                        {
-                            id: propertyEditor
-
-                            width: scrollArea.width
-
-                            properties: demoProperties
-                            path:       'root'
-
-                            Component.onCompleted:
-                            {
-                                propertyEditor.update()
-                            }
-                        }
-                    }
-                }
             }
 
             // Pipeline view
@@ -519,7 +165,7 @@ ApplicationWindow
 
                 onClosed:
                 {
-                    tabBar.currentIndex = 0;
+                    header.tabBar.currentIndex = 0;
                 }
             }
         }
@@ -538,48 +184,10 @@ ApplicationWindow
     }
 
     // Bottom Panel
-    Panel
+    BottomPanel
     {
         id: bottomPanel
-
-        position:    'bottom'
-        minimumSize: 150
-        visible:     false
-
-        ScriptConsole
-        {
-            id: scriptConsole
-
-            anchors.fill: parent
-
-            keywords: ["console", "Math", "Date", "if", "for", "while", "function", "exit"]
-
-            onSubmitted:
-            {
-                scriptConsole.output("> " + command + "\n");
-                var res = eval(command);
-
-                if (res !== undefined)
-                {
-                    console.log(scriptConsole.prettyPrint(res));
-                }
-            }
-        }
-
-        ToolButton
-        {
-            anchors.right: parent.right
-            anchors.top: parent.top
-
-            contentItem: Image
-            {
-                source: "icons/icon_close_sidebar.svg"
-            }
-
-            background.visible: hovered
-
-            onClicked: bottomPanel.setVisible(false)
-        }
+        visible: false
     }
 
     // Output capturing
@@ -590,7 +198,7 @@ ApplicationWindow
         onMessageReceived:
         {
             // Put message on console log
-            scriptConsole.output(message, type);
+            bottomPanel.scriptConsole.output(message, type);
         }
     }
 
@@ -618,10 +226,16 @@ ApplicationWindow
         }
     }
 
+    ConceptStyle
+    {
+        id: alteredStyle
+    }
+
     Component.onCompleted:
     {
         settings.load();
         window.visible = true;
+        Ui.style = alteredStyle
     }
 
     Component.onDestruction:
