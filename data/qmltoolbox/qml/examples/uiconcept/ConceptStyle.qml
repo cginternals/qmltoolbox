@@ -6,14 +6,22 @@ import QmlToolbox.Base 1.0
 StyleDefault
 {
     // changes to base style
+
     controlColor: "#bdbdbd"
 
     // new properties
+
+    // text & element colors
     property color headlineColor: '#1d1f21'
     property color dimHeadlineColor: '#c4ccd5'
     property color textSignalColor: '#c0015d'
     property color backgroundSignalColor: '#0ef3f9'
 
+    // side panel shadow
+    property color shadowColor: '#d8d8d8'
+    property int shadowRadius: 16
+
+    // fonts
     property font mainFont: Qt.font({
         pixelSize: Ui.style.fontSizeSmall,
         capitalization: Font.AllUppercase,
@@ -48,7 +56,7 @@ StyleDefault
         weight: Font.DemiBold
     });
 
-    //load fonts
+    // load fonts
     //FontLoader { source: "./fonts/Inconsolata-Regular.ttf" }
     //FontLoader { source: "./fonts/Inconsolata-Bold.ttf" }
 

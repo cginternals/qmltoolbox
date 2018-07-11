@@ -28,11 +28,12 @@ Item
 
         anchors.horizontalCenter: sidePanelBackground.horizontalCenter
         anchors.verticalCenter: sidePanelBackground.verticalCenter
-        width: sidePanelBackground.width + 32
-        height: sidePanelBackground.height + 32
+        width: sidePanelBackground.width + 2*Ui.style.shadowRadius
+        height: sidePanelBackground.height + 2*Ui.style.shadowRadius
+        visible: sidePanel.isVisible()
 
-        glowRadius: 16
-        color: '#d8d8d8'
+        glowRadius: Ui.style.shadowRadius
+        color: Ui.style.shadowColor
     }
 
     Rectangle
@@ -70,8 +71,7 @@ Item
         text: "Show Console"
         anchors.bottom: parent.bottom
         anchors.left: sidePanel.position == 'left' ? sidePanel.right : parent.left
-        anchors.leftMargin: 8
-        anchors.bottomMargin: 8
+        anchors.margins: 16
 
         visible: !bottomPanel.isVisible()
 
