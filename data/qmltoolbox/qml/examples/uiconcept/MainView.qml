@@ -1,6 +1,7 @@
 
 import QtQuick 2.0
 import QtQuick.Layouts 1.0
+import QtGraphicalEffects 1.0
 
 import QmlToolbox.Base 1.0
 import QmlToolbox.Controls 1.0
@@ -17,6 +18,37 @@ Item
         anchors.bottom: parent.bottom
 
         color: Ui.style.backgroundColor
+    }
+
+    // side panel & its shadow
+    // has to be done here to be able to draw beyond sidebar extends
+    RectangularGlow
+    {
+        id: sidePanelShadow
+
+        anchors.horizontalCenter: sidePanelBackground.horizontalCenter
+        anchors.verticalCenter: sidePanelBackground.verticalCenter
+        width: sidePanelBackground.width + 32
+        height: sidePanelBackground.height + 32
+
+        glowRadius: 16
+        color: '#d8d8d8'
+    }
+
+    Rectangle
+    {
+        id: sidePanelBackground
+
+        color: Ui.style.backgroundColor
+        anchors.fill: sidePanel
+    }
+
+    SidePanel
+    {
+        id: sidePanel
+
+        position:    settings.panelPosition
+        minimumSize: 240
     }
 
     // screenshot & video tool, "show sidebar" button
@@ -44,14 +76,6 @@ Item
         visible: !bottomPanel.isVisible()
 
         onClicked: bottomPanel.setVisible(true)
-    }
-
-    SidePanel
-    {
-        id: sidePanel
-
-        position:    settings.panelPosition
-        minimumSize: 240
     }
 
     function setSidePanelVisible(vis)

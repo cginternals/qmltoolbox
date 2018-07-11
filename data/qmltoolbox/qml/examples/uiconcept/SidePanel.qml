@@ -75,5 +75,11 @@ Panel
             }
         }
     }
+
+    Component.onCompleted:
+    {
+        // hide resizing handle as we have a shadow
+        children[1].children[0].visible = false;
+    }
 }
 
