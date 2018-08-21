@@ -3,7 +3,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.1
 
 import QmlToolbox.Base 1.0
-    
+
 
 /**
 *  RangeSlider
@@ -30,6 +30,8 @@ Item
     property color handleColor:     '#dddddd'
     property color borderColor:     '#555555'
     property color selectColor:     '#3388bb'
+
+    implicitHeight: handleSize
 
     Rectangle
     {

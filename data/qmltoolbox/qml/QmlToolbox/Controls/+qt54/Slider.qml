@@ -2,7 +2,7 @@
 import QtQuick.Controls 1.1
 
 import QmlToolbox.Base 1.0
-    
+
 
 /**
 *  Slider

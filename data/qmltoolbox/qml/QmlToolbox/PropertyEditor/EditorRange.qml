@@ -14,7 +14,7 @@ Editor
     id: item
 
     implicitWidth:  input.implicitWidth
-    implicitHeight: input.implicitHeight
+    implicitHeight: input.implicitHeight * 0.9 + label1.implicitHeight
 
     RangeSlider
     {
@@ -27,6 +27,26 @@ Editor
             var values = [ firstValue, secondValue ];
             item.properties.setValue(item.path, item.slot, values);
         }
+    }
+
+    Label
+    {
+        id: label1
+
+        x: (input.firstValue - input.from) / (input.to - input.from) * input.width - (width / 2.0)
+        y: input.height * 0.9
+
+        text: input.firstValue.toPrecision(2);
+    }
+
+    Label
+    {
+        id: label2
+
+        x: (input.secondValue - input.from) / (input.to - input.from) * input.width - (width / 2.0)
+        y: input.height * 0.9
+
+        text: input.secondValue.toPrecision(2);
     }
 
     onStatusChanged:

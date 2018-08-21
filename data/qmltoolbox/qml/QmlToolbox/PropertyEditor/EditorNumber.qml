@@ -14,9 +14,9 @@ Editor
     id: item
 
     implicitWidth:  input.implicitWidth
-    implicitHeight: input.implicitHeight
+    implicitHeight: input.implicitHeight * 0.9 + label.implicitHeight
 
-    Slider 
+    Slider
     {
         id: input
 
@@ -29,6 +29,16 @@ Editor
                 item.properties.setValue(item.path, item.slot, value);
             }
         }
+    }
+
+    Label
+    {
+        id: label
+
+        x: (input.value - input.minimumValue) / (input.maximumValue - input.minimumValue) * input.width - (width / 2.0)
+        y: input.height * 0.9
+
+        text: input.value.toPrecision(2);
     }
 
     onStatusChanged:
