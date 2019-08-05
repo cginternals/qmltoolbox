@@ -57,7 +57,7 @@ Item
 
         MenuItem
         {
-            text: 'Add Input'
+            text: 'Add Input...'
 
             onTriggered:
             {
@@ -69,13 +69,23 @@ Item
 
         MenuItem
         {
-            text: 'Add Output'
+            text: 'Add Output...'
 
             onTriggered:
             {
                 dialog.slotType = 'Output';
                 dialog.setChoices(properties.getSlotTypes(stage.path));
                 dialog.open();
+            }
+        }
+
+        MenuItem
+        {
+            text: 'Delete Stage'
+
+            onTriggered:
+            {
+                stage.closed();
             }
         }
     }
@@ -366,6 +376,19 @@ Item
         }
 
         return null;
+    }
+
+    /**
+    *  Add custom component to stage body
+    *
+    *  @param[in] component
+    *    The component from which one instance should be added
+    *  @param[in] options
+    *    Options for component creation
+    */
+    function addComponent(component, options)
+    {
+        return component.createObject(inputs, options);
     }
 
     /**

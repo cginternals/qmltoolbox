@@ -40,6 +40,7 @@ QtObject
             { from: 'root.Number', to: 'root.Stage2.Number' },
             { from: 'root.Stage1.Ok', to: 'root.Stage3.Ok1' },
             { from: 'root.Stage2.Ok', to: 'root.Stage3.Ok2' },
+            { from: 'root.Stage3.OkFeedback', to: 'root.Stage2.FeedbackIn', feedback : true },
             { from: 'root.Stage3.Ok', to: 'root.Ok' }
         ];
     }
@@ -199,19 +200,26 @@ QtObject
     // Internals
     function getSlotInfo(path, slot)
     {
-        for (var i=0; i<propertyInterface.stage.inputs.length; i++)
+        var stage = null;
+
+        if (path == 'root')        stage = propertyInterface.stage;
+        if (path == 'root.Stage1') stage = propertyInterface.stage1;
+        if (path == 'root.Stage2') stage = propertyInterface.stage2;
+        if (path == 'root.Stage3') stage = propertyInterface.stage3;
+
+        for (var i = 0; i < stage.inputs.length; i++)
         {
-            if (propertyInterface.stage.inputs[i].name == slot)
+            if (stage.inputs[i].name === slot)
             {
-                return propertyInterface.stage.inputs[i];
+                return stage.inputs[i];
             }
         }
 
-        for (var i=0; i<propertyInterface.stage.outputs.length; i++)
+        for (var i = 0; i < stage.outputs.length; i++)
         {
-            if (propertyInterface.stage.outputs[i].name == slot)
+            if (stage.outputs[i].name === slot)
             {
-                return propertyInterface.stage.outputs[i];
+                return stage.outputs[i];
             }
         }
 
@@ -332,7 +340,8 @@ QtObject
             {
                 name: 'Ok',
                 type: 'bool',
-                value: true
+                value: true,
+                required: true
             }
         ]
 
@@ -349,6 +358,11 @@ QtObject
                 name: 'Number',
                 type: 'int',
                 value: 0
+            },
+            {
+                name: 'FeedbackIn',
+                type: 'bool',
+                value: true
             }
         ]
 
@@ -356,7 +370,8 @@ QtObject
             {
                 name: 'Ok',
                 type: 'bool',
-                value: true
+                value: true,
+                required: true
             }
         ]
 
@@ -374,7 +389,6 @@ QtObject
                 type: 'bool',
                 value: true
             },
-
             {
                 name: 'Ok2',
                 type: 'bool',
@@ -385,6 +399,12 @@ QtObject
         property var outputs: [
             {
                 name: 'Ok',
+                type: 'bool',
+                value: true,
+                required: true
+            },
+            {
+                name: 'OkFeedback',
                 type: 'bool',
                 value: true
             }

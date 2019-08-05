@@ -62,20 +62,24 @@ Item
                 var splitPath = path.split('.');
                 return splitPath[splitPath.length - 1];
             };
+            var isEqual = function (path, slot, combinedPath) {
+                return path == getPath(combinedPath) && slot == getSlot(combinedPath);
+            }
 
             // Get all stages of the pipeline and the pipeline itself
             var stages = [];
 
             stages.push(path);
 
-            var pipeline = properties.getStage(path);
+            var pipelineInfo = properties.getStage(path);
 
-            for (var i in pipeline.stages)
+            for (var i in pipelineInfo.stages)
             {
-                stages.push(path + '.' + pipeline.stages[i]);
+                stages.push(path + '.' + pipelineInfo.stages[i]);
             }
 
             // Get connectors
+            var pipeline = connectors.pipeline;
             for (var i in stages)
             {
                 // Get stage
@@ -87,17 +91,24 @@ Item
                 {
                     // Get connection
                     var connection = connections[j];
-                    var from = connection.from;
-                    var to   = connection.to;
+
+                    var from     = connection.from;
+                    var to       = connection.to;
+                    var feedback = connection.feedback || false;
 
                     // Draw connection
-                    var p0 = connectors.pipeline.getSlotPos(getPath(from), getSlot(from));
-                    var p1 = connectors.pipeline.getSlotPos(getPath(to), getSlot(to));
+                    var p0 = pipeline.getSlotPos(getPath(from), getSlot(from));
+                    var p1 = pipeline.getSlotPos(getPath(to), getSlot(to));
 
                     if (p0 != null && p1 != null)
                     {
                         // Highlight the connection if its input or output slot is selected
-                        var status = (connectors.pipeline.hoveredElement == from || connectors.pipeline.hoveredElement == to) ? 1 : 0;
+                        var status = feedback ? 3 : 0;
+                        if (isEqual(pipeline.hoveredPath, pipeline.hoveredSlot, from) ||
+                            isEqual(pipeline.hoveredPath, pipeline.hoveredSlot, to))
+                        {
+                            status = 1;
+                        }
 
                         drawConnector(ctx, p0, p1, status);
                     }
@@ -105,17 +116,17 @@ Item
             }
 
             // Draw interactive connector
-            if (connectors.pipeline.selectedOutput != '')
+            if (pipeline.selectedOutput != '')
             {
-                var p0 = connectors.pipeline.getSlotPos(connectors.pipeline.selectedPath, connectors.pipeline.selectedOutput);
-                var p1 = { x: connectors.pipeline.mouseX, y: connectors.pipeline.mouseY };
+                var p0 = pipeline.getSlotPos(pipeline.selectedPath, pipeline.selectedOutput);
+                var p1 = { x: pipeline.mouseX, y: pipeline.mouseY };
                 drawConnector(ctx, p0, p1, 2);
             }
 
-            if (connectors.pipeline.selectedInput != '')
+            if (pipeline.selectedInput != '')
             {
-                var p0 = { x: connectors.pipeline.mouseX, y: connectors.pipeline.mouseY };
-                var p1 = connectors.pipeline.getSlotPos(connectors.pipeline.selectedPath, connectors.pipeline.selectedInput);
+                var p0 = { x: pipeline.mouseX, y: pipeline.mouseY };
+                var p1 = pipeline.getSlotPos(pipeline.selectedPath, pipeline.selectedInput);
                 drawConnector(ctx, p0, p1, 2);
             }
         }
@@ -142,6 +153,7 @@ Item
             var color = Ui.style.pipelineLineColorDefault;
             if (status == 1) color = Ui.style.pipelineLineColorHighlighted;
             if (status == 2) color = Ui.style.pipelineLineColorSelected;
+            if (status == 3) color = Ui.style.pipelineLineColorFeedback;
 
             ctx.strokeStyle = color;
             ctx.fillStyle   = color;

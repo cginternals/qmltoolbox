@@ -15,6 +15,8 @@ Item
 {
     id: pipeline
 
+    signal stageCreated(string path) ///< Signals creation of a new stage item after the pipeline was loaded
+
     // Options
     property var    properties: null ///< Interface for accessing the actual properties
     property string path:       ''   ///< Path in the pipeline hierarchy (e.g., 'pipeline')
@@ -103,7 +105,7 @@ Item
                 {
                     return function()
                     {
-                        pipeline.createStage(type, type);
+                        pipeline.createStage(type, type, menu.x, menu.y);
                     };
                 };
 
@@ -200,11 +202,23 @@ Item
         }
 
         // Add pseudo stages for inputs and outputs of the pipeline itself
-        addInputStageItem (pipeline.path, 'Inputs',    20, 150);
-        addOutputStageItem(pipeline.path, 'Outputs', 1200, 150);
+        addInputStageItem (pipeline.path, 'Inputs',  20, 150);
+        addOutputStageItem(pipeline.path, 'Outputs', x,  150);
 
-        // Do the layout
-        computeLayout();
+        // Hack: layout after 5 ms to ensure loading of stages is finished
+        function Timer() {
+            return Qt.createQmlObject("import QtQuick 2.0; Timer {}", pipeline);
+        }
+        function delay(delayTime, cb) {
+            var timer = new Timer();
+            timer.interval = delayTime;
+            timer.repeat = false;
+            timer.triggered.connect(cb);
+            timer.start();
+        }
+        delay(10, function() {
+            computeLayout();
+        });
 
         // Redraw connections
         connectors.requestPaint();
@@ -360,13 +374,15 @@ Item
     *  @param[in] name
     *    Name of stage
     */
-    function createStage(className, name)
+    function createStage(className, name, x, y)
     {
         // Create stage
         var realName = properties.createStage(pipeline.path, className, name);
 
         // Create stage item
-        addStageItem(pipeline.path + '.' + realName, realName, 100, 100);
+        addStageItem(pipeline.path + '.' + realName, realName, x, y);
+
+        stageCreated(pipeline.path + '.' + realName);
     }
 
     /**
@@ -391,11 +407,142 @@ Item
     }
 
     /**
+    *  Compute ranks in half ordered graph
+    */
+    function computeRanks()
+    {
+        var getPath = function (path) {
+            var splitPath = path.split('.');
+            splitPath.splice(splitPath.length - 1, 1);
+            return splitPath.join('.');
+        };
+
+        // build the empty graph
+        var graph = {};
+        var inverseGraph = {};
+        var pathToName = {};
+        for (var name in stageItems)
+        {
+            graph[stageItems[name].path] = [];
+            inverseGraph[stageItems[name].path] = [];
+            pathToName[stageItems[name].path] = name;
+        }
+        pathToName["root"] = "Outputs";
+
+        // insert edges
+        for (var name in stageItems)
+        {
+            var connections = properties.getConnections(stageItems[name].path);
+            for (var i in connections)
+            {
+                var fromPath = getPath(connections[i].from);
+                var toPath = getPath(connections[i].to);
+
+                if (fromPath == "root" || connections[i].feedback)
+                {
+                    // ignore connections from root (inputs will be leftmost)
+                    // and feedback connections
+                    // this lets the algorithm start at the output node
+                    continue;
+                }
+
+                if (graph[fromPath].indexOf(toPath) < 0)
+                {
+                    graph[fromPath].push(toPath);
+                }
+
+                if (inverseGraph[toPath].indexOf(fromPath) < 0)
+                {
+                    inverseGraph[toPath].push(fromPath);
+                }
+            }
+        }
+
+        var ranks = [];
+        var toRemove = [];
+        while (Object.keys(graph).length > 0)
+        {
+            for (var path in graph)
+            {
+                if (graph[path].length === 0)
+                {
+                    toRemove.push(path);
+                }
+            }
+
+            if (toRemove.length === 0)
+            {
+                console.log("circular graph detected, abort layout process.");
+                break;
+            }
+
+            var names = [];
+            for (var i in toRemove)
+            {
+                names.push(pathToName[toRemove[i]]);
+
+            }
+            ranks.push(names);
+
+            for (var i in toRemove)
+            {
+                var current = toRemove[i];
+                for (var j in inverseGraph[current])
+                {
+                    var predecessor = inverseGraph[current][j];
+                    var edgeNum = graph[predecessor].indexOf(current);
+                    graph[predecessor].splice(edgeNum, 1);
+                }
+                delete graph[current];
+            }
+            toRemove = [];
+        }
+        ranks.push(["Inputs"]);
+
+        return ranks;
+    }
+
+    /**
     *  Compute automatic layout for stages
     */
     function computeLayout()
     {
-        // [TODO]
+        var startX = 120;
+        var marginX = 100;
+        var startY = 120;
+        var marginY = 100;
+
+        var x = startX;
+
+        var ranks = computeRanks();
+
+        for (var i in ranks)
+        {
+            // go through the computed ranks in reverse order
+            var stages = ranks[ranks.length - i - 1];
+
+            var maxWidth = 0;
+            for (var j in stages)
+            {
+                var current = stageItems[stages[j]];
+
+                maxWidth = Math.max(maxWidth, current.width);
+            }
+
+            var y = startY;
+            for (var j in stages)
+            {
+                var current = stageItems[stages[j]];
+
+                current.x = x + (maxWidth - current.width) / 2;
+                current.y = y;
+
+                y += current.height + marginY;
+            }
+            x += maxWidth + marginX;
+        }
+
+        connectors.requestPaint();
     }
 
     /**

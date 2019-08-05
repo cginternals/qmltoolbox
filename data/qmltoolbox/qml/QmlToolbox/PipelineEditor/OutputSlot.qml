@@ -82,7 +82,7 @@ Item
             height:                 item.radius
 
             radius:       width / 2.0
-            color:        item.selected ? Ui.style.pipelineLineColorSelected : (item.hovered ? Ui.style.pipelineLineColorHighlighted : item.color)
+            color:        item.selected ? Ui.style.pipelineLineColorSelected : (item.hovered ? Ui.style.pipelineLineColorHighlighted : (status !== null && status.required ? Ui.style.pipelineSlotColorOutRequired : item.color))
             border.color: item.borderColor
             border.width: item.borderWidth
 
